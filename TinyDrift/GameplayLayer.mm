@@ -133,7 +133,7 @@
         
         [self setupWorld];
         //set to 0.5 to zoom out
-        self.scale = 0.2;
+        self.scale = 0.5;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
