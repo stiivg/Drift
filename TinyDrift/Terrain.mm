@@ -16,7 +16,7 @@
 int _lastRoadPoint = 100;
 static int targetRoadIndex= 0;
 
-- (void) resetBox2DBody {
+- (void) createEdges {
     
     if(_body) {
         _world->DestroyBody(_body);
@@ -29,13 +29,13 @@ static int targetRoadIndex= 0;
     
     b2PolygonShape shape;
     
-//    b2Vec2 p1, p2;
-//    for (int i=0; i<_nBorderVertices-1; i++) {
-//        p1 = b2Vec2(_borderVertices[i].x/PTM_RATIO,_borderVertices[i].y/PTM_RATIO);
-//        p2 = b2Vec2(_borderVertices[i+1].x/PTM_RATIO,_borderVertices[i+1].y/PTM_RATIO);
-//        shape.SetAsEdge(p1, p2);
-//        _body->CreateFixture(&shape, 0);
-//    }
+    b2Vec2 p1, p2;
+    for (int i=0; i<_lastRoadPoint-1; i++) {
+        p1 = b2Vec2(_roadKeyPoints[i].x/PTM_RATIO,_roadKeyPoints[i].y/PTM_RATIO);
+        p2 = b2Vec2(_roadKeyPoints[i+1].x/PTM_RATIO,_roadKeyPoints[i+1].y/PTM_RATIO);
+        shape.SetAsEdge(p1, p2);
+        _body->CreateFixture(&shape, 0);
+    }
 }
 
 - (void) generateRoad {
@@ -172,6 +172,7 @@ static int targetRoadIndex= 0;
         [self generateRoad];
         
         [self resetRoadVertices];
+        [self createEdges];
         
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"smallCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
