@@ -30,9 +30,9 @@ static int targetRoadIndex= 0;
     b2PolygonShape shape;
     
     b2Vec2 p1, p2;
-    for (int i=0; i<_lastRoadPoint-1; i++) {
-        p1 = b2Vec2(_roadKeyPoints[i].x/PTM_RATIO,_roadKeyPoints[i].y/PTM_RATIO);
-        p2 = b2Vec2(_roadKeyPoints[i+1].x/PTM_RATIO,_roadKeyPoints[i+1].y/PTM_RATIO);
+    for (int i=0; i<_nRoadVertices-2; i++) {
+        p1 = b2Vec2(_roadVertices[i].x/PTM_RATIO,_roadVertices[i].y/PTM_RATIO);
+        p2 = b2Vec2(_roadVertices[i+2].x/PTM_RATIO,_roadVertices[i+2].y/PTM_RATIO);
         shape.SetAsEdge(p1, p2);
         _body->CreateFixture(&shape, 0);
     }
