@@ -142,6 +142,8 @@
 		6413702C14537D8F006CD5C3 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 64136FA514537D8F006CD5C3 /* CJSONSerializer.m */; };
 		6413712414537EB6006CD5C3 /* LICENSE_Box2D.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6413712314537EB6006CD5C3 /* LICENSE_Box2D.txt */; };
 		6419A7FE145CCE4200DA3619 /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 6419A7FD145CCE4200DA3619 /* Notes.rtf */; };
+		6419A802145CE18E00DA3619 /* smallCar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6419A800145CE18E00DA3619 /* smallCar.plist */; };
+		6419A803145CE18E00DA3619 /* smallCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6419A801145CE18E00DA3619 /* smallCar.png */; };
 		643AE4EF142FFB3E0079501A /* drift_car.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE4EE142FFB3E0079501A /* drift_car.png */; };
 		643AE4F2142FFB510079501A /* drift_car.plist in Resources */ = {isa = PBXBuildFile; fileRef = 643AE4F1142FFB510079501A /* drift_car.plist */; };
 		643AE4FF142FFB7A0079501A /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE4F4142FFB7A0079501A /* blocks.png */; };
@@ -458,6 +460,8 @@
 		6413712214537E07006CD5C3 /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
 		6413712314537EB6006CD5C3 /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
 		6419A7FD145CCE4200DA3619 /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
+		6419A800145CE18E00DA3619 /* smallCar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = smallCar.plist; path = "TinyDrift/Sprite Sheets/smallCar.plist"; sourceTree = SOURCE_ROOT; };
+		6419A801145CE18E00DA3619 /* smallCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smallCar.png; path = "TinyDrift/Sprite Sheets/smallCar.png"; sourceTree = SOURCE_ROOT; };
 		643AE4EE142FFB3E0079501A /* drift_car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drift_car.png; path = "TinyDrift/Sprite Sheets/drift_car.png"; sourceTree = SOURCE_ROOT; };
 		643AE4F1142FFB510079501A /* drift_car.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = drift_car.plist; path = "TinyDrift/Sprite Sheets/drift_car.plist"; sourceTree = SOURCE_ROOT; };
 		643AE4F4142FFB7A0079501A /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
@@ -984,6 +988,8 @@
 		E162E98713ABF79500E06194 /* Sprite Sheets */ = {
 			isa = PBXGroup;
 			children = (
+				6419A800145CE18E00DA3619 /* smallCar.plist */,
+				6419A801145CE18E00DA3619 /* smallCar.png */,
 				643AE4F1142FFB510079501A /* drift_car.plist */,
 				643AE4EE142FFB3E0079501A /* drift_car.png */,
 			);
@@ -1136,6 +1142,8 @@
 				6413702614537D8F006CD5C3 /* LICENSE_TouchJSON.txt in Resources */,
 				6413712414537EB6006CD5C3 /* LICENSE_Box2D.txt in Resources */,
 				6419A7FE145CCE4200DA3619 /* Notes.rtf in Resources */,
+				6419A802145CE18E00DA3619 /* smallCar.plist in Resources */,
+				6419A803145CE18E00DA3619 /* smallCar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

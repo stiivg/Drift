@@ -141,9 +141,7 @@
 }
 
 - (void)_applyForce {
-    float highLimit = 56;
-    float lowLimit = 8;
-    static float limit = highLimit;
+    static float last_distance = 0;
     
     //calc distance = radial distance to target
     CGPoint targetVector = ccpSub(target, self.position);
@@ -153,33 +151,37 @@
     float theta = thetaT - thetaR;
     float sinTheta = sinf(theta);
     float targetDistance = hypotf(targetVector.x, targetVector.y);
-    float distance = targetDistance * sinTheta / PTM_RATIO;
+    float distance = targetDistance * sinTheta;
     
     //calc velR = radial velocity to target
     b2Vec2 vel2b = _body->GetLinearVelocity();
     CGPoint velocity = CGPointMake(vel2b.x, vel2b.y);
     CGPoint pathRadial = ccpRPerp(pathTangent);
-    CGPoint velR = ccpProject(velocity,pathRadial);
     
-    //acceleration = v^2 / 2*d
-    float acc = (velR.x * velR.x) / (2 * distance);
     
-    float accR = 5;
-    //accelerate towards the road
-    if (distance < 0) {
-        accR = -1 * accR;
-    }
+    //Derivative term
+    float Dterm = (distance - last_distance)*10;
+    last_distance = distance;
+    float Pterm = distance;
     
-    //moving towards road d and v have same sign
-    if (distance*velR.x > 0) {
-        //test for de-acceleration point
-        if (ABS(acc) > limit) {
-            accR = -1 * accR;
-            limit = lowLimit;   //de-bounce 
-        } else {
-            limit = highLimit;
-        }
-    }
+    float accR = Pterm+Dterm;
+//    //accelerate towards the road
+//    if (distance < 0) {
+//        accR = -1 * accR;
+//    }
+    
+    CCLOG(@"drift:      %4.2f   %4.2f", Pterm,Dterm);
+    
+//    //moving towards road d and v have same sign
+//    if (distance*velR.x > 0) {
+//        //test for de-acceleration point
+//        if (ABS(acc) > limit) {
+//            accR = -1 * accR;
+//            limit = lowLimit;   //de-bounce 
+//        } else {
+//            limit = highLimit;
+//        }
+//    }
     
     CGPoint accTangential = CGPointMake(0,0);
     
@@ -194,18 +196,18 @@
     float speedT = ccpLength(velT);
     if (speedT < 20.0) {
         accTangential = ccpNormalize(pathTangent);
-        accTangential = ccpMult(accTangential, 5);
+        accTangential = ccpMult(accTangential, 10);
     }
     
     CGPoint accTotal = ccpAdd(accRadial, accTangential);
     CGPoint accDrift = ccp(0,0);
     
     //Add drift force
-    if (_driftAngle != 0 && speedT < 40.0) {
+    if (_driftAngle != 0 && speedT < 30.0) {
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
-        accDrift= ccpMult(accDrift, 20);
+        accDrift= ccpMult(accDrift, 40);
         //CCLOG(@"drift:  angle=%4.2f accX=%4.2f accY=%4.2f", 
 //              self.rotation, accTotal.x, accTotal.y);
         accTotal = ccpAdd(accTotal, accDrift);
@@ -214,10 +216,14 @@
 
 //    CCLOG(@"drift:  d=%4.2f v=%4.2f  a=%4.2f accX=%4.2f accY=%4.2f", 
 //          distance, velR.x, acc, accTotal.x, accTotal.y);
-   
-    _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
-    //Comment to stop following road
-    //_body->ApplyForce( b2Vec2(accTotal.x,accTotal.y), _body->GetPosition() );
+    
+    BOOL followRoad = true;
+    if (followRoad) {
+        _body->ApplyForce( b2Vec2(accTotal.x,accTotal.y), _body->GetPosition() );
+    } else 
+    {
+        _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
+    }
 
 }
 

@@ -28,7 +28,8 @@ static int targetRoadIndex= 0;
     _body = _world->CreateBody(&bd);
     
     b2PolygonShape shape;
-    
+    //Takes alternate edge points and makes
+    //edge lines for alternating sides of the road
     b2Vec2 p1, p2;
     for (int i=0; i<_nRoadVertices-2; i++) {
         p1 = b2Vec2(_roadVertices[i].x/PTM_RATIO,_roadVertices[i].y/PTM_RATIO);
@@ -134,6 +135,7 @@ static int targetRoadIndex= 0;
     CGPoint l0, r0;
     CGFloat roadDistance = 0;
     
+    targetRoadIndex= 1;
     p0 = _roadKeyPoints[0];
     for (int i=0; i<_lastRoadPoint; i++) {
         p1 = _roadKeyPoints[i+1];
@@ -172,7 +174,7 @@ static int targetRoadIndex= 0;
         [self generateRoad];
         
         [self resetRoadVertices];
-        [self createEdges];
+//        [self createEdges];
         
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"smallCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
@@ -229,12 +231,14 @@ static int targetRoadIndex= 0;
         }
     }
     
+//    testPoint.x = 160;
+//    testPoint.y = 600;
     return testPoint;
 }
 
 - (CGPoint)targetTangent {
     CGPoint prevPoint = _roadKeyPoints[targetRoadIndex-1];
-    CGPoint nextPoint = _roadKeyPoints[targetRoadIndex+1];
+    CGPoint nextPoint = _roadKeyPoints[targetRoadIndex];
     CGPoint tangent = ccpSub(nextPoint, prevPoint);
     return tangent;
 }
