@@ -61,16 +61,19 @@
 
 //generate the path from the control points array
 -(void)generatePath {
-    int pathIndex = 0;
-    for (int i=0; i<20; i+=3)
+    _numPathPoints = 0;
+    for (int i=0; i<_numControlPoints-3; i+=3)
     {
         CGPoint a = _roadControlPoints[i];
         CGPoint b = _roadControlPoints[i+1];
         CGPoint c = _roadControlPoints[i+2];
         CGPoint d = _roadControlPoints[i+3];
-        for (int j=0; j<10; ++j) {
-            float t = j/9.0;
-            _pathPoints[pathIndex++] = [self cgbezier:a b:b c:c d:d t:t];
+        //Try to make point distance similar for all segments
+        float distance = ccpDistance(a, d);
+        int pointCount = distance /5;
+        for (int j=0; j<pointCount; ++j) {
+            float t = j/(float)(pointCount-1);
+            _pathPoints[_numPathPoints++] = [self cgbezier:a b:b c:c d:d t:t];
         }
     }
     
@@ -81,7 +84,7 @@
     FILE *file;
     file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "w");
     
-    for (int i=0; i<20; ++i)
+    for (int i=0; i<_numControlPoints; ++i)
     {
         fprintf(file, "%f\t%f\n", _roadControlPoints[i].x, _roadControlPoints[i].y);
     }
@@ -93,7 +96,7 @@
     FILE *file;
     file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "w");
     
-    for (int i=0; i<40; ++i)
+    for (int i=0; i<_numPathPoints; ++i)
     {
         fprintf(file, "%f\t%f\n", _pathPoints[i].x, _pathPoints[i].y);
     }
@@ -106,9 +109,9 @@
 -(CGPoint)randVector {
     int randx = 0, randy = 0;
     do {
-      randx = arc4random() % 400 - 200;
-      randy = arc4random() % 200;
-    } while (abs(randx + randy) < 50);
+      randx = arc4random() % 200 - 100;
+      randy = arc4random() % 100;
+    } while (abs(randx + randy) < 20);
     return CGPointMake(randx, randy);
 }
 
@@ -163,7 +166,7 @@
 
     _roadControlPoints[i++] = nextPathPoint; //road point
     
-    for (int j=0; j<4; j++) {
+    for (int j=0; j<8; j++) {
        _roadControlPoints[i++] = ccpAdd(nextPathPoint,slope); //control a
         
         //vector to next road point
@@ -176,7 +179,7 @@
         _roadControlPoints[i++] = nextPathPoint; //road point
         
     }
-    
+    _numControlPoints = i;
     
 }
 
