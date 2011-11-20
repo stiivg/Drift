@@ -112,48 +112,74 @@
     return CGPointMake(randx, randy);
 }
 
+//-(void) generateControlPoints {
+//    
+//    float startx = 0;
+//    float starty = 0;
+//    int i = 0;
+//    
+//    _roadControlPoints[i++] = CGPointMake(startx, starty); //road point
+//    //random 1-100
+//    int rand = arc4random() % 100 + 1;
+//    //random slope in y direction from straight line
+//    CGPoint prevPathPoint = CGPointMake(startx, starty+rand);
+//    _roadControlPoints[i++] = prevPathPoint; //control a
+//    
+//    for (int j=0; j<4; j++) {
+//        //vector to next road point
+//        CGPoint nextVector = [self randVector];
+//        //slope in same direction as next vector
+//        CGPoint slope = ccpMult(nextVector, .3);
+//        
+//        CGPoint nextPathPoint = ccpAdd(prevPathPoint, nextVector);
+//        CGPoint controlAdd = ccpAdd(nextPathPoint,slope);
+//        CGPoint controlSub = ccpSub(nextPathPoint,slope);
+//        _roadControlPoints[i++] = controlSub; //control b
+//        _roadControlPoints[i++] = nextPathPoint; //road point
+//        _roadControlPoints[i++] = controlAdd; //control a
+//        
+//        prevPathPoint = nextPathPoint;
+//    }
+//    
+//    
+//}
+
 -(void) generateControlPoints {
-    CGSize winSize = [CCDirector sharedDirector].winSize;
     
-    float x = winSize.width/2;
-    float y = 0;
+    float startx = 0;
+    float starty = 0;
     int i = 0;
     
-    _roadControlPoints[i++] = CGPointMake(x, y); //road point
-    //random 1-100
-    int rand = arc4random() % 100 + 1;
-    //random slope in y direction from straight line
-    CGPoint prevPathPoint = CGPointMake(x, y+rand);
-    _roadControlPoints[i++] = prevPathPoint; //control a
+    CGPoint nextPathPoint = CGPointMake(startx, starty);
+    //slope in direction of straight line
+    CGPoint nextVector = CGPointMake(0, 100);
+    CGPoint slope = ccpMult(nextVector, .3);
+    
+    //straight line at start
+    _roadControlPoints[i++] = nextPathPoint; //road point
+    _roadControlPoints[i++] = ccpAdd(nextPathPoint,slope); //control a
+    nextPathPoint = ccpAdd(nextPathPoint, nextVector);
+    _roadControlPoints[i++] = ccpSub(nextPathPoint,slope); //control b
+
+    _roadControlPoints[i++] = nextPathPoint; //road point
     
     for (int j=0; j<4; j++) {
-        //vector to next road point
-        CGPoint nextVector = [self randVector];
-        //perpendicular slope
-//        CGPoint slope = ccpRPerp(nextVector);
-//        slope = ccpMult(slope,0.3);
-        //slope in same direction as next vector
-        CGPoint slope = ccpMult(nextVector, .3);
-
-        CGPoint nextPathPoint = ccpAdd(prevPathPoint, nextVector);
-        CGPoint controlAdd = ccpAdd(nextPathPoint,slope);
-        CGPoint controlSub = ccpSub(nextPathPoint,slope);
-//        
-//        if (nextVector.x > 0) {
-            _roadControlPoints[i++] = controlSub; //control b
-            _roadControlPoints[i++] = nextPathPoint; //road point
-            _roadControlPoints[i++] = controlAdd; //control a
-//        } else {
-//            _roadControlPoints[i++] = controlAdd; //control b
-//            _roadControlPoints[i++] = nextPathPoint; //road point
-//            _roadControlPoints[i++] = controlSub; //control a
-//        }
+       _roadControlPoints[i++] = ccpAdd(nextPathPoint,slope); //control a
         
-        prevPathPoint = nextPathPoint;
+        //vector to next road point
+        nextVector = [self randVector];
+        //slope in same direction as next vector
+        slope = ccpMult(nextVector, .3);
+        
+        nextPathPoint = ccpAdd(nextPathPoint, nextVector);
+        _roadControlPoints[i++] = ccpSub(nextPathPoint,slope); //control b
+        _roadControlPoints[i++] = nextPathPoint; //road point
+        
     }
     
     
 }
+
 
 -(id) createPath {
     [self generateControlPoints];
