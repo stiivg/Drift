@@ -194,7 +194,7 @@
     //Add force along path if needed
     CGPoint velT = ccpProject(velocity, pathTangent);
     float speedT = ccpLength(velT);
-    if (speedT < 20.0) {
+    if (speedT < 15.0) {
         accTangential = ccpNormalize(pathTangent);
         accTangential = ccpMult(accTangential, 10);
     }
@@ -203,7 +203,7 @@
     CGPoint accDrift = ccp(0,0);
     
     //Add drift force
-    if (_driftAngle != 0 && speedT < 30.0) {
+    if (_driftAngle != 0 && speedT < 20.0) {
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);

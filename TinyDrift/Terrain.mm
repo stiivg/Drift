@@ -39,6 +39,18 @@ static int targetRoadIndex= 0;
     }
 }
 
+
+- (void) writeRoadFile {
+    NSString *filePath = @"/Users/stevengallagher/Documents/DriftGithub/roadPoints.tsv";
+    FILE *file;
+    file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "w");
+    
+    for (int i=0; i<_lastRoadPoint; i++) {
+        fprintf(file, "%f\t%f\n",_roadKeyPoints[i].x,_roadKeyPoints[i].y);
+    }
+    fclose(file);
+}
+
 - (void) generateRoad {
 
     CGSize winSize = [CCDirector sharedDirector].winSize;
@@ -125,9 +137,14 @@ static int targetRoadIndex= 0;
         y += 160;
     }
     _lastRoadPoint = i - 1;
+    //uncomment to write file of road points
+    [self writeRoadFile];
     
 }
 
+
+//Map the texture to the road points
+//Alternate left and right of road
 - (void)resetRoadVertices {
     
     _nRoadVertices = 0;
@@ -171,6 +188,7 @@ static int targetRoadIndex= 0;
     if ((self = [super init])) {
         _world = world;
         [self setupDebugDraw];
+        _path = [[[Path alloc] createPath] autorelease];
         [self generateRoad];
         
         [self resetRoadVertices];
@@ -186,8 +204,6 @@ static int targetRoadIndex= 0;
 - (void) draw {
         //SJG Disable the hill drawing
 //    CCLOG(@"drift:  from:%i to:%i ", _fromKeyPointI, _toKeyPointI);
-
-    CGSize winSize = [CCDirector sharedDirector].winSize;
 
     glBindTexture(GL_TEXTURE_2D, _roadTexture.texture.name);
     glDisableClientState(GL_COLOR_ARRAY);

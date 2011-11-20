@@ -133,7 +133,7 @@
         
         [self setupWorld];
         //set to 0.5 to zoom out
-        self.scale = 0.5;
+        self.scale = 0.3;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
@@ -234,7 +234,7 @@
     //[_emitter setPosition:ccp(_car.position.x, _car.position.y)];
 
     //uncomment to rotate view with car
- //   [_terrain updateRotation:_car.rotation];
+//    [_terrain updateRotation:_car.rotation];
     
 }
 
