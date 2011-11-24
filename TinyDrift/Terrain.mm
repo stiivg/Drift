@@ -153,9 +153,9 @@ static int targetRoadIndex= 0;
     CGFloat roadDistance = 0;
     
     targetRoadIndex= 1;
-    p0 = _roadKeyPoints[0];
-    for (int i=0; i<_lastRoadPoint; i++) {
-        p1 = _roadKeyPoints[i+1];
+    p0 = _pathPoints[0];
+    for (int i=0; i<_lastRoadPoint-1; i++) {
+        p1 = _pathPoints[i+1];
         roadSegment = ccpSub(p1, p0);
         roadSegment = ccpNormalize(roadSegment);
         perpSegment = ccpRPerp(roadSegment);
@@ -188,8 +188,9 @@ static int targetRoadIndex= 0;
     if ((self = [super init])) {
         _world = world;
         [self setupDebugDraw];
-        _path = [[[Path alloc] createPath] autorelease];
-        [self generateRoad];
+        _path = [[[Path alloc] createPath:_pathPoints] autorelease];
+        _lastRoadPoint = _path.getNumPathPoints;
+//        [self generateRoad];
         
         [self resetRoadVertices];
 //        [self createEdges];
@@ -236,10 +237,10 @@ static int targetRoadIndex= 0;
 //Return the next road point past the look ahead distance
 - (CGPoint)nextTargetPoint:(CGPoint)position {
 #define kLookAheadSq 40000
-    CGPoint testPoint = _roadKeyPoints[targetRoadIndex];
+    CGPoint testPoint = _pathPoints[targetRoadIndex];
    
     for (; targetRoadIndex<_lastRoadPoint; targetRoadIndex++) {
-        testPoint = _roadKeyPoints[targetRoadIndex];
+        testPoint = _pathPoints[targetRoadIndex];
         int dx =  (int)(position.x - testPoint.x);
         int dy =  (int)(position.y - testPoint.y);        
         if ((dx*dx + dy*dy) > kLookAheadSq) {
@@ -253,8 +254,8 @@ static int targetRoadIndex= 0;
 }
 
 - (CGPoint)targetTangent {
-    CGPoint prevPoint = _roadKeyPoints[targetRoadIndex-1];
-    CGPoint nextPoint = _roadKeyPoints[targetRoadIndex];
+    CGPoint prevPoint = _pathPoints[targetRoadIndex-1];
+    CGPoint nextPoint = _pathPoints[targetRoadIndex];
     CGPoint tangent = ccpSub(nextPoint, prevPoint);
     return tangent;
 }

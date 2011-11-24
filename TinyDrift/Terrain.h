@@ -22,6 +22,7 @@
     int _offsetX;
     int _offsetY;
     CGPoint _roadKeyPoints[kMaxRoadKeyPoints];
+    CGPoint _pathPoints[kMaxRoadKeyPoints];
     CCSprite *_roadTexture;
     Path * _path;
 

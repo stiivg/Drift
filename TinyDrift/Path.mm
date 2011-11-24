@@ -70,11 +70,20 @@
         CGPoint d = _roadControlPoints[i+3];
         //Try to make point distance similar for all segments
         float distance = ccpDistance(a, d);
-        int pointCount = distance /5;
+        int pointCount = distance;
         for (int j=0; j<pointCount; ++j) {
-            float t = j/(float)(pointCount-1);
+            float t = j/(float)(pointCount);
             _pathPoints[_numPathPoints++] = [self cgbezier:a b:b c:c d:d t:t];
         }
+    }
+    
+}
+
+-(void)scalePath {
+    for (int i=0; i<_numPathPoints; i++) {
+        CGPoint scaledPoint = ccpMult(_pathPoints[i], 80);
+        scaledPoint.x += 160;
+        _pathPoints[i] = scaledPoint;
     }
     
 }
@@ -109,9 +118,9 @@
 -(CGPoint)randVector {
     int randx = 0, randy = 0;
     do {
-      randx = arc4random() % 200 - 100;
-      randy = arc4random() % 100;
-    } while (abs(randx + randy) < 20);
+      randx = arc4random() % 40 - 20;
+      randy = arc4random() % 20;
+    } while (abs(randx + randy) < 4);
     return CGPointMake(randx, randy);
 }
 
@@ -151,11 +160,12 @@
     
     float startx = 0;
     float starty = 0;
+    int segmentCount = 8;
     int i = 0;
     
     CGPoint nextPathPoint = CGPointMake(startx, starty);
     //slope in direction of straight line
-    CGPoint nextVector = CGPointMake(0, 100);
+    CGPoint nextVector = CGPointMake(0, 20);
     CGPoint slope = ccpMult(nextVector, .3);
     
     //straight line at start
@@ -166,7 +176,7 @@
 
     _roadControlPoints[i++] = nextPathPoint; //road point
     
-    for (int j=0; j<8; j++) {
+    for (int j=0; j<segmentCount; j++) {
        _roadControlPoints[i++] = ccpAdd(nextPathPoint,slope); //control a
         
         //vector to next road point
@@ -184,12 +194,19 @@
 }
 
 
--(id) createPath {
+-(id) createPath:(CGPoint *)pathPoints {
+    _pathPoints = pathPoints;
+    
     [self generateControlPoints];
     [self saveControlPoints];
     [self generatePath];
+    [self scalePath];
     [self savePathPoints];
     return self;
+}
+
+-(int)getNumPathPoints {
+    return _numPathPoints;
 }
 
 @end

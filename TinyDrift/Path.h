@@ -16,12 +16,13 @@
 @interface Path : NSObject {
     CGPoint _roadControlPoints[kMaxRoadKeyPoints];
     int _numControlPoints;
-    CGPoint _pathPoints[kMaxRoadKeyPoints];
+    CGPoint * _pathPoints;
     int _numPathPoints;
 }
 
-- (id)createPath;
+- (id)createPath:(CGPoint *) pathPoints;
 
+-(int)getNumPathPoints;
 
 @end
 
