@@ -15,30 +15,11 @@
 // Equidistant points: http://www.blitzbasic.com/codearcs/codearcs.php?code=1523
 
 
-// simple linear interpolation between two points
--(CGPoint)interpolate:(CGPoint)a endPoint:(CGPoint)b fraction:(float)t {
-    CGPoint retVal;
-    retVal.x = a.x + (b.x-a.x)*t;
-    retVal.y = a.y + (b.y-a.y)*t;
-    return retVal;
-}
-
-// evaluate a point on a hermite curve. t goes from 0 to 1.0
--(CGPoint)cgBezier:(CGPoint)a b:(CGPoint)b c:(CGPoint)c d:(CGPoint)d t:(float)t {
-    CGPoint bezierPoint;
-    CGPoint ab,bc,cd,abbc,bccd;
-    ab = [self interpolate:a endPoint:b fraction:t];
-    bc = [self interpolate:b endPoint:c fraction:t];
-    cd = [self interpolate:c endPoint:d fraction:t];
-    abbc = [self interpolate:ab endPoint:bc fraction:t];
-    bccd = [self interpolate:bc endPoint:cd fraction:t];
-    bezierPoint = [self interpolate:abbc endPoint:bccd fraction:t];
-    return bezierPoint;
-}
-
-
 //generate the path from the control points array
 -(void)generatePath {
+    CGPoint bezierPoint;
+    CGPoint slope;
+    static float t = 0;
     _numPathPoints = 0;
     for (int i=0; i<_numControlPoints-3; i+=3)
     {
@@ -47,12 +28,21 @@
         CGPoint c = _roadControlPoints[i+2];
         CGPoint d = _roadControlPoints[i+3];
         //Try to make point distance similar for all segments
-        float distance = ccpDistance(a, d);
-        int pointCount = distance /5;
-        for (int j=0; j<pointCount; ++j) {
-            float t = j/(float)(pointCount);
-            _pathPoints[_numPathPoints++] = [self cgBezier:a b:b c:c d:d t:t];
+        float speed = 0;
+        
+        while (t < 1.0) {
+            float tb = 1-t;
+            bezierPoint.x = a.x*tb*tb*tb + 3*b.x*tb*tb*t + 3*c.x*tb*t*t + d.x*t*t*t;
+            bezierPoint.y = a.y*tb*tb*tb + 3*b.y*tb*tb*t + 3*c.y*tb*t*t + d.y*t*t*t;
+            _pathPoints[_numPathPoints++] = bezierPoint;
+            
+            //calculate speed of curve at this point
+            slope.x = -3*a.x*tb*tb + 3*b.x*tb*(tb-2*t) + 3*c.x*t*(2*tb-t) + d.x*3*t*t;
+            slope.y = -3*a.y*tb*tb + 3*b.y*tb*(tb-2*t) + 3*c.y*t*(2*tb-t) + d.y*3*t*t;
+            speed = 5 / ccpLength(slope);
+            t += speed;
         }
+        t = t - 1;  //Start next segment at this t for equal spacing
     }
     
 }
@@ -123,13 +113,14 @@
 
 //Generate random vector to next point in positive y
 -(CGPoint)randVector {
-    int maxDistance = 20;
-    int minSum = 4;
+    int maxDistance = 200;
+    int minY = 10;
+    int minSquare = 10000;
     int randx = 0, randy = 0;
     do {
-      randx = arc4random() % (2*maxDistance) - maxDistance;
-      randy = arc4random() % maxDistance;
-    } while (abs(randx + randy) < minSum);
+        randx = arc4random() % (2*maxDistance) - maxDistance;
+        randy = arc4random() % (maxDistance-minY) + minY;
+    } while ( (randx*randx + randy*randy) < minSquare);
     return CGPointMake(randx, randy);
 }
 
@@ -141,10 +132,10 @@
     int i = 0;
         
     //straight line at start
-    _keyPoints[i++] = CGPointMake(startx, starty-20); //point before first point used
+    _keyPoints[i++] = CGPointMake(startx, starty-100); //point before first point used
     CGPoint nextPathPoint = CGPointMake(startx, starty);
     _keyPoints[i++] = nextPathPoint; //first key point used
-    CGPoint nextVector = CGPointMake(0, 20);
+    CGPoint nextVector = CGPointMake(0, 100);
     
     for (int j=0; j<segmentCount; j++) {
         //vector to next road point
@@ -186,9 +177,9 @@
 -(id) createPath:(CGPoint *)pathPoints {
     _pathPoints = pathPoints;
     
-//    [self generateKeyPoints];
-//    [self saveKeyPoints];
-    [self restoreKeyPoints];
+    [self generateKeyPoints];
+    [self saveKeyPoints];
+//    [self restoreKeyPoints];
     [self generateControlPoints];
     [self saveControlPoints];
     [self generatePath];
