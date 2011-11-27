@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "GLES-Render.h"
-#import "Path.h"
+#import "HermitePath.h"
 
 @class GameplayLayer;
 
@@ -24,7 +24,7 @@
     CGPoint _roadKeyPoints[kMaxRoadKeyPoints];
     CGPoint _pathPoints[kMaxRoadKeyPoints];
     CCSprite *_roadTexture;
-    Path * _path;
+    HermitePath * _path;
 
     
     int _nRoadVertices;

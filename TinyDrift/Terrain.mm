@@ -188,7 +188,7 @@ static int targetRoadIndex= 0;
     if ((self = [super init])) {
         _world = world;
         [self setupDebugDraw];
-        _path = [[[Path alloc] createPath:_pathPoints] autorelease];
+        _path = [[[HermitePath alloc] createPath:_pathPoints] autorelease];
         _lastRoadPoint = _path.getNumPathPoints;
 //        [self generateRoad];
         
