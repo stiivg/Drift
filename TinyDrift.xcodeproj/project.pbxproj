@@ -170,6 +170,8 @@
 		643AE6E91430064A0079501A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6E31430064A0079501A /* Icon@2x.png */; };
 		643AE6EB143006670079501A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6EA143006670079501A /* Default.png */; };
 		64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DAA14952E8D0022FBE6 /* GameScene.mm */; };
+		64476DB0149542D20022FBE6 /* pause_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64476DAF149542D20022FBE6 /* pause_selected.png */; };
+		64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DB21495449C0022FBE6 /* GameBtnLayer.mm */; };
 		64639A6314817065006DB651 /* HermitePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64639A6214817065006DB651 /* HermitePath.mm */; };
 		64639A661481BA36006DB651 /* keypoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64639A651481BA36006DB651 /* keypoints.tsv */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
@@ -504,6 +506,9 @@
 		643AE6EA143006670079501A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		64476DA914952E8D0022FBE6 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = TinyDrift/GameScene.h; sourceTree = SOURCE_ROOT; };
 		64476DAA14952E8D0022FBE6 /* GameScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameScene.mm; path = TinyDrift/GameScene.mm; sourceTree = SOURCE_ROOT; };
+		64476DAF149542D20022FBE6 /* pause_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_selected.png; path = TinyDrift/pause_selected.png; sourceTree = SOURCE_ROOT; };
+		64476DB11495449C0022FBE6 /* GameBtnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameBtnLayer.h; path = TinyDrift/GameBtnLayer.h; sourceTree = SOURCE_ROOT; };
+		64476DB21495449C0022FBE6 /* GameBtnLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameBtnLayer.mm; path = TinyDrift/GameBtnLayer.mm; sourceTree = SOURCE_ROOT; };
 		64639A6114817065006DB651 /* HermitePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HermitePath.h; path = TinyDrift/HermitePath.h; sourceTree = SOURCE_ROOT; };
 		64639A6214817065006DB651 /* HermitePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HermitePath.mm; path = TinyDrift/HermitePath.mm; sourceTree = SOURCE_ROOT; };
 		64639A651481BA36006DB651 /* keypoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keypoints.tsv; sourceTree = "<group>"; };
@@ -1002,8 +1007,8 @@
 		64476D9F149469140022FBE6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				643AE50D142FFBE00079501A /* AppDelegate.h */,
 				643AE50E142FFBE00079501A /* AppDelegate.mm */,
-				643AE50F142FFBE00079501A /* Car.h */,
 				64476DA1149469750022FBE6 /* Scenes */,
 				643AE512142FFBE00079501A /* GameConfig.h */,
 				643AE51C142FFBE00079501A /* RootViewController.h */,
@@ -1015,7 +1020,6 @@
 		64476DA1149469750022FBE6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				643AE510142FFBE00079501A /* Car.mm */,
 				643AE511142FFBE00079501A /* fire.png */,
 				64476DA2149469B20022FBE6 /* Scene1 */,
 			);
@@ -1025,9 +1029,12 @@
 		64476DA2149469B20022FBE6 /* Scene1 */ = {
 			isa = PBXGroup;
 			children = (
+				643AE50F142FFBE00079501A /* Car.h */,
+				643AE510142FFBE00079501A /* Car.mm */,
 				64476DA3149469E80022FBE6 /* Layers */,
 				64EB35C3148BF28A00B0CDAC /* pause.png */,
 				643AE515142FFBE00079501A /* GLES-Render.h */,
+				64476DAF149542D20022FBE6 /* pause_selected.png */,
 				643AE516142FFBE00079501A /* GLES-Render.mm */,
 				643AE518142FFBE00079501A /* Noise.png */,
 				643AE51A142FFBE00079501A /* road_pattern.png */,
@@ -1049,6 +1056,8 @@
 			children = (
 				643AE513142FFBE00079501A /* GameplayLayer.h */,
 				643AE514142FFBE00079501A /* GameplayLayer.mm */,
+				64476DB11495449C0022FBE6 /* GameBtnLayer.h */,
+				64476DB21495449C0022FBE6 /* GameBtnLayer.mm */,
 			);
 			name = Layers;
 			sourceTree = "<group>";
@@ -1101,7 +1110,6 @@
 			isa = PBXGroup;
 			children = (
 				643AE52B142FFC7E0079501A /* libs */,
-				643AE50D142FFBE00079501A /* AppDelegate.h */,
 				64476D9F149469140022FBE6 /* Classes */,
 				643AE50A142FFB9F0079501A /* Sounds */,
 				643AE4F3142FFB7A0079501A /* Resources */,
@@ -1199,6 +1207,7 @@
 				6419A803145CE18E00DA3619 /* smallCar.png in Resources */,
 				64639A661481BA36006DB651 /* keypoints.tsv in Resources */,
 				64EB35C4148BF28A00B0CDAC /* pause.png in Resources */,
+				64476DB0149542D20022FBE6 /* pause_selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1348,6 +1357,7 @@
 				6419A80B14703E5700DA3619 /* Path.mm in Sources */,
 				64639A6314817065006DB651 /* HermitePath.mm in Sources */,
 				64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */,
+				64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

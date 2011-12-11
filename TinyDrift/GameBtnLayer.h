@@ -1,19 +1,23 @@
 //
-//  GameScene.h
+//  GameBtnLayer.h
 //  TinyDrift
 //
 //  Created by Steven Gallagher on 12/10/11.
 //  Copyright (c) 2011 Steve Gallagher. All rights reserved.
 //
 
-#ifndef TinyDrift_GameScene_h
-#define TinyDrift_GameScene_h
+#ifndef TinyDrift_GameBtnLayer_h
+#define TinyDrift_GameBtnLayer_h
 
 #import "cocos2d.h"
-#import "GameplayLayer.h"
-#import "GameBtnLayer.h"
-@interface GameScene : CCScene {
+
+
+@interface GameBtnLayer : CCLayer
+{
+
 }
+
 @end
+
 
 #endif

@@ -27,6 +27,4 @@
     float _driftControl;
 }
 
-+(CCScene *) scene;
-
 @end

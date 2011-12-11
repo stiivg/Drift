@@ -13,14 +13,6 @@
 @implementation GameplayLayer
 
 
-+(CCScene *) scene
-{
-	CCScene *scene = [CCScene node];
-	GameplayLayer *layer = [GameplayLayer node];
-	[scene addChild: layer];
-	return scene;
-}
-
 -(CCSprite *)spriteWithColor:(ccColor4F)bgColor textureSize:(float)textureSize {
     
     // 1: Create new CCRenderTexture
@@ -133,7 +125,7 @@
         
         [self setupWorld];
         //set to 0.5 to zoom out
-        self.scale = 0.3;
+        self.scale = 0.5;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
@@ -164,15 +156,6 @@
 //        [_emitter setPosition:ccp(winSize.width/2, winSize.height/4)];
         [_emitter setPosition:ccp(_car.position.x, _car.position.y)];
 
-        // Standard method to create a button
-        CCMenuItem *starMenuItem = [CCMenuItemImage 
-                                    itemFromNormalImage:@"pause.png" selectedImage:@"pause.png" 
-                                    target:self selector:@selector(pauseAction:)];
-//        starMenuItem.position = ccp(winSize.width - 10, winSize.height - 10);
-        starMenuItem.position = ccp(10, 20);
-        CCMenu *starMenu = [CCMenu menuWithItems:starMenuItem, nil];
-        starMenu.position = CGPointZero;
-        [self addChild:starMenu];
 
         //SJG continuous background music off
   //      [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TinyDrift.caf" loop:YES];
@@ -181,9 +164,6 @@
     return self;
 }
 
-- (void)pauseAction:(id)sender {
-    
-}
 
 - (void)update:(ccTime)dt {
     

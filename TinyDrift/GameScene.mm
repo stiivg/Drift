@@ -9,6 +9,7 @@
 
 #import "GameScene.h"
 
+
 @implementation GameScene
 
 -(id)init {
@@ -17,6 +18,9 @@
         //Gameplay layer
         GameplayLayer *gamePlayLayer = [GameplayLayer node];
         [self addChild:gamePlayLayer];
+        //Game button layer
+         GameBtnLayer *gameBtnLayer = [GameBtnLayer node];
+        [self addChild:gameBtnLayer];
     }
     return self;
 }
