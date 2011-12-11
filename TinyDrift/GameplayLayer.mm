@@ -164,11 +164,25 @@
 //        [_emitter setPosition:ccp(winSize.width/2, winSize.height/4)];
         [_emitter setPosition:ccp(_car.position.x, _car.position.y)];
 
+        // Standard method to create a button
+        CCMenuItem *starMenuItem = [CCMenuItemImage 
+                                    itemFromNormalImage:@"pause.png" selectedImage:@"pause.png" 
+                                    target:self selector:@selector(pauseAction:)];
+//        starMenuItem.position = ccp(winSize.width - 10, winSize.height - 10);
+        starMenuItem.position = ccp(10, 20);
+        CCMenu *starMenu = [CCMenu menuWithItems:starMenuItem, nil];
+        starMenu.position = CGPointZero;
+        [self addChild:starMenu];
+
         //SJG continuous background music off
   //      [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TinyDrift.caf" loop:YES];
         
     }
     return self;
+}
+
+- (void)pauseAction:(id)sender {
+    
 }
 
 - (void)update:(ccTime)dt {
