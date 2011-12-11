@@ -169,6 +169,7 @@
 		643AE6E81430064A0079501A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6E21430064A0079501A /* Icon.png */; };
 		643AE6E91430064A0079501A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6E31430064A0079501A /* Icon@2x.png */; };
 		643AE6EB143006670079501A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6EA143006670079501A /* Default.png */; };
+		64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DAA14952E8D0022FBE6 /* GameScene.mm */; };
 		64639A6314817065006DB651 /* HermitePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64639A6214817065006DB651 /* HermitePath.mm */; };
 		64639A661481BA36006DB651 /* keypoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64639A651481BA36006DB651 /* keypoints.tsv */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
@@ -501,6 +502,8 @@
 		643AE6E21430064A0079501A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		643AE6E31430064A0079501A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		643AE6EA143006670079501A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		64476DA914952E8D0022FBE6 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = TinyDrift/GameScene.h; sourceTree = SOURCE_ROOT; };
+		64476DAA14952E8D0022FBE6 /* GameScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameScene.mm; path = TinyDrift/GameScene.mm; sourceTree = SOURCE_ROOT; };
 		64639A6114817065006DB651 /* HermitePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HermitePath.h; path = TinyDrift/HermitePath.h; sourceTree = SOURCE_ROOT; };
 		64639A6214817065006DB651 /* HermitePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HermitePath.mm; path = TinyDrift/HermitePath.mm; sourceTree = SOURCE_ROOT; };
 		64639A651481BA36006DB651 /* keypoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keypoints.tsv; sourceTree = "<group>"; };
@@ -996,6 +999,60 @@
 			path = TinyDrift/libs;
 			sourceTree = SOURCE_ROOT;
 		};
+		64476D9F149469140022FBE6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				643AE50E142FFBE00079501A /* AppDelegate.mm */,
+				643AE50F142FFBE00079501A /* Car.h */,
+				64476DA1149469750022FBE6 /* Scenes */,
+				643AE512142FFBE00079501A /* GameConfig.h */,
+				643AE51C142FFBE00079501A /* RootViewController.h */,
+				643AE51D142FFBE00079501A /* RootViewController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		64476DA1149469750022FBE6 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				643AE510142FFBE00079501A /* Car.mm */,
+				643AE511142FFBE00079501A /* fire.png */,
+				64476DA2149469B20022FBE6 /* Scene1 */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		64476DA2149469B20022FBE6 /* Scene1 */ = {
+			isa = PBXGroup;
+			children = (
+				64476DA3149469E80022FBE6 /* Layers */,
+				64EB35C3148BF28A00B0CDAC /* pause.png */,
+				643AE515142FFBE00079501A /* GLES-Render.h */,
+				643AE516142FFBE00079501A /* GLES-Render.mm */,
+				643AE518142FFBE00079501A /* Noise.png */,
+				643AE51A142FFBE00079501A /* road_pattern.png */,
+				643AE51B142FFBE00079501A /* road.png */,
+				643AE51E142FFBE00079501A /* Terrain.h */,
+				64476DA914952E8D0022FBE6 /* GameScene.h */,
+				64476DAA14952E8D0022FBE6 /* GameScene.mm */,
+				643AE51F142FFBE00079501A /* Terrain.mm */,
+				6419A80914703E4B00DA3619 /* Path.h */,
+				6419A80A14703E5600DA3619 /* Path.mm */,
+				64639A6114817065006DB651 /* HermitePath.h */,
+				64639A6214817065006DB651 /* HermitePath.mm */,
+			);
+			name = Scene1;
+			sourceTree = "<group>";
+		};
+		64476DA3149469E80022FBE6 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				643AE513142FFBE00079501A /* GameplayLayer.h */,
+				643AE514142FFBE00079501A /* GameplayLayer.mm */,
+			);
+			name = Layers;
+			sourceTree = "<group>";
+		};
 		E162E98713ABF79500E06194 /* Sprite Sheets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1045,27 +1102,7 @@
 			children = (
 				643AE52B142FFC7E0079501A /* libs */,
 				643AE50D142FFBE00079501A /* AppDelegate.h */,
-				643AE50E142FFBE00079501A /* AppDelegate.mm */,
-				643AE50F142FFBE00079501A /* Car.h */,
-				643AE510142FFBE00079501A /* Car.mm */,
-				643AE511142FFBE00079501A /* fire.png */,
-				643AE512142FFBE00079501A /* GameConfig.h */,
-				643AE513142FFBE00079501A /* GameplayLayer.h */,
-				643AE514142FFBE00079501A /* GameplayLayer.mm */,
-				64EB35C3148BF28A00B0CDAC /* pause.png */,
-				643AE515142FFBE00079501A /* GLES-Render.h */,
-				643AE516142FFBE00079501A /* GLES-Render.mm */,
-				643AE518142FFBE00079501A /* Noise.png */,
-				643AE51A142FFBE00079501A /* road_pattern.png */,
-				643AE51B142FFBE00079501A /* road.png */,
-				643AE51C142FFBE00079501A /* RootViewController.h */,
-				643AE51D142FFBE00079501A /* RootViewController.m */,
-				643AE51E142FFBE00079501A /* Terrain.h */,
-				643AE51F142FFBE00079501A /* Terrain.mm */,
-				6419A80914703E4B00DA3619 /* Path.h */,
-				6419A80A14703E5600DA3619 /* Path.mm */,
-				64639A6114817065006DB651 /* HermitePath.h */,
-				64639A6214817065006DB651 /* HermitePath.mm */,
+				64476D9F149469140022FBE6 /* Classes */,
 				643AE50A142FFB9F0079501A /* Sounds */,
 				643AE4F3142FFB7A0079501A /* Resources */,
 				E162E98713ABF79500E06194 /* Sprite Sheets */,
@@ -1310,6 +1347,7 @@
 				6413702C14537D8F006CD5C3 /* CJSONSerializer.m in Sources */,
 				6419A80B14703E5700DA3619 /* Path.mm in Sources */,
 				64639A6314817065006DB651 /* HermitePath.mm in Sources */,
+				64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
