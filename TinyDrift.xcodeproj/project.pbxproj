@@ -172,6 +172,11 @@
 		64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DAA14952E8D0022FBE6 /* GameScene.mm */; };
 		64476DB0149542D20022FBE6 /* pause_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64476DAF149542D20022FBE6 /* pause_selected.png */; };
 		64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DB21495449C0022FBE6 /* GameBtnLayer.mm */; };
+		64476DB5149574BC0022FBE6 /* resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 64476DB4149574BC0022FBE6 /* resume.png */; };
+		64476DBB149C5C2B0022FBE6 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DBA149C5C2B0022FBE6 /* GameManager.mm */; };
+		64560926149D3C3A006B4FBA /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560924149D3C3A006B4FBA /* stop.png */; };
+		64560927149D3C3A006B4FBA /* stop_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560925149D3C3A006B4FBA /* stop_selected.png */; };
+		64560929149D4098006B4FBA /* resume_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560928149D4098006B4FBA /* resume_selected.png */; };
 		64639A6314817065006DB651 /* HermitePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64639A6214817065006DB651 /* HermitePath.mm */; };
 		64639A661481BA36006DB651 /* keypoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64639A651481BA36006DB651 /* keypoints.tsv */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
@@ -509,6 +514,13 @@
 		64476DAF149542D20022FBE6 /* pause_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_selected.png; path = TinyDrift/pause_selected.png; sourceTree = SOURCE_ROOT; };
 		64476DB11495449C0022FBE6 /* GameBtnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameBtnLayer.h; path = TinyDrift/GameBtnLayer.h; sourceTree = SOURCE_ROOT; };
 		64476DB21495449C0022FBE6 /* GameBtnLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameBtnLayer.mm; path = TinyDrift/GameBtnLayer.mm; sourceTree = SOURCE_ROOT; };
+		64476DB4149574BC0022FBE6 /* resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resume.png; path = TinyDrift/resume.png; sourceTree = SOURCE_ROOT; };
+		64476DB9149C5C2B0022FBE6 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameManager.h; path = TinyDrift/GameManager.h; sourceTree = SOURCE_ROOT; };
+		64476DBA149C5C2B0022FBE6 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameManager.mm; path = TinyDrift/GameManager.mm; sourceTree = SOURCE_ROOT; };
+		64476DBC149C67820022FBE6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = TinyDrift/Constants.h; sourceTree = SOURCE_ROOT; };
+		64560924149D3C3A006B4FBA /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop.png; path = TinyDrift/stop.png; sourceTree = SOURCE_ROOT; };
+		64560925149D3C3A006B4FBA /* stop_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop_selected.png; path = TinyDrift/stop_selected.png; sourceTree = SOURCE_ROOT; };
+		64560928149D4098006B4FBA /* resume_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resume_selected.png; path = TinyDrift/resume_selected.png; sourceTree = SOURCE_ROOT; };
 		64639A6114817065006DB651 /* HermitePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HermitePath.h; path = TinyDrift/HermitePath.h; sourceTree = SOURCE_ROOT; };
 		64639A6214817065006DB651 /* HermitePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HermitePath.mm; path = TinyDrift/HermitePath.mm; sourceTree = SOURCE_ROOT; };
 		64639A651481BA36006DB651 /* keypoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keypoints.tsv; sourceTree = "<group>"; };
@@ -1013,6 +1025,9 @@
 				643AE512142FFBE00079501A /* GameConfig.h */,
 				643AE51C142FFBE00079501A /* RootViewController.h */,
 				643AE51D142FFBE00079501A /* RootViewController.m */,
+				64476DB9149C5C2B0022FBE6 /* GameManager.h */,
+				64476DBA149C5C2B0022FBE6 /* GameManager.mm */,
+				64476DBC149C67820022FBE6 /* Constants.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1035,11 +1050,15 @@
 				64EB35C3148BF28A00B0CDAC /* pause.png */,
 				643AE515142FFBE00079501A /* GLES-Render.h */,
 				64476DAF149542D20022FBE6 /* pause_selected.png */,
+				64560924149D3C3A006B4FBA /* stop.png */,
+				64560925149D3C3A006B4FBA /* stop_selected.png */,
 				643AE516142FFBE00079501A /* GLES-Render.mm */,
 				643AE518142FFBE00079501A /* Noise.png */,
 				643AE51A142FFBE00079501A /* road_pattern.png */,
 				643AE51B142FFBE00079501A /* road.png */,
 				643AE51E142FFBE00079501A /* Terrain.h */,
+				64560928149D4098006B4FBA /* resume_selected.png */,
+				64476DB4149574BC0022FBE6 /* resume.png */,
 				64476DA914952E8D0022FBE6 /* GameScene.h */,
 				64476DAA14952E8D0022FBE6 /* GameScene.mm */,
 				643AE51F142FFBE00079501A /* Terrain.mm */,
@@ -1208,6 +1227,10 @@
 				64639A661481BA36006DB651 /* keypoints.tsv in Resources */,
 				64EB35C4148BF28A00B0CDAC /* pause.png in Resources */,
 				64476DB0149542D20022FBE6 /* pause_selected.png in Resources */,
+				64476DB5149574BC0022FBE6 /* resume.png in Resources */,
+				64560926149D3C3A006B4FBA /* stop.png in Resources */,
+				64560927149D3C3A006B4FBA /* stop_selected.png in Resources */,
+				64560929149D4098006B4FBA /* resume_selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1358,6 +1381,7 @@
 				64639A6314817065006DB651 /* HermitePath.mm in Sources */,
 				64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */,
 				64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */,
+				64476DBB149C5C2B0022FBE6 /* GameManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
