@@ -13,7 +13,11 @@
 @synthesize driftAngle = _driftAngle;
 
 - (void)createBody {
-    
+    //Destroy any body if exists
+    b2Body* body_list =  _world->GetBodyList();
+    if (body_list != NULL) {
+        _world->DestroyBody(body_list);
+    }
     
     float radius = 16.0f;
     CGSize size = [[CCDirector sharedDirector] winSize];
@@ -139,9 +143,9 @@
 - (CGPoint) toPixels:(b2Vec2)vec {
     return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
+static float last_distance = 0;
 
 - (void)_applyForce {
-    static float last_distance = 0;
     
     //calc distance = radial distance to target
     CGPoint targetVector = ccpSub(target, self.position);
@@ -249,8 +253,7 @@
         //Apply force to stay  on road
         [self _applyForce];
         
-    }
-    
+    }    
 
 }
 
@@ -258,6 +261,21 @@
     _driving = YES;
     _driftAngle = 0;
     _body->SetActive(true);
+    [self runNormalAnimation];
+}
+
+- (void)stopDrive {
+    _driving = NO;
+    _driftAngle = 0;
+    self.rotation = 0;
+    last_distance = 0;
+    
+    [_normalAnimate stop];
+    _normalAnimate = nil;
+    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
+    
+    _body->SetActive(false);
+    [self createBody];
 }
 
 -(void)push {

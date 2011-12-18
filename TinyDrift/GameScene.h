@@ -14,6 +14,9 @@
 #import "GameBtnLayer.h"
 @interface GameScene : CCScene {
 }
+
+-(void)startGame;
+
 @end
 
 #endif

@@ -10,9 +10,15 @@
 #import "Constants.h"
 
 @interface GameManager : NSObject {
+    BOOL isGamePaused;
     SceneTypes currentScene;
 }
+@property (readwrite) BOOL isGamePaused;
+
 +(GameManager*)sharedGameManager;
+-(void)pauseGame;
+-(void)resumeGame;
+-(void)stopGame;
 -(void)runSceneWithID:(SceneTypes)sceneID;
 
 @end

@@ -8,6 +8,7 @@
 
 
 #import "GameplayLayer.h"
+#import "GameManager.h"
 #import "SimpleAudioEngine.h"
 
 @implementation GameplayLayer
@@ -167,6 +168,10 @@
 
 - (void)update:(ccTime)dt {
     
+    //test if paused
+    if ([[GameManager sharedGameManager] isGamePaused]) return;
+
+    
     static double UPDATE_INTERVAL = 1.0f/60.0f;
     static double MAX_CYCLES_PER_FRAME = 5;
     static double timeAccumulator = 0;
@@ -229,6 +234,12 @@
 
     //uncomment to rotate view with car
 //    [_terrain updateRotation:_car.rotation];
+    
+}
+
+-(void)startGame {
+    [_terrain resetTargetPoint];
+    [_car stopDrive];
     
 }
 

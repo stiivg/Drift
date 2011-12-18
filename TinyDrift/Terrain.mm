@@ -286,6 +286,10 @@ static int targetRoadIndex= 0;
     //[self resetHillVertices];
 }
 
+- (void)resetTargetPoint {
+    targetRoadIndex= 1;
+}
+
 
 - (void)dealloc {
     [_roadTexture release];

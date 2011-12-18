@@ -9,6 +9,8 @@
 
 
 #import "GameBtnLayer.h"
+#import "GameManager.h"
+
 
 @implementation GameBtnLayer
 
@@ -58,7 +60,7 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:true];
     [stopMenuItem setVisible:true];
-//    [[GameManager sharedGameManager] pauseGame];
+    [[GameManager sharedGameManager] pauseGame ];
     
     
 }
@@ -67,7 +69,7 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
     [stopMenuItem setVisible:false];
-//    [[GameManager sharedGameManager] stopGame];
+    [[GameManager sharedGameManager] stopGame];
     
 }
 
@@ -75,7 +77,7 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
     [stopMenuItem setVisible:false];
-//    [[GameManager sharedGameManager] resumeGame];
+    [[GameManager sharedGameManager] resumeGame];
     
 }
 

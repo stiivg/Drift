@@ -26,5 +26,6 @@
     BOOL _tapDown;
     float _driftControl;
 }
+-(void)startGame;
 
 @end

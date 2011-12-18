@@ -12,6 +12,7 @@
 
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
+@synthesize isGamePaused = _paused;
 
 +(GameManager*)sharedGameManager {
     @synchronized([GameManager class])
@@ -41,6 +42,7 @@ static GameManager* _sharedGameManager = nil;
         //Game manager initialized
         CCLOG(@"Game Manager Singleton, init");
         currentScene = kNoSceneUnininitalized;
+        isGamePaused = NO;
     }
     return self;
 }
@@ -69,4 +71,32 @@ static GameManager* _sharedGameManager = nil;
         [[CCDirector sharedDirector] replaceScene:sceneToRun];
     }
 }
+
+-(void)pauseGame {
+    _paused = YES;
+}
+
+-(void)resumeGame {
+    _paused = NO;
+}
+
+-(void)stopGame {
+    //stop this game and start next game
+    [((GameScene*)[[CCDirector sharedDirector] runningScene]) startGame];
+    _paused = NO;
+}
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+

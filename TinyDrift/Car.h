@@ -30,7 +30,9 @@
 @property (readonly) BOOL driving;
 @property float driftAngle;
 
+- (void)runNormalAnimation;
 - (void)drive;
+- (void)stopDrive;
 - (void)push;
 - (void)setTarget: (CGPoint) newTarget;
 - (void)setPathTangent: (CGPoint) newTangent;

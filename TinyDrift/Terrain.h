@@ -43,6 +43,7 @@
 @property (retain) CCSpriteBatchNode * batchNode;
 @property (retain) CCSprite * roadTexture;
 
+- (void)resetTargetPoint;
 - (CGPoint)nextTargetPoint:(CGPoint)position;
 - (CGPoint)targetTangent;
 - (void) setOffset:(CGPoint)newOffset;
