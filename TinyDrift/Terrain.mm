@@ -151,6 +151,7 @@ static int targetRoadIndex= 0;
     CGPoint p0, p1, roadSegment, perpSegment;
     CGPoint l0, r0;
     CGFloat roadDistance = 0;
+    int half_road_width = 64;
     
     targetRoadIndex= 1;
     p0 = _pathPoints[0];
@@ -159,8 +160,8 @@ static int targetRoadIndex= 0;
         roadSegment = ccpSub(p1, p0);
         roadSegment = ccpNormalize(roadSegment);
         perpSegment = ccpRPerp(roadSegment);
-        l0 = ccpMult(perpSegment, -128);
-        r0 = ccpMult(perpSegment, 128);
+        l0 = ccpMult(perpSegment, -half_road_width);
+        r0 = ccpMult(perpSegment, half_road_width);
         
         _roadVertices[_nRoadVertices]  = ccpAdd(p0, l0);
         _roadTexCoords[_nRoadVertices++] = CGPointMake(0, roadDistance/512);
@@ -265,7 +266,7 @@ static int targetRoadIndex= 0;
     _offsetX = newOffset.x;
     _offsetY = newOffset.y;
     
-    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, winSize.height/4-_offsetY*self.scale);
+    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, -400-_offsetY*self.scale);
 //    [self resetRoadVertices];
 }
 

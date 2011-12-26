@@ -10,7 +10,6 @@
 
 @implementation Car
 @synthesize driving = _driving;
-@synthesize driftAngle = _driftAngle;
 
 - (void)createBody {
     //Destroy any body if exists
@@ -23,7 +22,7 @@
     CGSize size = [[CCDirector sharedDirector] winSize];
     int screenW = size.width;
     
-    CGPoint startPosition = ccp(screenW/2, 60);
+    CGPoint startPosition = ccp(screenW/2, 40);
     
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
@@ -51,6 +50,7 @@
     if ((self = [super initWithSpriteFrameName:@"car.png"])) {
         _world = world;
         [self createBody];
+        self.scale = 1.0;
         
         _normalAnim = [[CCAnimation alloc] init];
         [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
@@ -146,8 +146,12 @@
 static float last_distance = 0;
 
 - (void)_applyForce {
+    //The force is calculated as two perpendicular components
+    //Along the path tangent at the target and perpendicular to the tangent
+    //The perpendicular distance to the tangent is the error term for the PID
+    //control, the tangential direction is for velocity.
     
-    //calc distance = radial distance to target
+    //calc distance to target
     CGPoint targetVector = ccpSub(target, self.position);
 
     float thetaT = atan2f(targetVector.x, targetVector.y);
@@ -169,23 +173,9 @@ static float last_distance = 0;
     float Pterm = distance;
     
     float accR = Pterm+Dterm;
-//    //accelerate towards the road
-//    if (distance < 0) {
-//        accR = -1 * accR;
-//    }
     
     CCLOG(@"drift:      %4.2f   %4.2f", Pterm,Dterm);
     
-//    //moving towards road d and v have same sign
-//    if (distance*velR.x > 0) {
-//        //test for de-acceleration point
-//        if (ABS(acc) > limit) {
-//            accR = -1 * accR;
-//            limit = lowLimit;   //de-bounce 
-//        } else {
-//            limit = highLimit;
-//        }
-//    }
     
     CGPoint accTangential = CGPointMake(0,0);
     
@@ -202,8 +192,13 @@ static float last_distance = 0;
         accTangential = ccpNormalize(pathTangent);
         accTangential = ccpMult(accTangential, 10);
     }
-    
-    CGPoint accTotal = ccpAdd(accRadial, accTangential);
+    CGPoint accTotal;
+    if (speedT < 5) {
+        //at slow speeds just accelerate along the tangent
+        accTotal = accTangential;
+    } else {
+        accTotal = ccpAdd(accRadial, accTangential);
+    }
     CGPoint accDrift = ccp(0,0);
     
     //Add drift force
@@ -267,6 +262,9 @@ static float last_distance = 0;
 - (void)stopDrive {
     _driving = NO;
     _driftAngle = 0;
+    for(int i = 0; i < NUM_PREV_VELS; ++i) {
+        _prevVels[i].SetZero();
+    }
     self.rotation = 0;
     last_distance = 0;
     
@@ -274,7 +272,7 @@ static float last_distance = 0;
     _normalAnimate = nil;
     [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
     
-    _body->SetActive(false);
+//    _body->SetActive(false);
     [self createBody];
 }
 
@@ -309,7 +307,12 @@ static float last_distance = 0;
     
     pathTangent = newTangent;
 }
+//Property getter
+-(float)driftAngle {
+    return _driftAngle;
+}
 
+//Property setter
 - (void) setDriftAngle:(float)driftAngle {
     _driftAngle = driftAngle;
     if (_driftAngle > 0) {

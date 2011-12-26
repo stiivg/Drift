@@ -126,11 +126,11 @@
         
         [self setupWorld];
         //set to 0.5 to zoom out
-        self.scale = 0.5;
+        self.scale = 0.3;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
-        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern.png"];
+        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_128.png"];
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
