@@ -48,8 +48,10 @@
 }
 
 -(void)scalePath {
+    const float k_road_scale = 20;
+    
     for (int i=0; i<_numPathPoints; i++) {
-        CGPoint scaledPoint = ccpMult(_pathPoints[i], 8);
+        CGPoint scaledPoint = ccpMult(_pathPoints[i], k_road_scale);
         scaledPoint.x += 160;
         _pathPoints[i] = scaledPoint;
     }

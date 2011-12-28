@@ -13,6 +13,14 @@
 
 @implementation GameplayLayer
 
+BOOL _turbo = false;
+double k_turbo_time = 2.0;
+double driftStart; 
+
+CCParticleSystem * _non_turbo_emitter;
+CCParticleSystem * _turbo_emitter;
+
+
 
 -(CCSprite *)spriteWithColor:(ccColor4F)bgColor textureSize:(float)textureSize {
     
@@ -103,6 +111,24 @@
     _world = new b2World(gravity, doSleep);            
 }
 
+-(void)setupEmitters {
+    _non_turbo_emitter = [CCParticleSmoke node];
+    _non_turbo_emitter.scale = 1.0;
+    _non_turbo_emitter.gravity = ccp(0,-200);
+    _non_turbo_emitter.positionType = kCCPositionTypeFree;
+    _non_turbo_emitter.emissionRate = 0.0;
+    [_terrain addChild: _non_turbo_emitter];
+    [_non_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
+    
+    _turbo_emitter = [CCParticleSun node];
+    _turbo_emitter.scale = 1.0;
+    _turbo_emitter.gravity = ccp(0,-200);
+    _turbo_emitter.positionType = kCCPositionTypeFree;
+    _turbo_emitter.emissionRate = 0.0;
+    [_terrain addChild: _turbo_emitter];
+    [_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
+}
+
 - (void)createTestBodyAtPosition:(CGPoint)position {
     
     b2BodyDef testBodyDef;
@@ -134,8 +160,6 @@
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
-
-       
        
         [self genBackground];
         self.isTouchEnabled = YES;  
@@ -144,18 +168,12 @@
         _car = [[[Car alloc] initWithWorld:_world] autorelease];
         [_terrain.batchNode addChild:_car];
         
-        _emitter = [CCParticleSmoke node];
-        [_terrain addChild: _emitter];
-        //[self addChild: _emitter];
-        _emitter.scale = 1.0;
-        _emitter.gravity = ccp(0,-200);
-        _emitter.positionType = kCCPositionTypeFree;
-        
+        [self setupEmitters];
+        _emitter = _non_turbo_emitter;        
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         //copied from terrain offset
 //        [_emitter setPosition:ccp(winSize.width/2, winSize.height/4)];
-        [_emitter setPosition:ccp(_car.position.x, _car.position.y)];
 
 
         //SJG continuous background music off
@@ -216,6 +234,15 @@
     if (_driftControl == 0) {
         _emitter.emissionRate = 0.0;
     } else {
+        //if turbo time change emitter
+        double drift_time = CACurrentMediaTime() - driftStart; 
+        if (drift_time > k_turbo_time) {
+            _non_turbo_emitter.emissionRate = 0.0;
+            _emitter = _turbo_emitter;
+        } else {
+            _turbo_emitter.emissionRate = 0.0;
+            _emitter = _non_turbo_emitter;
+        }
         _emitter.emissionRate = 50.0;
     
         float posRadians = CC_DEGREES_TO_RADIANS(90 - _car.rotation);
@@ -245,9 +272,12 @@
 
 //remember the touch start location for relative slides
 static CGPoint startLoc;
+//remember the touch start time
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    _tapDown = YES;    
+    _tapDown = YES;
+    _turbo = NO;
+    driftStart = CACurrentMediaTime();
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     startLoc = [[CCDirector sharedDirector] convertToGL:location];

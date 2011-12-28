@@ -61,84 +61,6 @@
     
 }
 
-- (void)_applyForceOld {
-    //calc target vector
-    CGPoint targetVector = ccpSub(target, self.position);
-    
-    //calc velocity
-    b2Vec2 vel2b = _body->GetLinearVelocity();
-    CGPoint vel = ccp(vel2b.x, vel2b.y);
-    if (vel.y == 0) {
-        vel.y = 1;
-    }
-
-    //calc velocity to target angle
-    float targetAngle = ccpAngleSigned(targetVector, vel);
-    
-    //Calc normalized tangent vector
-    vel = ccpNormalize(vel);
-    CGPoint tangent = ccpPerp(vel);
-    
-    //Calc direction to target
-    CGPoint targetDir = ccpSub(target, self.position);
-
-    //calc tangential force to turn towards target
-    float forceScale = 1 * targetAngle * targetAngle;
-    CGPoint tangentForce = ccpMult(tangent,forceScale);
-    
-    CGPoint force = tangentForce;
-    float minVal = 4;
-    //if velocity too low add force in target direction
-    if (ccpLengthSQ(vel) < minVal) {
-        targetDir = ccpNormalize(targetDir);
-        targetDir = ccpMult(targetDir,2);
-        CGPoint targetForce = targetDir;
-        //Add tangential and target force vectors
-        force = ccpAdd(tangentForce, targetForce);
-    }
-    _body->ApplyForce( b2Vec2(force.x,force.y), _body->GetPosition() );
-    
-//    int forceScale = 2;
-//    _body->ApplyForce( b2Vec2(forceScale*targetDir.x,forceScale*targetDir.y), _body->GetPosition() );
-    
-}
-
-- (void)_applyForceTest {
-    float highLimit = 56;
-    float lowLimit = 8;
-    static float limit = highLimit;
-    float endX = 160;
-    
-    float posX = _body->GetPosition().x*PTM_RATIO;
-    b2Vec2 vel2b = _body->GetLinearVelocity();
-    float velX = vel2b.x;
-    
-    //acceleration = v^2 / 2*d
-    float distance = (endX - posX) / PTM_RATIO;
-    float acc = (velX * velX) / (2 * distance);
-    
-    float accX = 40;
-    //accelerate towards the road
-    if (distance < 0) {
-        accX = -1 * accX;
-    }
-    
-    //moving towards road d and v have same sign
-    if (distance*velX > 0) {
-        //test for de-acceleration point
-        if (ABS(acc) > limit) {
-            accX = -1 * accX;
-            limit = lowLimit;   //de-bounce 
-        } else {
-            limit = highLimit;
-        }
-    }
-    
-    // CCLOG(@"drift:  d=%4.2f v=%4.2f  a=%4.2f acc=%4.2f", distance, velX, acc, accX);
-    
-    _body->ApplyForce( b2Vec2(accX,0), _body->GetPosition() );
-    
-}
 
 - (CGPoint) toPixels:(b2Vec2)vec {
     return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
@@ -150,6 +72,11 @@ static float last_distance = 0;
     //Along the path tangent at the target and perpendicular to the tangent
     //The perpendicular distance to the tangent is the error term for the PID
     //control, the tangential direction is for velocity.
+    
+    const float k_default_road_speed = 7;
+    const float k_default_road_acc = 10;
+    const float k_drift_acc = 5;
+    
     
     //calc distance to target
     CGPoint targetVector = ccpSub(target, self.position);
@@ -188,9 +115,9 @@ static float last_distance = 0;
     //Add force along path if needed
     CGPoint velT = ccpProject(velocity, pathTangent);
     float speedT = ccpLength(velT);
-    if (speedT < 15.0) {
+    if (speedT < k_default_road_speed) {
         accTangential = ccpNormalize(pathTangent);
-        accTangential = ccpMult(accTangential, 10);
+        accTangential = ccpMult(accTangential, k_default_road_acc);
     }
     CGPoint accTotal;
     if (speedT < 5) {
@@ -206,7 +133,7 @@ static float last_distance = 0;
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
-        accDrift= ccpMult(accDrift, 40);
+        accDrift= ccpMult(accDrift, k_drift_acc);
         //CCLOG(@"drift:  angle=%4.2f accX=%4.2f accY=%4.2f", 
 //              self.rotation, accTotal.x, accTotal.y);
         accTotal = ccpAdd(accTotal, accDrift);
