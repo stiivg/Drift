@@ -237,7 +237,11 @@ static int targetRoadIndex= 0;
 
 //Return the next road point past the look ahead distance
 - (CGPoint)nextTargetPoint:(CGPoint)position {
-#define kLookAheadSq 40000
+    //scale position in points to actual pixels
+    position.x *= CC_CONTENT_SCALE_FACTOR();
+    position.y *= CC_CONTENT_SCALE_FACTOR();
+    
+    const int kLookAheadSq = 40000 * CC_CONTENT_SCALE_FACTOR();
     CGPoint testPoint = _pathPoints[targetRoadIndex];
    
     for (; targetRoadIndex<_lastRoadPoint; targetRoadIndex++) {
@@ -245,6 +249,9 @@ static int targetRoadIndex= 0;
         int dx =  (int)(position.x - testPoint.x);
         int dy =  (int)(position.y - testPoint.y);        
         if ((dx*dx + dy*dy) > kLookAheadSq) {
+            //Scale back to position in points
+            testPoint.x *= 1/CC_CONTENT_SCALE_FACTOR();
+            testPoint.y *= 1/CC_CONTENT_SCALE_FACTOR();
             return testPoint;
         }
     }
@@ -266,7 +273,7 @@ static int targetRoadIndex= 0;
     _offsetX = newOffset.x;
     _offsetY = newOffset.y;
     
-    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, -400-_offsetY*self.scale);
+    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, 100-_offsetY*self.scale);
 //    [self resetRoadVertices];
 }
 

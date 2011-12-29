@@ -33,7 +33,7 @@
 - (void)runNormalAnimation;
 - (void)drive;
 - (void)stopDrive;
-- (void)push;
+- (void)turboBoost;
 - (void)setTarget: (CGPoint) newTarget;
 - (void)setPathTangent: (CGPoint) newTangent;
 - (id)initWithWorld:(b2World *)world;

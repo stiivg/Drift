@@ -22,7 +22,7 @@
     CGSize size = [[CCDirector sharedDirector] winSize];
     int screenW = size.width;
     
-    CGPoint startPosition = ccp(screenW/2, 40);
+    CGPoint startPosition = ccp(screenW/2, 100);
     
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
@@ -203,8 +203,13 @@ static float last_distance = 0;
     [self createBody];
 }
 
--(void)push {
-    _body->ApplyLinearImpulse(b2Vec2(-5,0), _body->GetPosition() );
+- (void)turboBoost {
+    float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
+    float32 c = cosf(posRadians), s = sinf(posRadians);
+    b2Vec2 vel2b(c,s);
+    vel2b*=10;
+
+    _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
 }
 
 - (void)runNormalAnimation {

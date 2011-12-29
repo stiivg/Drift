@@ -93,7 +93,7 @@ CCParticleSystem * _turbo_emitter;
     ccColor4B roadColor = ccc4(209, 133, 34, 255);
     ccColor4F bgColor = ccc4FFromccc4B(roadColor);
     
-    _background = [self spriteWithColor:bgColor textureSize:512];
+    _background = [self spriteWithColor:bgColor textureSize:512/CC_CONTENT_SCALE_FACTOR()];
     
     CGSize winSize = [CCDirector sharedDirector].winSize;
     _background.position = ccp(winSize.width/2, winSize.height/2);        
@@ -112,6 +112,7 @@ CCParticleSystem * _turbo_emitter;
 }
 
 -(void)setupEmitters {
+    //Normal Drift
     _non_turbo_emitter = [CCParticleSmoke node];
     _non_turbo_emitter.scale = 1.0;
     _non_turbo_emitter.gravity = ccp(0,-200);
@@ -120,6 +121,7 @@ CCParticleSystem * _turbo_emitter;
     [_terrain addChild: _non_turbo_emitter];
     [_non_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
     
+    //Turbo drift
     _turbo_emitter = [CCParticleSun node];
     _turbo_emitter.scale = 1.0;
     _turbo_emitter.gravity = ccp(0,-200);
@@ -152,7 +154,7 @@ CCParticleSystem * _turbo_emitter;
         
         [self setupWorld];
         //set to 0.5 to zoom out
-        self.scale = 0.3;
+        self.scale = 1.0;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
@@ -208,6 +210,12 @@ CCParticleSystem * _turbo_emitter;
             if (!_car.driving) {
                 [_car drive];
             }
+        } else {
+            //test if end of turbo drift
+            if (_turbo ) {
+                _turbo = NO;
+                [_car turboBoost];
+            }
         }
         _car.driftAngle = _driftControl;
         
@@ -237,6 +245,7 @@ CCParticleSystem * _turbo_emitter;
         //if turbo time change emitter
         double drift_time = CACurrentMediaTime() - driftStart; 
         if (drift_time > k_turbo_time) {
+            _turbo = YES;
             _non_turbo_emitter.emissionRate = 0.0;
             _emitter = _turbo_emitter;
         } else {
