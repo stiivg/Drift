@@ -10,6 +10,7 @@
 #import "GameplayLayer.h"
 #import "GameManager.h"
 #import "SimpleAudioEngine.h"
+#import "emitters.h"
 
 @implementation GameplayLayer
 
@@ -17,7 +18,7 @@ BOOL _turbo = false;
 double k_turbo_time = 2.0;
 double driftStart; 
 
-CCParticleSystem * _non_turbo_emitter;
+CCParticleSystem * _drift_emitter;
 CCParticleSystem * _turbo_emitter;
 
 
@@ -113,19 +114,13 @@ CCParticleSystem * _turbo_emitter;
 
 -(void)setupEmitters {
     //Normal Drift
-    _non_turbo_emitter = [CCParticleSmoke node];
-    _non_turbo_emitter.scale = 1.0;
-    _non_turbo_emitter.gravity = ccp(0,-200);
-    _non_turbo_emitter.positionType = kCCPositionTypeFree;
-    _non_turbo_emitter.emissionRate = 0.0;
-    [_terrain addChild: _non_turbo_emitter];
-    [_non_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
+    _drift_emitter = [CCParticleDrift node];
+    _drift_emitter.emissionRate = 0.0;
+    [_terrain addChild: _drift_emitter];
+    [_drift_emitter setPosition:ccp(_car.position.x, _car.position.y)];
     
     //Turbo drift
-    _turbo_emitter = [CCParticleSun node];
-    _turbo_emitter.scale = 1.0;
-    _turbo_emitter.gravity = ccp(0,-200);
-    _turbo_emitter.positionType = kCCPositionTypeFree;
+    _turbo_emitter = [CCParticleTurbo node];
     _turbo_emitter.emissionRate = 0.0;
     [_terrain addChild: _turbo_emitter];
     [_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
@@ -171,12 +166,8 @@ CCParticleSystem * _turbo_emitter;
         [_terrain.batchNode addChild:_car];
         
         [self setupEmitters];
-        _emitter = _non_turbo_emitter;        
+        _emitter = _drift_emitter;        
         
-        CGSize winSize = [CCDirector sharedDirector].winSize;
-        //copied from terrain offset
-//        [_emitter setPosition:ccp(winSize.width/2, winSize.height/4)];
-
 
         //SJG continuous background music off
   //      [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TinyDrift.caf" loop:YES];
@@ -246,11 +237,11 @@ CCParticleSystem * _turbo_emitter;
         double drift_time = CACurrentMediaTime() - driftStart; 
         if (drift_time > k_turbo_time) {
             _turbo = YES;
-            _non_turbo_emitter.emissionRate = 0.0;
+            _drift_emitter.emissionRate = 0.0;
             _emitter = _turbo_emitter;
         } else {
             _turbo_emitter.emissionRate = 0.0;
-            _emitter = _non_turbo_emitter;
+            _emitter = _drift_emitter;
         }
         _emitter.emissionRate = 50.0;
     
@@ -258,7 +249,7 @@ CCParticleSystem * _turbo_emitter;
         CGPoint particleDrift;
         //ccpForAngle zero along x axis, CCW positive
         particleDrift = ccpForAngle(posRadians);
-        particleDrift= ccpMult(particleDrift, -20);
+        particleDrift= ccpMult(particleDrift, 0);
 
         _emitter.gravity = particleDrift;
     

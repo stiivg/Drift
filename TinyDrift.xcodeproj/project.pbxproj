@@ -186,6 +186,7 @@
 		64B4D0BC14ABA10D000F20C3 /* resume-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0B814ABA10D000F20C3 /* resume-hd.png */; };
 		64B4D0BD14ABA10D000F20C3 /* stop_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0B914ABA10D000F20C3 /* stop_selected-hd.png */; };
 		64B4D0BE14ABA10D000F20C3 /* stop-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0BA14ABA10D000F20C3 /* stop-hd.png */; };
+		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
 		E1E7766513A8F71100DF595A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766413A8F71100DF595A /* QuartzCore.framework */; };
 		E1E7766713A8F71100DF595A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766613A8F71100DF595A /* OpenGLES.framework */; };
@@ -538,6 +539,8 @@
 		64B4D0B814ABA10D000F20C3 /* resume-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resume-hd.png"; path = "TinyDrift/resume-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0B914ABA10D000F20C3 /* stop_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stop_selected-hd.png"; path = "TinyDrift/stop_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BA14ABA10D000F20C3 /* stop-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stop-hd.png"; path = "TinyDrift/stop-hd.png"; sourceTree = SOURCE_ROOT; };
+		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
+		64B4D0C014AE5286000F20C3 /* emitters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = emitters.m; path = TinyDrift/emitters.m; sourceTree = SOURCE_ROOT; };
 		64E063EA1430180F007234F4 /* TinyDrift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyDrift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EB35C3148BF28A00B0CDAC /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = TinyDrift/pause.png; sourceTree = SOURCE_ROOT; };
 		E1E7766413A8F71100DF595A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1087,6 +1090,8 @@
 				6419A80A14703E5600DA3619 /* Path.mm */,
 				64639A6114817065006DB651 /* HermitePath.h */,
 				64639A6214817065006DB651 /* HermitePath.mm */,
+				64B4D0BF14AE5286000F20C3 /* emitters.h */,
+				64B4D0C014AE5286000F20C3 /* emitters.m */,
 			);
 			name = Scene1;
 			sourceTree = "<group>";
@@ -1410,6 +1415,7 @@
 				64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */,
 				64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */,
 				64476DBB149C5C2B0022FBE6 /* GameManager.mm in Sources */,
+				64B4D0C114AE5287000F20C3 /* emitters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

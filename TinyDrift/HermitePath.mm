@@ -48,7 +48,7 @@
 }
 
 -(void)scalePath {
-    const float k_road_scale = 20 * CC_CONTENT_SCALE_FACTOR();
+    const float k_road_scale = 10 * CC_CONTENT_SCALE_FACTOR();
     
     for (int i=0; i<_numPathPoints; i++) {
         CGPoint scaledPoint = ccpMult(_pathPoints[i], k_road_scale);
@@ -180,13 +180,13 @@
     _pathPoints = pathPoints;
     
     [self generateKeyPoints];
-    [self saveKeyPoints];
+//    [self saveKeyPoints];
 //    [self restoreKeyPoints];
     [self generateControlPoints];
-    [self saveControlPoints];
+//    [self saveControlPoints];
     [self generatePath];
     [self scalePath];
-    [self savePathPoints];
+//    [self savePathPoints];
     return self;
 }
 
