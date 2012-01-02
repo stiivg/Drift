@@ -19,6 +19,7 @@
     float _driftAngle;
     CGPoint target;
     CGPoint pathTangent;
+    float pathCurve;
     
     b2Vec2 _prevVels[NUM_PREV_VELS];
     int _nextVel;
@@ -29,6 +30,7 @@
 
 @property (readonly) BOOL driving;
 @property float driftAngle;
+@property BOOL fixedDrift;
 
 - (void)runNormalAnimation;
 - (void)drive;
@@ -36,6 +38,7 @@
 - (void)turboBoost;
 - (void)setTarget: (CGPoint) newTarget;
 - (void)setPathTangent: (CGPoint) newTangent;
+- (void)setPathCurve: (float) newCurve;
 - (id)initWithWorld:(b2World *)world;
 - (void)update;
 

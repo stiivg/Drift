@@ -46,6 +46,7 @@
 - (void)resetTargetPoint;
 - (CGPoint)nextTargetPoint:(CGPoint)position;
 - (CGPoint)targetTangent;
+- (float)targetCurve;
 - (void) setOffset:(CGPoint)newOffset;
 - (void) updateRotation:(float)rotation;
 - (id)initWithWorld:(b2World *)world;

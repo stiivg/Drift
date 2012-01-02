@@ -261,6 +261,22 @@ static int targetRoadIndex= 0;
     return testPoint;
 }
 
+//Returns path curve at the target point
+//positive for curves to the right, negative to the left
+-(float)targetCurve {
+    CGPoint prevPoint = _pathPoints[targetRoadIndex-1];
+    CGPoint targetPoint = _pathPoints[targetRoadIndex];
+    CGPoint nextPoint = _pathPoints[targetRoadIndex+1];
+    CGPoint tangent = ccpSub(targetPoint, prevPoint);
+    CGPoint nextTangent = ccpSub(nextPoint, targetPoint);
+    
+    float angleTangent = atan2f(tangent.x, tangent.y);
+    float angleNextTangent = atan2f(nextTangent.x, nextTangent.y);
+    float curve = angleTangent - angleNextTangent;
+//    CCLOG(@"curve=%4.4f",curve);
+    return curve;
+}
+
 - (CGPoint)targetTangent {
     CGPoint prevPoint = _pathPoints[targetRoadIndex-1];
     CGPoint nextPoint = _pathPoints[targetRoadIndex];

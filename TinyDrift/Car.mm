@@ -10,6 +10,9 @@
 
 @implementation Car
 @synthesize driving = _driving;
+@synthesize fixedDrift;
+
+bool curvetoright = false;
 
 - (void)createBody {
     //Destroy any body if exists
@@ -66,6 +69,8 @@
     return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
 static float last_distance = 0;
+const float k_max_speed = 40;
+const float k_drift_acc = 10;
 
 - (void)_applyForce {
     //The force is calculated as two perpendicular components
@@ -75,8 +80,7 @@ static float last_distance = 0;
     
     const float k_default_road_speed = 7;
     const float k_default_road_acc = 10;
-    const float k_drift_acc = 5;
-    
+        
     
     //calc distance to target
     CGPoint targetVector = ccpSub(target, self.position);
@@ -88,6 +92,8 @@ static float last_distance = 0;
     float targetDistance = hypotf(targetVector.x, targetVector.y);
     float distance = targetDistance * sinTheta;
     
+//    CCLOG(@"distance=%4.2f", distance);
+    
     //calc velR = radial velocity to target
     b2Vec2 vel2b = _body->GetLinearVelocity();
     CGPoint velocity = CGPointMake(vel2b.x, vel2b.y);
@@ -95,13 +101,13 @@ static float last_distance = 0;
     
     
     //Derivative term
-    float Dterm = (distance - last_distance)*10;
+    float Dterm = (distance - last_distance)*6;
     last_distance = distance;
     float Pterm = distance;
     
     float accR = Pterm+Dterm;
     
-    CCLOG(@"drift:      %4.2f   %4.2f", Pterm,Dterm);
+//    CCLOG(@"p=%4.2f  d=%4.2f", Pterm,Dterm);
     
     
     CGPoint accTangential = CGPointMake(0,0);
@@ -126,31 +132,31 @@ static float last_distance = 0;
     } else {
         accTotal = ccpAdd(accRadial, accTangential);
     }
+
+    BOOL followRoad = true;
+    if (followRoad) {
+        _body->ApplyForce( b2Vec2(accTotal.x,accTotal.y), _body->GetPosition() );
+    }
+    
+    //    CCLOG(@"drift:  d=%4.2f v=%4.2f  a=%4.2f accX=%4.2f accY=%4.2f", 
+    //          distance, velR.x, acc, accTotal.x, accTotal.y);
+    
+    
+}
+
+-(void)_applyDriftForce {
     CGPoint accDrift = ccp(0,0);
     
     //Add drift force
-    if (_driftAngle != 0 && speedT < 20.0) {
+    if (_driftAngle != 0) {
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
         accDrift= ccpMult(accDrift, k_drift_acc);
-        //CCLOG(@"drift:  angle=%4.2f accX=%4.2f accY=%4.2f", 
-//              self.rotation, accTotal.x, accTotal.y);
-        accTotal = ccpAdd(accTotal, accDrift);
-    }
-    
-
-//    CCLOG(@"drift:  d=%4.2f v=%4.2f  a=%4.2f accX=%4.2f accY=%4.2f", 
-//          distance, velR.x, acc, accTotal.x, accTotal.y);
-    
-    BOOL followRoad = true;
-    if (followRoad) {
-        _body->ApplyForce( b2Vec2(accTotal.x,accTotal.y), _body->GetPosition() );
-    } else 
-    {
+        
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
     }
-
+    
 }
 
 - (void)update {
@@ -168,12 +174,14 @@ static float last_distance = 0;
     //SJG angle from vertical
     float angle = ccpToAngle(ccp(weightedVel.y, weightedVel.x));     
     if (_driving) { 
-        //SJG disable rotation here
+        //Apply force to stay  on road
+        [self _applyForce];
+        
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
         
-        //Apply force to stay  on road
-        [self _applyForce];
+        
+        [self _applyDriftForce];
         
     }    
 
@@ -231,14 +239,17 @@ static float last_distance = 0;
 }
 
 - (void)setTarget : (CGPoint)newTarget {
-    
     target = newTarget;
 }
 
 - (void)setPathTangent : (CGPoint)newTangent {
-    
     pathTangent = newTangent;
 }
+
+- (void)setPathCurve : (float)newCurve {
+    pathCurve = newCurve;
+}
+
 //Property getter
 -(float)driftAngle {
     return _driftAngle;
@@ -247,6 +258,11 @@ static float last_distance = 0;
 //Property setter
 - (void) setDriftAngle:(float)driftAngle {
     _driftAngle = driftAngle;
+    if (fixedDrift) {
+        if (pathCurve > 0 && _driftAngle > 0) {
+            _driftAngle = -1 * _driftAngle;
+        }
+    }
     if (_driftAngle > 0) {
         [self runRightDriftAnimation];
     } else if (_driftAngle < 0) {

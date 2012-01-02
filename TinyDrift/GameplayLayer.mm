@@ -21,7 +21,7 @@ double driftStart;
 CCParticleSystem * _drift_emitter;
 CCParticleSystem * _turbo_emitter;
 
-
+const bool _fixedDrift = false;
 
 -(CCSprite *)spriteWithColor:(ccColor4F)bgColor textureSize:(float)textureSize {
     
@@ -164,6 +164,7 @@ CCParticleSystem * _turbo_emitter;
         
         _car = [[[Car alloc] initWithWorld:_world] autorelease];
         [_terrain.batchNode addChild:_car];
+        _car.fixedDrift = _fixedDrift;
         
         [self setupEmitters];
         _emitter = _drift_emitter;        
@@ -218,6 +219,10 @@ CCParticleSystem * _turbo_emitter;
             
     CGPoint target = [_terrain nextTargetPoint:_car.position];
     [_car setTarget:target];
+    
+    float targetCurve = [_terrain targetCurve];
+    [_car setPathCurve:targetCurve];
+    
     // CCLOG(@"drift:  target x=%4.2f y=%4.2f  ", target.x, target.y);
     CGPoint tangent = [_terrain targetTangent];
     [_car setPathTangent:tangent];
@@ -282,6 +287,10 @@ static CGPoint startLoc;
     CGPoint location = [touch locationInView: [touch view]];
     startLoc = [[CCDirector sharedDirector] convertToGL:location];
     
+    if (_car.driving && _fixedDrift) {
+        _driftControl = 0.7;
+    }
+    
    // CCLOG(@"drift:  touches began x=%4.2f y=%4.2f  ", cLoc.x, cLoc.y);
 
     
@@ -292,10 +301,12 @@ static CGPoint startLoc;
     CGPoint location = [touch locationInView: [touch view]];
     CGPoint cLoc = [[CCDirector sharedDirector] convertToGL:location];
     
-    _driftControl = (startLoc.x - cLoc.x) / 50;
+    if (!_fixedDrift) {
+        _driftControl = (startLoc.x - cLoc.x) / 50;
+    }
 
     
-   // CCLOG(@"drift:  touches moved drift=%4.2f", _driftControl);
+//    CCLOG(@"drift:  touches moved drift=%4.2f", _driftControl);
 }
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
