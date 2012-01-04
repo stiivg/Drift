@@ -75,6 +75,25 @@
         
 }
 
+-(void) restoreControlPoints {    
+    NSString* filePath = [[NSBundle mainBundle]  pathForResource:@"controlpoints" ofType:@"tsv"];    
+    NSString* content = [NSString stringWithContentsOfFile:filePath
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:NULL];
+    NSArray *pointItems = [content componentsSeparatedByString:@"\n"];
+    
+    int i=0;
+    for (id point in pointItems) {
+        NSArray *scalarItems = [point componentsSeparatedByString:@"\t"];
+        if (scalarItems.count > 1) {
+            _roadControlPoints[i++] = CGPointMake([[scalarItems objectAtIndex:0] floatValue],
+                                                  [[scalarItems objectAtIndex:1] floatValue]);
+        }
+    }
+    _numControlPoints = i;
+    
+}
+
 -(void) saveControlPoints {    
     NSString *filePath = @"/Users/stevengallagher/Documents/DriftGithub/controlpoints.tsv";
     FILE *file;
@@ -130,7 +149,7 @@
 -(void) generateKeyPoints {
     float startx = 0;
     float starty = 0;
-    int segmentCount = 8;
+    int segmentCount = 16;
     int i = 0;
         
     //straight line at start
@@ -174,19 +193,22 @@
     
 }
 
-
+const BOOL _newPath = false;
 
 -(id) createPath:(CGPoint *)pathPoints {
     _pathPoints = pathPoints;
     
-    [self generateKeyPoints];
-//    [self saveKeyPoints];
-//    [self restoreKeyPoints];
-    [self generateControlPoints];
-//    [self saveControlPoints];
+    if(_newPath) {
+        [self generateKeyPoints];
+//        [self saveKeyPoints];
+        [self generateControlPoints];
+//        [self saveControlPoints];
+    } else {
+        [self restoreControlPoints];
+    }
     [self generatePath];
     [self scalePath];
-//    [self savePathPoints];
+    //    [self savePathPoints];
     return self;
 }
 
