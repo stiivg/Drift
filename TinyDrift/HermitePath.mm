@@ -135,13 +135,16 @@
 //Generate random vector to next point in positive y
 -(CGPoint)randVector {
     int maxDistance = 200;
-    int minY = 10;
+    int minY = 20;
     int minSquare = 10000;
     int randx = 0, randy = 0;
     do {
+        // -maxDistance < x < maxDistance
         randx = arc4random() % (2*maxDistance) - maxDistance;
+        // miny < y < maxDistance
         randy = arc4random() % (maxDistance-minY) + minY;
     } while ( (randx*randx + randy*randy) < minSquare);
+    //length^2 > minSquare
     return CGPointMake(randx, randy);
 }
 
@@ -157,6 +160,8 @@
     CGPoint nextPathPoint = CGPointMake(startx, starty);
     _keyPoints[i++] = nextPathPoint; //first key point used
     CGPoint nextVector = CGPointMake(0, 100);
+    nextPathPoint = ccpAdd(nextPathPoint, nextVector);
+    _keyPoints[i++] = nextPathPoint; //key point
     
     for (int j=0; j<segmentCount; j++) {
         //vector to next road point
@@ -164,6 +169,15 @@
         _keyPoints[i++] = nextPathPoint; //key point
         nextVector = [self randVector];        
     }
+    
+    //Straight line at end
+    nextVector = CGPointMake(0, 100);
+    for (int j=0; j<6; j++) {
+        //vector to next road point
+        nextPathPoint = ccpAdd(nextPathPoint, nextVector);
+        _keyPoints[i++] = nextPathPoint; //key point
+    }
+    
     _numKeyPoints = i;
  
 }
@@ -175,7 +189,8 @@
     
     _roadControlPoints[i++] = _keyPoints[1]; //road point
     CGPoint slope = ccpSub(_keyPoints[2],_keyPoints[0]);
-    slope = ccpMult(slope, .2); //scale the slope
+    slope = ccpNormalize(slope);
+    slope = ccpMult(slope, 10); //scale the slope
 
     for (int j=0; j<_numKeyPoints-3; j++) {
         _roadControlPoints[i++] = ccpAdd(_keyPoints[j+1],slope); //control a
@@ -193,7 +208,7 @@
     
 }
 
-const BOOL _newPath = false;
+const BOOL _newPath = true;
 
 -(id) createPath:(CGPoint *)pathPoints {
     _pathPoints = pathPoints;
