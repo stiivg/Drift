@@ -153,7 +153,7 @@ const bool _fixedDrift = false;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
-        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_128.png"];
+        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern.png"];
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
@@ -297,12 +297,20 @@ static CGPoint startLoc;
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    const float kMaxDrift = 1.0;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     CGPoint cLoc = [[CCDirector sharedDirector] convertToGL:location];
     
     if (!_fixedDrift) {
         _driftControl = (startLoc.x - cLoc.x) / 50;
+    }
+    if (_driftControl > kMaxDrift) {
+        _driftControl = kMaxDrift;
+    } else {
+        if (_driftControl < -kMaxDrift) {
+            _driftControl = -kMaxDrift;
+        }
     }
 
     

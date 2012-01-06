@@ -207,17 +207,27 @@ const float k_drift_acc = 10;
     _normalAnimate = nil;
     [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
     
-//    _body->SetActive(false);
+    //    _body->SetActive(false);
     [self createBody];
 }
 
 - (void)turboBoost {
-    float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
-    float32 c = cosf(posRadians), s = sinf(posRadians);
-    b2Vec2 vel2b(c,s);
-    vel2b*=10;
-
-    _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
+    const BOOL kVelocityDirection = true;
+    
+    if(kVelocityDirection) {
+        b2Vec2 vel2b = _body->GetLinearVelocity();
+        vel2b.Normalize();
+        vel2b *= 20;
+        _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
+    } else {
+        float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
+        float32 c = cosf(posRadians), s = sinf(posRadians);
+        
+        b2Vec2 vel2b(c,s);
+        vel2b*=10;
+        _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
+    }
+    
 }
 
 - (void)runNormalAnimation {

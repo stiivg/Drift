@@ -151,7 +151,8 @@ static int targetRoadIndex= 0;
     CGPoint p0, p1, roadSegment, perpSegment;
     CGPoint l0, r0;
     CGFloat roadDistance = 0;
-    int half_road_width = 64;
+    
+    int half_road_width = 128; // for half width 64;
     
     targetRoadIndex= 1;
     p0 = _pathPoints[0];
