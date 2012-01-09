@@ -270,8 +270,9 @@ const bool _fixedDrift = false;
 }
 
 -(void)startGame {
-    [_terrain resetTargetPoint];
     [_car stopDrive];
+    //Reset the target point after the car has stopped
+    [_terrain resetTargetPoint];
     
 }
 

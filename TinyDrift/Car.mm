@@ -210,6 +210,9 @@ const float k_drift_acc = 10;
     
     //    _body->SetActive(false);
     [self createBody];
+    //Reset the car position to the starting body position
+    self.position = [self toPixels:_body->GetPosition()];
+
 }
 
 - (void)turboBoost {
