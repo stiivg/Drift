@@ -197,9 +197,9 @@ static int targetRoadIndex= 0;
         [self resetRoadVertices];
 //        [self createEdges];
         
-        _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"smallCar.png"];
+        _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"driftCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"smallCar.plist"];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"driftCar.plist"];
     }
     return self;
 }

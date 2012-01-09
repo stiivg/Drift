@@ -55,9 +55,10 @@ bool curvetoright = false;
         [self createBody];
         self.scale = 1.0;
         
+        //SJG TODO engine running animation frames
         _normalAnim = [[CCAnimation alloc] init];
         [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
-        [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car_right.png"]];
+        [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
         _normalAnim.delay = 0.1;
     }
     return self;

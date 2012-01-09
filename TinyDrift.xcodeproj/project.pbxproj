@@ -188,6 +188,11 @@
 		64B4D0BE14ABA10D000F20C3 /* stop-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0BA14ABA10D000F20C3 /* stop-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
 		64B4D0C314B2AF4B000F20C3 /* controlpoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C214B2AF4A000F20C3 /* controlpoints.tsv */; };
+		64B4D0C614BA288A000F20C3 /* driftCar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C414BA2889000F20C3 /* driftCar-hd.plist */; };
+		64B4D0C714BA288A000F20C3 /* driftCar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C514BA2889000F20C3 /* driftCar-hd.png */; };
+		64B4D0CA14BA2A77000F20C3 /* driftCar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C814BA2A77000F20C3 /* driftCar.plist */; };
+		64B4D0CB14BA2A77000F20C3 /* driftCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C914BA2A77000F20C3 /* driftCar.png */; };
+		64B4D0CD14BA8947000F20C3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0CC14BA8947000F20C3 /* Default@2x.png */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
 		E1E7766513A8F71100DF595A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766413A8F71100DF595A /* QuartzCore.framework */; };
 		E1E7766713A8F71100DF595A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766613A8F71100DF595A /* OpenGLES.framework */; };
@@ -543,6 +548,11 @@
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
 		64B4D0C014AE5286000F20C3 /* emitters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = emitters.m; path = TinyDrift/emitters.m; sourceTree = SOURCE_ROOT; };
 		64B4D0C214B2AF4A000F20C3 /* controlpoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = controlpoints.tsv; path = TinyDrift/controlpoints.tsv; sourceTree = SOURCE_ROOT; };
+		64B4D0C414BA2889000F20C3 /* driftCar-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "driftCar-hd.plist"; path = "TinyDrift/Sprite Sheets/driftCar-hd.plist"; sourceTree = SOURCE_ROOT; };
+		64B4D0C514BA2889000F20C3 /* driftCar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "driftCar-hd.png"; path = "TinyDrift/Sprite Sheets/driftCar-hd.png"; sourceTree = SOURCE_ROOT; };
+		64B4D0C814BA2A77000F20C3 /* driftCar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = driftCar.plist; path = "TinyDrift/Sprite Sheets/driftCar.plist"; sourceTree = SOURCE_ROOT; };
+		64B4D0C914BA2A77000F20C3 /* driftCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = driftCar.png; path = "TinyDrift/Sprite Sheets/driftCar.png"; sourceTree = SOURCE_ROOT; };
+		64B4D0CC14BA8947000F20C3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		64E063EA1430180F007234F4 /* TinyDrift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyDrift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EB35C3148BF28A00B0CDAC /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = TinyDrift/pause.png; sourceTree = SOURCE_ROOT; };
 		E1E7766413A8F71100DF595A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -990,6 +1000,7 @@
 		643AE4F3142FFB7A0079501A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64B4D0CC14BA8947000F20C3 /* Default@2x.png */,
 				643AE6EA143006670079501A /* Default.png */,
 				643AE6DE143006490079501A /* Icon-72.png */,
 				643AE6DF143006490079501A /* Icon-Small-50.png */,
@@ -1113,6 +1124,10 @@
 		E162E98713ABF79500E06194 /* Sprite Sheets */ = {
 			isa = PBXGroup;
 			children = (
+				64B4D0C814BA2A77000F20C3 /* driftCar.plist */,
+				64B4D0C914BA2A77000F20C3 /* driftCar.png */,
+				64B4D0C414BA2889000F20C3 /* driftCar-hd.plist */,
+				64B4D0C514BA2889000F20C3 /* driftCar-hd.png */,
 				6419A800145CE18E00DA3619 /* smallCar.plist */,
 				6419A801145CE18E00DA3619 /* smallCar.png */,
 				643AE4F1142FFB510079501A /* drift_car.plist */,
@@ -1268,6 +1283,11 @@
 				64B4D0BD14ABA10D000F20C3 /* stop_selected-hd.png in Resources */,
 				64B4D0BE14ABA10D000F20C3 /* stop-hd.png in Resources */,
 				64B4D0C314B2AF4B000F20C3 /* controlpoints.tsv in Resources */,
+				64B4D0C614BA288A000F20C3 /* driftCar-hd.plist in Resources */,
+				64B4D0C714BA288A000F20C3 /* driftCar-hd.png in Resources */,
+				64B4D0CA14BA2A77000F20C3 /* driftCar.plist in Resources */,
+				64B4D0CB14BA2A77000F20C3 /* driftCar.png in Resources */,
+				64B4D0CD14BA8947000F20C3 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
