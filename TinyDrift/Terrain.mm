@@ -285,12 +285,22 @@ static int targetRoadIndex= 0;
     return tangent;
 }
 
+//To keep the car in the same screen location at all scales
+//The scale factor zooms about the screen center
+//Calc the pixel distance from center to the bottom of the screen
+//Subtract the constant pixel offset desired
+//Divide by scale to convert pixels to scaled units
 -(void) setOffset:(CGPoint)newOffset {
+    const float kBaseOffset = 100;
     CGSize winSize = [CCDirector sharedDirector].winSize;
+    float scale = self.parent.scale;
+    float viewOffset  = (winSize.height/2 * (1 - scale) - kBaseOffset) / scale;
+    
+    
     _offsetX = newOffset.x;
     _offsetY = newOffset.y;
     
-    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, 100-_offsetY*self.scale);
+    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, -viewOffset -_offsetY*self.scale);
 //    [self resetRoadVertices];
 }
 
