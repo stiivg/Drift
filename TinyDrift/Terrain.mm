@@ -287,7 +287,7 @@ static int targetRoadIndex= 0;
 
 //To keep the car in the same screen location at all scales
 //The scale factor zooms about the screen center
-//Calc the pixel distance from center to the bottom of the screen
+//Calc the pixel distance from the bottom of the screen to original screen bottom (at scale 1.0)
 //Subtract the constant pixel offset desired
 //Divide by scale to convert pixels to scaled units
 -(void) setOffset:(CGPoint)newOffset {
