@@ -285,6 +285,11 @@ const float k_drift_acc = 10;
         [self runNormalAnimation];
     }
 }   
+- (float)getSpeed {
+    b2Vec2 vel2b = _body->GetLinearVelocity();
+    return vel2b.Length();
+}
+
 - (void)nodive {
     [self runNormalAnimation];
 }

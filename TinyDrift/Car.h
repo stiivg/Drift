@@ -41,5 +41,6 @@
 - (void)setPathCurve: (float) newCurve;
 - (id)initWithWorld:(b2World *)world;
 - (void)update;
+- (float)getSpeed;
 
 @end

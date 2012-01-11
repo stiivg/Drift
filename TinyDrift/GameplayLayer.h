@@ -12,6 +12,9 @@
 #import "Car.h"
 
 #define PTM_RATIO   32.0
+#define NUM_PREV_SPEEDS   60
+#define MIN_SCALE 0.5
+
 
 @interface GameplayLayer : CCLayer
 {
@@ -22,6 +25,11 @@
     
     Car * _car;
     CCParticleSystem * _emitter;
+    
+    float _prevSpeeds[NUM_PREV_SPEEDS];
+    int _nextSpeed;
+    
+    float targetScale;
     
     BOOL _tapDown;
     float _driftControl;

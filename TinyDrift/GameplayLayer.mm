@@ -100,7 +100,7 @@ const bool _fixedDrift = false;
     _background.position = ccp(winSize.width/2, winSize.height/2);        
     ccTexParams tp = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
     [_background.texture setTexParameters:&tp];
-    [_background setTextureRect:CGRectMake(0, 0, winSize.width/self.scale, winSize.height/self.scale)];
+    [_background setTextureRect:CGRectMake(0, 0, winSize.width / MIN_SCALE, winSize.height / MIN_SCALE)];
     
     [self addChild:_background];
         
@@ -151,6 +151,8 @@ const bool _fixedDrift = false;
         //set to 0.5 to zoom out
         self.scale = 1.0;
         
+        targetScale = 1.0;
+        
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
         CCSprite *road = [CCSprite spriteWithFile:@"road_pattern.png"];
@@ -183,6 +185,7 @@ const bool _fixedDrift = false;
     //test if paused
     if ([[GameManager sharedGameManager] isGamePaused]) return;
 
+//    self.scale *= 0.99;
     
     static double UPDATE_INTERVAL = 1.0f/60.0f;
     static double MAX_CYCLES_PER_FRAME = 5;
@@ -263,6 +266,40 @@ const bool _fixedDrift = false;
   
     [_terrain setOffset:ccp(_car.position.x, _car.position.y)];
     //[_emitter setPosition:ccp(_car.position.x, _car.position.y)];
+    
+    float speed = _car.getSpeed;
+    float weightedSpeed = speed;
+    const float kZoomOutSpeed = 20;
+    const float kZoomInSpeed = 10;
+    
+    for(int i = 0; i < NUM_PREV_SPEEDS; ++i) {
+        weightedSpeed += _prevSpeeds[i];
+    }
+    weightedSpeed = weightedSpeed / NUM_PREV_SPEEDS;    
+    _prevSpeeds[_nextSpeed++] = speed;
+    if (_nextSpeed >= NUM_PREV_SPEEDS) _nextSpeed = 0;
+
+    //set the target scale with hysteresis
+    //Zoom out at kZoomOutSpeed zoom in to 1.0 at kZoomInSpeed
+    if (weightedSpeed > kZoomOutSpeed && targetScale == 1.0) {
+        targetScale = MIN_SCALE;
+    } else if (weightedSpeed < kZoomInSpeed && targetScale < 1.0){
+        targetScale = 1.0;
+    }
+    
+    if (self.scale > targetScale) {
+        self.scale *= 0.99;
+        if (self.scale < targetScale) { //clamp to target
+            self.scale = targetScale;
+        }
+    } else if (self.scale < targetScale){
+        self.scale *= 1.01;
+        if (self.scale > targetScale) { //clamp to target
+            self.scale = targetScale;
+        }
+    }
+//    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
+    
 
     //uncomment to rotate view with car
 //    [_terrain updateRotation:_car.rotation];

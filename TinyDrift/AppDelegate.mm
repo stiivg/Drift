@@ -90,7 +90,7 @@
 #endif
 	
 	[director setAnimationInterval:1.0/60];
-	[director setDisplayFPS:NO];//sjg
+	[director setDisplayFPS:YES];//sjg
 	
 	
 	// make the OpenGLView a child of the view controller
