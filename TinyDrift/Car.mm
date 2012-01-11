@@ -12,6 +12,14 @@
 @synthesize driving = _driving;
 @synthesize fixedDrift;
 
+const float kDriftAcc = 40;
+
+const float kDefaultRoadSpeed = 7;
+const float kDefaultRoadAcc = 40;
+const float kCorrectionAcc = 4;
+
+const float kTurboImpulse = 80;
+
 bool curvetoright = false;
 
 - (void)createBody {
@@ -40,7 +48,7 @@ bool curvetoright = false;
     
     b2FixtureDef fd;
     fd.shape = &shape;
-    fd.density = 1.0f;
+    fd.density = 4.0f;
     fd.restitution = 0.0f;
     fd.friction = 0.2;
     
@@ -70,18 +78,12 @@ bool curvetoright = false;
     return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
 static float last_distance = 0;
-const float k_max_speed = 40;
-const float k_drift_acc = 10;
 
 - (void)_applyForce {
     //The force is calculated as two perpendicular components
     //Along the path tangent at the target and perpendicular to the tangent
     //The perpendicular distance to the tangent is the error term for the PID
     //control, the tangential direction is for velocity.
-    
-    const float k_default_road_speed = 7;
-    const float k_default_road_acc = 10;
-        
     
     //calc distance to target
     CGPoint targetVector = ccpSub(target, self.position);
@@ -106,7 +108,7 @@ const float k_drift_acc = 10;
     last_distance = distance;
     float Pterm = distance;
     
-    float accR = Pterm+Dterm;
+    float accR = Pterm+Dterm * kCorrectionAcc;
     
 //    CCLOG(@"p=%4.2f  d=%4.2f", Pterm,Dterm);
     
@@ -122,9 +124,9 @@ const float k_drift_acc = 10;
     //Add force along path if needed
     CGPoint velT = ccpProject(velocity, pathTangent);
     float speedT = ccpLength(velT);
-    if (speedT < k_default_road_speed) {
+    if (speedT < kDefaultRoadSpeed) {
         accTangential = ccpNormalize(pathTangent);
-        accTangential = ccpMult(accTangential, k_default_road_acc);
+        accTangential = ccpMult(accTangential, kDefaultRoadAcc);
     }
     CGPoint accTotal;
     if (speedT < 5) {
@@ -153,7 +155,7 @@ const float k_drift_acc = 10;
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
-        accDrift= ccpMult(accDrift, k_drift_acc);
+        accDrift= ccpMult(accDrift, kDriftAcc);
         
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
     }
@@ -221,14 +223,14 @@ const float k_drift_acc = 10;
     if(kVelocityDirection) {
         b2Vec2 vel2b = _body->GetLinearVelocity();
         vel2b.Normalize();
-        vel2b *= 20;
+        vel2b *= kTurboImpulse;
         _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
     } else {
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         float32 c = cosf(posRadians), s = sinf(posRadians);
         
         b2Vec2 vel2b(c,s);
-        vel2b*=10;
+        vel2b *= kTurboImpulse;
         _body->ApplyLinearImpulse(vel2b, _body->GetPosition() );  
     }
     
