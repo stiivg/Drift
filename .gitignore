@@ -5,3 +5,5 @@ keypoints.tsv
 pathpoints.tsv
 .DS_Store
 TinyDrift/.DS_Store
+TinyDrift.xcodeproj/xcuserdata/
+TinyDrift.xcodeproj/project.xcworkspace/xcuserdata/
