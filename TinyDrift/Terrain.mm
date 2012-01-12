@@ -14,7 +14,6 @@
 @synthesize roadTexture = _roadTexture;
 
 int _lastRoadPoint = 100;
-static int targetRoadIndex= 0;
 
 - (void) createEdges {
     
@@ -154,7 +153,7 @@ static int targetRoadIndex= 0;
     
     int half_road_width = 128; // for half width 64;
     
-    targetRoadIndex= 1;
+    _targetRoadIndex= 1;
     p0 = _pathPoints[0];
     for (int i=0; i<_lastRoadPoint-1; i++) {
         p1 = _pathPoints[i+1];
@@ -192,6 +191,7 @@ static int targetRoadIndex= 0;
         [self setupDebugDraw];
         _path = [[[HermitePath alloc] createPath:_pathPoints] autorelease];
         _lastRoadPoint = _path.getNumPathPoints;
+        _targetRoadIndex = 1;
 //        [self generateRoad];
         
         [self resetRoadVertices];
@@ -236,38 +236,45 @@ static int targetRoadIndex= 0;
     
 }
 
+
 //Return the next road point past the look ahead distance
 - (CGPoint)nextTargetPoint:(CGPoint)position {
     //scale position in points to actual pixels
     position.x *= CC_CONTENT_SCALE_FACTOR();
     position.y *= CC_CONTENT_SCALE_FACTOR();
     
-    const int kLookAheadSq = 40000 * CC_CONTENT_SCALE_FACTOR();
-    CGPoint testPoint = _pathPoints[targetRoadIndex];
-   
-    for (; targetRoadIndex<_lastRoadPoint; targetRoadIndex++) {
-        testPoint = _pathPoints[targetRoadIndex];
+    CGPoint testPoint = _pathPoints[_targetRoadIndex];
+    
+    for (; _targetRoadIndex<_lastRoadPoint; _targetRoadIndex++) {
+        testPoint = _pathPoints[_targetRoadIndex];
         int dx =  (int)(position.x - testPoint.x);
-        int dy =  (int)(position.y - testPoint.y);        
-        if ((dx*dx + dy*dy) > kLookAheadSq) {
+        int dy =  (int)(position.y - testPoint.y);
+        
+        CGPoint tangent = self.targetTangent;
+        float angleTangent = atan2f(tangent.x, tangent.y);
+        float angleCar = atan2f(dx, dy);
+        float angleDiff = angleTangent - angleCar;
+        //test if behind this point
+        if (angleDiff > 1.5 || angleDiff < -1.5) {
             //Scale back to position in points
             testPoint.x *= 1/CC_CONTENT_SCALE_FACTOR();
             testPoint.y *= 1/CC_CONTENT_SCALE_FACTOR();
+            CCLOG(@"target=%i",_targetRoadIndex);
             return testPoint;
         }
     }
     
-//    testPoint.x = 160;
-//    testPoint.y = 600;
+    //    testPoint.x = 160;
+    //    testPoint.y = 600;
     return testPoint;
 }
 
 //Returns path curve at the target point
 //positive for curves to the right, negative to the left
 -(float)targetCurve {
-    CGPoint prevPoint = _pathPoints[targetRoadIndex-1];
-    CGPoint targetPoint = _pathPoints[targetRoadIndex];
-    CGPoint nextPoint = _pathPoints[targetRoadIndex+1];
+    CGPoint prevPoint = _pathPoints[_targetRoadIndex-1];
+    CGPoint targetPoint = _pathPoints[_targetRoadIndex];
+    CGPoint nextPoint = _pathPoints[_targetRoadIndex+1];
     CGPoint tangent = ccpSub(targetPoint, prevPoint);
     CGPoint nextTangent = ccpSub(nextPoint, targetPoint);
     
@@ -279,8 +286,8 @@ static int targetRoadIndex= 0;
 }
 
 - (CGPoint)targetTangent {
-    CGPoint prevPoint = _pathPoints[targetRoadIndex-1];
-    CGPoint nextPoint = _pathPoints[targetRoadIndex];
+    CGPoint prevPoint = _pathPoints[_targetRoadIndex-1];
+    CGPoint nextPoint = _pathPoints[_targetRoadIndex];
     CGPoint tangent = ccpSub(nextPoint, prevPoint);
     return tangent;
 }
@@ -322,7 +329,7 @@ static int targetRoadIndex= 0;
 }
 
 - (void)resetTargetPoint {
-    targetRoadIndex= 1;
+    _targetRoadIndex= 1;
 }
 
 

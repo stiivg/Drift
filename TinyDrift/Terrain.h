@@ -32,6 +32,7 @@
     CGPoint _roadTexCoords[kMaxRoadVertices];
     int _nBorderVertices;
     CGPoint _borderVertices[kMaxBorderVertices];
+    int _targetRoadIndex;
     
     b2World *_world;
     b2Body *_body;
