@@ -1,4 +1,6 @@
 
 TinyDrift.xcodeproj/project.xcworkspace/xcuserdata/stevengallagher.xcuserdatad/UserInterfaceState.xcuserstate
-
+controlpoints.tsv
+keypoints.tsv
+pathpoints.tsv
 .DS_Store
