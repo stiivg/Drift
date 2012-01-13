@@ -259,7 +259,7 @@ int _lastRoadPoint = 100;
             //Scale back to position in points
             testPoint.x *= 1/CC_CONTENT_SCALE_FACTOR();
             testPoint.y *= 1/CC_CONTENT_SCALE_FACTOR();
-            CCLOG(@"target=%i",_targetRoadIndex);
+//            CCLOG(@"target=%i",_targetRoadIndex);
             return testPoint;
         }
     }
