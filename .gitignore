@@ -5,4 +5,6 @@ keypoints.tsv
 pathpoints.tsv
 .DS_Store
 TinyDrift/.DS_Store
+TinyDrift/libs/.DS_Store
+TinyDrift/Sprite Sheets/.DS_Store
 .xcodeproj/ !*.xcodeproj/project.pbxproj
