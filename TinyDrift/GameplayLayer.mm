@@ -335,7 +335,7 @@ static CGPoint startLoc;
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    const float kMaxDrift = 1.0;
+    const float kMaxDrift = 2.0;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     CGPoint cLoc = [[CCDirector sharedDirector] convertToGL:location];

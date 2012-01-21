@@ -178,8 +178,7 @@ static float last_distance = 0;
     float angle = ccpToAngle(ccp(weightedVel.y, weightedVel.x));     
     if (_driving) { 
         //Apply force to stay  on road
-        [self _applyForce];
-        
+        [self _applyForce]; 
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
         
@@ -218,7 +217,7 @@ static float last_distance = 0;
 }
 
 - (void)turboBoost {
-    const BOOL kVelocityDirection = true;
+    const BOOL kVelocityDirection = false;
     
     if(kVelocityDirection) {
         b2Vec2 vel2b = _body->GetLinearVelocity();
