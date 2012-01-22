@@ -9,6 +9,7 @@
 #import "GameManager.h"
 #import "ccMacros.h"
 #import "GameScene.h"
+#import "MainScene.h"
 
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
@@ -53,7 +54,12 @@ static GameManager* _sharedGameManager = nil;
     id sceneToRun = nil;
     switch (sceneID) {
         case kGameScene:
+            _paused = NO;
             sceneToRun  = [GameScene node];
+            break;
+            
+        case kMainScene:
+            sceneToRun  = [MainScene node];
             break;
             
         default:
@@ -80,7 +86,7 @@ static GameManager* _sharedGameManager = nil;
     _paused = NO;
 }
 
--(void)stopGame {
+-(void)playGame {
     //stop this game and start next game
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) startGame];
     _paused = NO;

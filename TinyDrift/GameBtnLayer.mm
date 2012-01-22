@@ -17,6 +17,7 @@
 CCMenuItem *pauseMenuItem;
 CCMenuItem *stopMenuItem;
 CCMenuItem *resumeMenuItem;
+CCMenuItem *menuMenuItem;
 
 -(id) init {
     if((self=[super init])) {
@@ -41,7 +42,17 @@ CCMenuItem *resumeMenuItem;
         stopMenu.position = CGPointZero;
         [self addChild:stopMenu];
         [stopMenuItem setVisible:false];
-  
+        
+        // Create menu button
+        menuMenuItem = [CCMenuItemImage 
+                        itemFromNormalImage:@"menu.png" selectedImage:@"menu_selected.png" 
+                        target:self selector:@selector(menuAction:)];
+        menuMenuItem.position = ccp(winSize.width / 2, 60);
+        CCMenu *menuMenu = [CCMenu menuWithItems:menuMenuItem, nil];
+        menuMenu.position = CGPointZero;
+        [self addChild:menuMenu];
+        [menuMenuItem setVisible:false];
+        
         // Create resume button
         resumeMenuItem = [CCMenuItemImage 
                         itemFromNormalImage:@"resume.png" selectedImage:@"resume_selected.png" 
@@ -60,6 +71,7 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:true];
     [stopMenuItem setVisible:true];
+    [menuMenuItem setVisible:true];
     [[GameManager sharedGameManager] pauseGame ];
     
     
@@ -69,7 +81,8 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
     [stopMenuItem setVisible:false];
-    [[GameManager sharedGameManager] stopGame];
+    [menuMenuItem setVisible:false];
+    [[GameManager sharedGameManager] playGame];
     
 }
 
@@ -77,7 +90,17 @@ CCMenuItem *resumeMenuItem;
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
     [stopMenuItem setVisible:false];
+    [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] resumeGame];
+    
+}
+
+- (void)menuAction:(id)sender {
+    [pauseMenuItem setVisible:true];
+    [resumeMenuItem setVisible:false];
+    [stopMenuItem setVisible:false];
+    [menuMenuItem setVisible:false];
+    [[GameManager sharedGameManager] runSceneWithID:kMainScene];
     
 }
 

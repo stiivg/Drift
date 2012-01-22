@@ -111,7 +111,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-    [[GameManager sharedGameManager] runSceneWithID:kGameScene];
+    [[GameManager sharedGameManager] runSceneWithID:kMainScene];
 }
 
 

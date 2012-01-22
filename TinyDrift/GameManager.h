@@ -18,7 +18,7 @@
 +(GameManager*)sharedGameManager;
 -(void)pauseGame;
 -(void)resumeGame;
--(void)stopGame;
+-(void)playGame;
 -(void)runSceneWithID:(SceneTypes)sceneID;
 
 @end
