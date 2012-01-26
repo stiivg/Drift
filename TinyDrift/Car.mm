@@ -33,7 +33,7 @@ bool curvetoright = false;
     CGSize size = [[CCDirector sharedDirector] winSize];
     int screenW = size.width;
     
-    CGPoint startPosition = ccp(screenW/2, 100);
+    CGPoint startPosition = ccp(screenW/2, 110);
     
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
