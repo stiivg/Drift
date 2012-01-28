@@ -2,8 +2,8 @@
 //  Terrain.m
 //  TinyDrift
 //
-//  Created by Ray Wenderlich on 6/15/11.
-//  Copyright 2011 Ray Wenderlich. All rights reserved.
+//  Created by Steven Gallagher on 12/1/11.
+//  Copyright (c) 2012 Steve Gallagher. All rights reserved.
 //
 
 #import "Terrain.h"
@@ -312,17 +312,18 @@ int _lastRoadPoint = 100;
 }
 
 - (void) updateRotation:(float)newRotation {
+    self.anchorPoint = ccp(0.5, 0.5);
     self.rotation = newRotation;
-//    self.rotation = 60;
-    float rotationRadians = CC_DEGREES_TO_RADIANS(self.rotation);
-    
-    //update offset to maintain the car in the same position
-    _offsetX = _offsetX * (1 - sinf(rotationRadians));
-    _offsetY = _offsetY * (1 - cosf(rotationRadians));
-    
-    CGSize winSize = [CCDirector sharedDirector].winSize;
-    
-    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, winSize.height/4-_offsetY*self.scale);
+//    self.rotation = -20;
+//    float rotationRadians = CC_DEGREES_TO_RADIANS(self.rotation);
+//    
+//    //update offset to maintain the car in the same position
+//    _offsetX = _offsetX * (1 - sinf(rotationRadians));
+//    _offsetY = _offsetY * (1 - cosf(rotationRadians));
+//    
+//    CGSize winSize = [CCDirector sharedDirector].winSize;
+//    
+//    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, winSize.height/4-_offsetY*self.scale);
     
     //SJG TODO draw the new terrain revealed here
     //[self resetHillVertices];

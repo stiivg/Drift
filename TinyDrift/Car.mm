@@ -58,16 +58,20 @@ bool curvetoright = false;
 
 - (id)initWithWorld:(b2World *)world {
     
-    if ((self = [super initWithSpriteFrameName:@"car.png"])) {
+    if ((self = [super initWithSpriteFrameName:@"car_body.png"])) {
         _world = world;
         [self createBody];
         self.scale = 1.0;
         
-        //SJG TODO engine running animation frames
-        _normalAnim = [[CCAnimation alloc] init];
-        [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
-        [_normalAnim addFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
-        _normalAnim.delay = 0.1;
+        
+        leftWheel = [CCSprite spriteWithSpriteFrameName:@"wheel.png"];
+        leftWheel.position = ccp(2, 40);
+        [self addChild:leftWheel z:-1];
+        
+        rightWheel = [CCSprite spriteWithSpriteFrameName:@"wheel.png"];
+        rightWheel.position = ccp(27.5, 40);
+        [self addChild:rightWheel z:-1];
+        
     }
     return self;
     
@@ -207,7 +211,7 @@ static float last_distance = 0;
     
     [_normalAnimate stop];
     _normalAnimate = nil;
-    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car.png"]];
+    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car_body.png"]];
     
     //    _body->SetActive(false);
     [self createBody];
@@ -236,21 +240,23 @@ static float last_distance = 0;
 }
 
 - (void)runNormalAnimation {
-    if (_normalAnimate || !_driving) return;
-    _normalAnimate = [CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:_normalAnim]];
-    [self runAction:_normalAnimate];
+    leftWheel.rotation = 0;
+    rightWheel.rotation = 0;
 }
 
 - (void)runRightDriftAnimation {
-    [_normalAnimate stop];
-    _normalAnimate = nil;
-    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car_left.png"]];
+    float wheelTurn = -0.8 * CC_RADIANS_TO_DEGREES(_driftAngle);
+    wheelTurn = MAX(wheelTurn, -30);
+    leftWheel.rotation = wheelTurn;
+    rightWheel.rotation = wheelTurn;
+
 }
 
 - (void)runLeftDriftAnimation {
-    [_normalAnimate stop];
-    _normalAnimate = nil;
-    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car_right.png"]];
+    float wheelTurn = -0.8 * CC_RADIANS_TO_DEGREES(_driftAngle);
+    wheelTurn = MIN(wheelTurn, 30);
+    leftWheel.rotation = wheelTurn;
+    rightWheel.rotation = wheelTurn;
 }
 
 - (void)setTarget : (CGPoint)newTarget {

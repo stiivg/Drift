@@ -15,6 +15,9 @@
 @interface Car : CCSprite {
     b2World *_world;
     b2Body *_body;
+    
+    CCSprite *leftWheel;
+    CCSprite *rightWheel;
     BOOL _driving;
     float _driftAngle;
     CGPoint target;
