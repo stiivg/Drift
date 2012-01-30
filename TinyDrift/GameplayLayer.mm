@@ -14,9 +14,8 @@
 
 @implementation GameplayLayer
 
-BOOL _turbo = false;
 double k_turbo_time = 2.0;
-double driftStart; 
+double driftStartTime; 
 
 CCParticleSystem * _drift_emitter;
 CCParticleSystem * _turbo_emitter;
@@ -172,13 +171,78 @@ const bool _fixedDrift = false;
         _emitter = _drift_emitter;        
         
 
-        //SJG continuous background music off
-  //      [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TinyDrift.caf" loop:YES];
+        [[GameManager sharedGameManager] playBackgroundTrack:BACKGROUND_TRACK_RACE];
+        
         
     }
     return self;
 }
 
+-(void)scaleWithSpeed {
+    
+    float speed = _car.getSpeed;
+    float weightedSpeed = speed;
+    const float kZoomOutSpeed = 20;
+    const float kZoomInSpeed = 10;
+    
+    for(int i = 0; i < NUM_PREV_SPEEDS; ++i) {
+        weightedSpeed += _prevSpeeds[i];
+    }
+    weightedSpeed = weightedSpeed / NUM_PREV_SPEEDS;    
+    _prevSpeeds[_nextSpeed++] = speed;
+    if (_nextSpeed >= NUM_PREV_SPEEDS) _nextSpeed = 0;
+    
+    //set the target scale with hysteresis
+    //Zoom out at kZoomOutSpeed zoom in to 1.0 at kZoomInSpeed
+    if (weightedSpeed > kZoomOutSpeed && targetScale == 1.0) {
+        targetScale = MIN_SCALE;
+    } else if (weightedSpeed < kZoomInSpeed && targetScale < 1.0){
+        targetScale = 1.0;
+    }
+    
+    if (self.scale > targetScale) {
+        self.scale *= 0.99;
+        if (self.scale < targetScale) { //clamp to target
+            self.scale = targetScale;
+        }
+    } else if (self.scale < targetScale){
+        self.scale *= 1.01;
+        if (self.scale > targetScale) { //clamp to target
+            self.scale = targetScale;
+        }
+    }
+    //    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
+    
+
+}
+
+-(void)startDrift {
+    //Only create the sound source when needed
+    if (driftingSound == nil) {
+        driftingSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
+    }
+    driftingSound.looping = YES;
+    [driftingSound play];
+    _turbo_emitter.emissionRate = 0.0;
+    _emitter = _drift_emitter;
+    _emitter.emissionRate = 50.0;
+    drifting = YES;
+}
+
+-(void)endDrift {
+    if (driftingSound != 0) {
+//        [CDPropertyModifierAction fadeSoundEffect:0.1f finalVolume:0.0f curveType:kIT_Linear shouldStop:YES effect:driftingSound];
+
+        [driftingSound stop];
+    }
+    //test if end of turbo drift
+    if (turboDrifting) {
+        turboDrifting = NO;
+        [_car turboBoost];
+    }
+    drifting = NO;
+    _emitter.emissionRate = 0.0;
+}
 
 - (void)update:(ccTime)dt {
     
@@ -204,15 +268,13 @@ const bool _fixedDrift = false;
         if (_tapDown) {
             if (!_car.driving) {
                 [_car drive];
+            } else if(!drifting) {
+                [self startDrift];
             }
-        } else {
-            //test if end of turbo drift
-            if (_turbo ) {
-                _turbo = NO;
-                [_car turboBoost];
-            }
+        } else if(drifting) {
+            [self endDrift];
         }
-        _car.driftAngle = _driftControl;
+        _car.driftAngle = _driftControlAngle;
         
         _world->Step(UPDATE_INTERVAL, 
                      velocityIterations, positionIterations);        
@@ -237,70 +299,56 @@ const bool _fixedDrift = false;
     
     CGSize textureSize = _background.textureRect.size;
     [_background setTextureRect:CGRectMake(offsetX, -offsetY, textureSize.width, textureSize.height)];
+    
     //Particles when drifting only
-    if (_driftControl == 0) {
-        _emitter.emissionRate = 0.0;
-    } else {
+    if (drifting) {
         //if turbo time change emitter
-        double drift_time = CACurrentMediaTime() - driftStart; 
+        double drift_time = CACurrentMediaTime() - driftStartTime; 
         if (drift_time > k_turbo_time) {
-            _turbo = YES;
+            turboDrifting = YES;
             _drift_emitter.emissionRate = 0.0;
             _emitter = _turbo_emitter;
-        } else {
-            _turbo_emitter.emissionRate = 0.0;
-            _emitter = _drift_emitter;
+            _emitter.emissionRate = 50.0;
         }
-        _emitter.emissionRate = 50.0;
-    
+        
+
+        float soundGain = 0.2 +  ABS(_driftControlAngle) / 4;
+        soundGain = MIN(soundGain, 1.0);
+        
+        float soundPitch = 1.0 + ABS(_driftControlAngle) / 3;
+        soundPitch = MIN(soundPitch, 2.0);
+                           
+        driftingSound.gain = soundGain;    //0.0 - 1.0
+        driftingSound.pitch = soundPitch;  //0.5 - 2.0
+        
+        
+        
         float posRadians = CC_DEGREES_TO_RADIANS(90 - _car.rotation);
         CGPoint particleDrift;
         //ccpForAngle zero along x axis, CCW positive
         particleDrift = ccpForAngle(posRadians);
         particleDrift= ccpMult(particleDrift, 0);
-
+        
         _emitter.gravity = particleDrift;
-    
+        
         [_emitter setSourcePosition:ccp(_car.position.x / _emitter.scale, _car.position.y / _emitter.scale)];
+        
     }
+    
+//    float speed = [_car getSpeed];
+//    CCLOG(@"speed=%4.2f", speed);
+//    speed = MIN((speed +100)/70, 2.0);
+//    
+//    
+//    driftingSound.gain = 0.1;    //0.0 - 1.0
+//    driftingSound.pitch = speed;  //0.5 - 2.0
+//
   
     [_terrain setOffset:ccp(_car.position.x, _car.position.y)];
     //[_emitter setPosition:ccp(_car.position.x, _car.position.y)];
     
-    float speed = _car.getSpeed;
-    float weightedSpeed = speed;
-    const float kZoomOutSpeed = 20;
-    const float kZoomInSpeed = 10;
+    [self scaleWithSpeed];
     
-    for(int i = 0; i < NUM_PREV_SPEEDS; ++i) {
-        weightedSpeed += _prevSpeeds[i];
-    }
-    weightedSpeed = weightedSpeed / NUM_PREV_SPEEDS;    
-    _prevSpeeds[_nextSpeed++] = speed;
-    if (_nextSpeed >= NUM_PREV_SPEEDS) _nextSpeed = 0;
-
-    //set the target scale with hysteresis
-    //Zoom out at kZoomOutSpeed zoom in to 1.0 at kZoomInSpeed
-    if (weightedSpeed > kZoomOutSpeed && targetScale == 1.0) {
-        targetScale = MIN_SCALE;
-    } else if (weightedSpeed < kZoomInSpeed && targetScale < 1.0){
-        targetScale = 1.0;
-    }
-    
-    if (self.scale > targetScale) {
-        self.scale *= 0.99;
-        if (self.scale < targetScale) { //clamp to target
-            self.scale = targetScale;
-        }
-    } else if (self.scale < targetScale){
-        self.scale *= 1.01;
-        if (self.scale > targetScale) { //clamp to target
-            self.scale = targetScale;
-        }
-    }
-//    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
-    
-
     //uncomment to rotate view with car
 //    [_terrain updateRotation:_car.rotation];
     
@@ -319,14 +367,14 @@ static CGPoint startLoc;
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     _tapDown = YES;
-    _turbo = NO;
-    driftStart = CACurrentMediaTime();
+    turboDrifting = NO;
+    driftStartTime = CACurrentMediaTime();
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     startLoc = [[CCDirector sharedDirector] convertToGL:location];
     
     if (_car.driving && _fixedDrift) {
-        _driftControl = 0.7;
+        _driftControlAngle = 0.7;
     }
     
    // CCLOG(@"drift:  touches began x=%4.2f y=%4.2f  ", cLoc.x, cLoc.y);
@@ -335,19 +383,19 @@ static CGPoint startLoc;
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    const float kMaxDrift = 2.0;
+    const float kMaxDrift = 2.0;    //Maximum drift angle in radians
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     CGPoint cLoc = [[CCDirector sharedDirector] convertToGL:location];
     
     if (!_fixedDrift) {
-        _driftControl = (startLoc.x - cLoc.x) / 50;
+        _driftControlAngle = (startLoc.x - cLoc.x) / 50;
     }
-    if (_driftControl > kMaxDrift) {
-        _driftControl = kMaxDrift;
+    if (_driftControlAngle > kMaxDrift) {
+        _driftControlAngle = kMaxDrift;
     } else {
-        if (_driftControl < -kMaxDrift) {
-            _driftControl = -kMaxDrift;
+        if (_driftControlAngle < -kMaxDrift) {
+            _driftControlAngle = -kMaxDrift;
         }
     }
 
@@ -357,12 +405,19 @@ static CGPoint startLoc;
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     _tapDown = NO;
-    _driftControl = 0;
+    _driftControlAngle = 0;
 }
 
 - (void)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     _tapDown = NO;
-    _driftControl = 0;
+    _driftControlAngle = 0;
+}
+
+-(void) dealloc {
+    
+    //Release all our retained objects
+    [driftingSound release];
+    [super dealloc];
 }
 
 @end

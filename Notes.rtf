@@ -59,4 +59,18 @@ pico .gitignore\
 \b0 \
 From the key chain export the developer key and certificate\
 From the Organizer export the provisioning profile\
-Import these into the new computer}
+Import these into the new computer\
+\
+\
+
+\b Audio
+\b0 \
+Use Audacity to edit sounds. Opened MPEG wav file and exported to linear PCM wav format WAV 16 bit PCM\
+Command line such as afinfo\
+\
+afinfo car_skid_export.wav \
+\
+afconvert -d LEI16 -f 'caff' car_skid.wav output_file2.caf  convert file to CAFF\
+\
+\
+ }

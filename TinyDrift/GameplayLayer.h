@@ -7,9 +7,11 @@
 //
 
 #import "cocos2d.h"
+#import "Constants.h"
 #import "Terrain.h"
 #import "Box2D.h"
 #import "Car.h"
+#import "GameManager.h"
 
 #define PTM_RATIO   32.0
 #define NUM_PREV_SPEEDS   60
@@ -32,7 +34,11 @@
     float targetScale;
     
     BOOL _tapDown;
-    float _driftControl;
+    float _driftControlAngle;
+    BOOL turboDrifting;
+    BOOL drifting;
+    
+    CDSoundSource* driftingSound;
 }
 -(void)startGame;
 

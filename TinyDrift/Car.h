@@ -8,6 +8,8 @@
 
 #import "cocos2d.h"
 #import "Box2D.h"
+#import "Constants.h"
+
 
 #define NUM_PREV_VELS   5
 #define PTM_RATIO   32.0
@@ -29,6 +31,7 @@
     
     CCAnimation *_normalAnim;
     CCAnimate *_normalAnimate;
+    
 }
 
 @property (readonly) BOOL driving;

@@ -245,7 +245,7 @@ static float last_distance = 0;
 }
 
 - (void)runRightDriftAnimation {
-    float wheelTurn = -1.5 * CC_RADIANS_TO_DEGREES(_driftAngle);
+    float wheelTurn = -0.5 * CC_RADIANS_TO_DEGREES(_driftAngle);
     wheelTurn = MAX(wheelTurn, -30);
     leftWheel.rotation = wheelTurn;
     rightWheel.rotation = wheelTurn;
