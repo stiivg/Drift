@@ -10,6 +10,7 @@
 
 @implementation Car
 @synthesize driving = _driving;
+@synthesize followRoad;
 @synthesize fixedDrift;
 
 const float kDriftAcc = 40;
@@ -33,7 +34,7 @@ bool curvetoright = false;
     CGSize size = [[CCDirector sharedDirector] winSize];
     int screenW = size.width;
     
-    CGPoint startPosition = ccp(screenW/2, 110);
+    CGPoint startPosition = ccp(screenW/2, START_DOWN_ROAD);
     
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
@@ -140,7 +141,6 @@ static float last_distance = 0;
         accTotal = ccpAdd(accRadial, accTangential);
     }
 
-    BOOL followRoad = true;
     if (followRoad) {
         _body->ApplyForce( b2Vec2(accTotal.x,accTotal.y), _body->GetPosition() );
     }
@@ -183,10 +183,9 @@ static float last_distance = 0;
     if (_driving) { 
         //Apply force to stay  on road
         [self _applyForce]; 
+        
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
-        
-        
         [self _applyDriftForce];
         
     }    
@@ -195,12 +194,13 @@ static float last_distance = 0;
 
 - (void)drive {
     _driving = YES;
+    followRoad = YES;
     _driftAngle = 0;
     _body->SetActive(true);
     [self runNormalAnimation];
 }
 
-- (void)stopDrive {
+- (void)resetDrive {
     _driving = NO;
     _driftAngle = 0;
     for(int i = 0; i < NUM_PREV_VELS; ++i) {

@@ -15,7 +15,7 @@
 
 #define PTM_RATIO   32.0
 #define NUM_PREV_SPEEDS   60
-#define MIN_SCALE 0.5
+#define MIN_SCALE 0.7
 
 
 @interface GameplayLayer : CCLayer
@@ -37,6 +37,7 @@
     float _driftControlAngle;
     BOOL turboDrifting;
     BOOL drifting;
+    BOOL driftEnabled;
     
     CDSoundSource* driftingSound;
 }

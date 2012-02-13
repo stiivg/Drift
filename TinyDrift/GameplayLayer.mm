@@ -90,7 +90,8 @@ const bool _fixedDrift = false;
     
     [_background removeFromParentAndCleanup:YES];
     //Use fixed road color
-    ccColor4B roadColor = ccc4(209, 133, 34, 255);
+    ccColor4B roadColor = ccc4(209, 133, 34, 255); // brown
+//    ccColor4B roadColor = ccc4(20, 200, 30, 255); // green
     ccColor4F bgColor = ccc4FFromccc4B(roadColor);
     
     _background = [self spriteWithColor:bgColor textureSize:512/CC_CONTENT_SCALE_FACTOR()];
@@ -154,7 +155,7 @@ const bool _fixedDrift = false;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
-        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern.png"];
+        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_fade_inverted.png"];
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
@@ -170,7 +171,7 @@ const bool _fixedDrift = false;
         [self setupEmitters];
         _emitter = _drift_emitter;        
         
-
+        driftEnabled = YES;
         [[GameManager sharedGameManager] playBackgroundTrack:BACKGROUND_TRACK_RACE];
         
         
@@ -268,13 +269,16 @@ const bool _fixedDrift = false;
         if (_tapDown) {
             if (!_car.driving) {
                 [_car drive];
-            } else if(!drifting) {
+            } else if(driftEnabled && !drifting) {
                 [self startDrift];
             }
         } else if(drifting) {
             [self endDrift];
         }
-        _car.driftAngle = _driftControlAngle;
+        
+        if (driftEnabled) {
+            _car.driftAngle = _driftControlAngle;
+        }
         
         _world->Step(UPDATE_INTERVAL, 
                      velocityIterations, positionIterations);        
@@ -283,6 +287,16 @@ const bool _fixedDrift = false;
     }
             
     CGPoint target = [_terrain nextTargetPoint:_car.position];
+    if (target.x == 0 && target.y == 0) {
+        //end of path
+        _car.followRoad = NO;
+        [self endDrift];
+        driftEnabled = NO;
+        _car.driftAngle = 0;
+        
+//        [[GameManager sharedGameManager] endRace ];
+//        return;
+    }
     [_car setTarget:target];
     
     float targetCurve = [_terrain targetCurve];
@@ -355,7 +369,8 @@ const bool _fixedDrift = false;
 }
 
 -(void)startGame {
-    [_car stopDrive];
+    [_car resetDrive];
+    driftEnabled = YES;
     //Reset the target point after the car has stopped
     [_terrain resetTargetPoint];
     

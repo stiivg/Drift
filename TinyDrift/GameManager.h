@@ -37,6 +37,7 @@
 -(void)pauseGame;
 -(void)resumeGame;
 -(void)playGame;
+-(void)endRace;
 -(void)runSceneWithID:(SceneTypes)sceneID;
 -(void)setupAudioEngine;
 -(CDSoundSource*)createSoundSource:(NSString*)soundEffectKey;

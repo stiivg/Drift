@@ -13,6 +13,7 @@
 
 #define NUM_PREV_VELS   5
 #define PTM_RATIO   32.0
+#define START_DOWN_ROAD 200
 
 @interface Car : CCSprite {
     b2World *_world;
@@ -35,12 +36,13 @@
 }
 
 @property (readonly) BOOL driving;
+@property BOOL followRoad;
 @property float driftAngle;
 @property BOOL fixedDrift;
 
 - (void)runNormalAnimation;
 - (void)drive;
-- (void)stopDrive;
+- (void)resetDrive;
 - (void)turboBoost;
 - (void)setTarget: (CGPoint) newTarget;
 - (void)setPathTangent: (CGPoint) newTangent;

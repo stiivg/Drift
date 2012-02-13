@@ -6,10 +6,12 @@
 //  Copyright (c) 2011 Steve Gallagher. All rights reserved.
 //
 
+#import "cocos2d.h"
 #import "GameManager.h"
 #import "ccMacros.h"
 #import "GameScene.h"
 #import "MainScene.h"
+#import "Race2Scene.h"
 
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
@@ -131,6 +133,9 @@ static GameManager* _sharedGameManager = nil;
             break;
         case kGameScene:
             result = @"kGameScene";
+            break;
+        case kRace2Scene:
+            result = @"kRace2Scene";
             break;
         default:
             [NSException raise:NSGenericException format:@"Unexpected SceneType."];
@@ -343,6 +348,10 @@ static GameManager* _sharedGameManager = nil;
             sceneToRun  = [MainScene node];
             break;
             
+        case kRace2Scene:
+            sceneToRun  = [Race2Scene node];
+            break;
+            
         default:
             return;
             break;
@@ -359,6 +368,7 @@ static GameManager* _sharedGameManager = nil;
         [[CCDirector sharedDirector] runWithScene:sceneToRun];
     } else {
         [[CCDirector sharedDirector] replaceScene:sceneToRun];
+//        [[CCDirector sharedDirector] replaceScene:[CCTransitionFlipX transitionWithDuration:1.0 scene: sceneToRun]];
     }
     
     [self performSelectorInBackground:@selector(unloadAudioForSceneWithID:) withObject:[NSNumber numberWithInt:oldScene]];
@@ -380,6 +390,11 @@ static GameManager* _sharedGameManager = nil;
     _paused = NO;
 }
 
+-(void)endRace {
+    //end of first race scene
+    [self runSceneWithID:kRace2Scene];
+    
+}
 
 @end
 

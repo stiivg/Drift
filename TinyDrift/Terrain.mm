@@ -238,14 +238,15 @@ int _lastRoadPoint = 100;
 
 
 //Return the next road point past the look ahead distance
+//return 0,0 if end of path
 - (CGPoint)nextTargetPoint:(CGPoint)position {
     //scale position in points to actual pixels
     position.x *= CC_CONTENT_SCALE_FACTOR();
     position.y *= CC_CONTENT_SCALE_FACTOR();
     
     CGPoint testPoint = _pathPoints[_targetRoadIndex];
-    
-    for (; _targetRoadIndex<_lastRoadPoint; _targetRoadIndex++) {
+    //stop for end of path
+    for (; _targetRoadIndex<_lastRoadPoint - 50; _targetRoadIndex++) {
         testPoint = _pathPoints[_targetRoadIndex];
         int dx =  (int)(position.x - testPoint.x);
         int dy =  (int)(position.y - testPoint.y);
@@ -264,8 +265,8 @@ int _lastRoadPoint = 100;
         }
     }
     
-    //    testPoint.x = 160;
-    //    testPoint.y = 600;
+    testPoint.x = 0;
+    testPoint.y = 0;
     return testPoint;
 }
 
