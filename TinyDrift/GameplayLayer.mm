@@ -194,11 +194,11 @@ const bool _fixedDrift = false;
     if (_nextSpeed >= NUM_PREV_SPEEDS) _nextSpeed = 0;
     
     //set the target scale with hysteresis
-    //Zoom out at kZoomOutSpeed zoom in to 1.0 at kZoomInSpeed
-    if (weightedSpeed > kZoomOutSpeed && targetScale == 1.0) {
+    //Zoom out at kZoomOutSpeed zoom in at kZoomInSpeed
+    if (weightedSpeed > kZoomOutSpeed && targetScale == MAX_SCALE) {
         targetScale = MIN_SCALE;
-    } else if (weightedSpeed < kZoomInSpeed && targetScale < 1.0){
-        targetScale = 1.0;
+    } else if (weightedSpeed < kZoomInSpeed && targetScale < MAX_SCALE){
+        targetScale = MAX_SCALE;
     }
     
     if (self.scale > targetScale) {
