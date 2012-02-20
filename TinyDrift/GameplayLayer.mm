@@ -245,13 +245,7 @@ const bool _fixedDrift = false;
     _emitter.emissionRate = 0.0;
 }
 
-- (void)update:(ccTime)dt {
-    
-    //test if paused
-    if ([[GameManager sharedGameManager] isGamePaused]) return;
-
-//    self.scale *= 0.99;
-    
+-(void)updatePhysics:(ccTime)dt {
     static double UPDATE_INTERVAL = 1.0f/60.0f;
     static double MAX_CYCLES_PER_FRAME = 5;
     static double timeAccumulator = 0;
@@ -266,33 +260,43 @@ const bool _fixedDrift = false;
     while (timeAccumulator >= UPDATE_INTERVAL) {        
         timeAccumulator -= UPDATE_INTERVAL;       
         
-        if (_tapDown) {
-            if (!_car.driving) {
-                [_car drive];
-            } else if(driftEnabled && !drifting) {
-                [self startDrift];
-            }
-        } else if(drifting) {
-            [self endDrift];
-        }
-        
-        if (driftEnabled) {
-            _car.driftAngle = _driftControlAngle;
-        }
-        
         _world->Step(UPDATE_INTERVAL, 
                      velocityIterations, positionIterations);        
         _world->ClearForces();
         
     }
+   
+}
+
+- (void)update:(ccTime)dt {
+    
+    //test if paused
+    if ([[GameManager sharedGameManager] isGamePaused]) return;
+    
+    [self updatePhysics:dt];
+    
+    if (_tapDown) {
+        if (!_car.driving) {
+            [_car drive];
+        } else if(driftEnabled && !drifting) {
+            [self startDrift];
+        }
+    } else if(drifting) {
+        [self endDrift];
+    }
+    
+    if (driftEnabled) {
+        _car.driftAngle = _driftControlAngle;
+    }
             
     CGPoint target = [_terrain nextTargetPoint:_car.position];
-    if (target.x == 0 && target.y == 0) {
-        //end of path
-        _car.followRoad = NO;
+    if ([_terrain atDriveEnd]) {
+        //end of path drive section
+        _car.followRoad = YES;
         [self endDrift];
         driftEnabled = NO;
         _car.driftAngle = 0;
+        _car.roadSpeed = END_SPEED;
         
 //        [[GameManager sharedGameManager] endRace ];
 //        return;
@@ -345,21 +349,11 @@ const bool _fixedDrift = false;
         
         _emitter.gravity = particleDrift;
         
-        [_emitter setSourcePosition:ccp(_car.position.x / _emitter.scale, _car.position.y / _emitter.scale)];
-        
+        [_emitter setSourcePosition:ccp(_car.position.x / _emitter.scale, _car.position.y / _emitter.scale)];        
     }
     
-//    float speed = [_car getSpeed];
-//    CCLOG(@"speed=%4.2f", speed);
-//    speed = MIN((speed +100)/70, 2.0);
-//    
-//    
-//    driftingSound.gain = 0.1;    //0.0 - 1.0
-//    driftingSound.pitch = speed;  //0.5 - 2.0
-//
   
     [_terrain setOffset:ccp(_car.position.x, _car.position.y)];
-    //[_emitter setPosition:ccp(_car.position.x, _car.position.y)];
     
     [self scaleWithSpeed];
     

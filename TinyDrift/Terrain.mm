@@ -245,8 +245,8 @@ int _lastRoadPoint = 100;
     position.y *= CC_CONTENT_SCALE_FACTOR();
     
     CGPoint testPoint = _pathPoints[_targetRoadIndex];
-    //stop for end of path
-    for (; _targetRoadIndex<_lastRoadPoint - 50; _targetRoadIndex++) {
+
+    for (; _targetRoadIndex<_lastRoadPoint; _targetRoadIndex++) {
         testPoint = _pathPoints[_targetRoadIndex];
         int dx =  (int)(position.x - testPoint.x);
         int dy =  (int)(position.y - testPoint.y);
@@ -268,6 +268,11 @@ int _lastRoadPoint = 100;
     testPoint.x = 0;
     testPoint.y = 0;
     return testPoint;
+}
+
+//True if at end of path drive section
+- (BOOL)atDriveEnd {
+    return _targetRoadIndex >= _lastRoadPoint-160;
 }
 
 //Returns path curve at the target point

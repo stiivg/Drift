@@ -39,6 +39,7 @@
 @property BOOL followRoad;
 @property float driftAngle;
 @property BOOL fixedDrift;
+@property float roadSpeed;
 
 - (void)runNormalAnimation;
 - (void)drive;

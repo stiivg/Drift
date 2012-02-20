@@ -12,6 +12,7 @@
 @synthesize driving = _driving;
 @synthesize followRoad;
 @synthesize fixedDrift;
+@synthesize roadSpeed;
 
 const float kDriftAcc = 40;
 
@@ -73,6 +74,7 @@ bool curvetoright = false;
         rightWheel.position = ccp(27.5, 40);
         [self addChild:rightWheel z:-1];
         
+        roadSpeed = kDefaultRoadSpeed;
     }
     return self;
     
@@ -129,7 +131,7 @@ static float last_distance = 0;
     //Add force along path if needed
     CGPoint velT = ccpProject(velocity, pathTangent);
     float speedT = ccpLength(velT);
-    if (speedT < kDefaultRoadSpeed) {
+    if (speedT < roadSpeed) {
         accTangential = ccpNormalize(pathTangent);
         accTangential = ccpMult(accTangential, kDefaultRoadAcc);
     }
@@ -217,6 +219,7 @@ static float last_distance = 0;
     [self createBody];
     //Reset the car position to the starting body position
     self.position = [self toPixels:_body->GetPosition()];
+    self.roadSpeed = kDefaultRoadSpeed;
 
 }
 

@@ -48,6 +48,7 @@
 - (CGPoint)nextTargetPoint:(CGPoint)position;
 - (CGPoint)targetTangent;
 - (float)targetCurve;
+- (BOOL)atDriveEnd;
 - (void) setOffset:(CGPoint)newOffset;
 - (void) updateRotation:(float)rotation;
 - (id)initWithWorld:(b2World *)world;
