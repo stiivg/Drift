@@ -158,7 +158,6 @@
 		643AE524142FFBE00079501A /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 643AE516142FFBE00079501A /* GLES-Render.mm */; };
 		643AE525142FFBE00079501A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643AE517142FFBE00079501A /* main.m */; };
 		643AE526142FFBE00079501A /* Noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE518142FFBE00079501A /* Noise.png */; };
-		643AE527142FFBE00079501A /* road_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE51A142FFBE00079501A /* road_pattern.png */; };
 		643AE529142FFBE00079501A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 643AE51D142FFBE00079501A /* RootViewController.m */; };
 		643AE52A142FFBE00079501A /* Terrain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 643AE51F142FFBE00079501A /* Terrain.mm */; };
 		643AE6E41430064A0079501A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 643AE6DE143006490079501A /* Icon-72.png */; };
@@ -211,13 +210,14 @@
 		64B4D0F514CB48C3000F20C3 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0F114CB48C2000F20C3 /* menu.png */; };
 		64B4D0F714CC79A0000F20C3 /* LoopLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0F614CC79A0000F20C3 /* LoopLayer.mm */; };
 		64B4D0FE14D4C365000F20C3 /* SoundEffects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0FD14D4C365000F20C3 /* SoundEffects.plist */; };
-		64B4D10214D5C631000F20C3 /* road_pattern_fade.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D10114D5C630000F20C3 /* road_pattern_fade.png */; };
 		64B4D10414D5EE08000F20C3 /* dirtcar_loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D10314D5EE08000F20C3 /* dirtcar_loop.wav */; };
 		64B4D10614DE2DA1000F20C3 /* leaves.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D10514DE2D9F000F20C3 /* leaves.png */; };
 		64B4D10A14DF0611000F20C3 /* Race2Layer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D10914DF0611000F20C3 /* Race2Layer.mm */; };
 		64B4D10E14DF076A000F20C3 /* Race2Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D10D14DF076A000F20C3 /* Race2Scene.mm */; };
-		64B4D11114E6F584000F20C3 /* road_pattern_fade_inverted.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D10F14E6F581000F20C3 /* road_pattern_fade_inverted.png */; };
-		64B4D11214E6F584000F20C3 /* road_pattern_inverted.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11014E6F583000F20C3 /* road_pattern_inverted.png */; };
+		64B4D11414F32309000F20C3 /* road_pattern_inverted_fade-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11314F32306000F20C3 /* road_pattern_inverted_fade-hd.png */; };
+		64B4D11614F341EB000F20C3 /* road_pattern_inverted_fade.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11514F341EA000F20C3 /* road_pattern_inverted_fade.png */; };
+		64B4D11914F34732000F20C3 /* grid-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11714F3472F000F20C3 /* grid-hd.png */; };
+		64B4D11A14F34732000F20C3 /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11814F34731000F20C3 /* grid.png */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
 		E1E7766513A8F71100DF595A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766413A8F71100DF595A /* QuartzCore.framework */; };
 		E1E7766713A8F71100DF595A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766613A8F71100DF595A /* OpenGLES.framework */; };
@@ -535,7 +535,6 @@
 		643AE517142FFBE00079501A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TinyDrift/main.m; sourceTree = SOURCE_ROOT; };
 		643AE518142FFBE00079501A /* Noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Noise.png; path = TinyDrift/Noise.png; sourceTree = SOURCE_ROOT; };
 		643AE519142FFBE00079501A /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = TinyDrift/Prefix.pch; sourceTree = SOURCE_ROOT; };
-		643AE51A142FFBE00079501A /* road_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = road_pattern.png; path = TinyDrift/road_pattern.png; sourceTree = SOURCE_ROOT; };
 		643AE51C142FFBE00079501A /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = TinyDrift/RootViewController.h; sourceTree = SOURCE_ROOT; };
 		643AE51D142FFBE00079501A /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = TinyDrift/RootViewController.m; sourceTree = SOURCE_ROOT; };
 		643AE51E142FFBE00079501A /* Terrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Terrain.h; path = TinyDrift/Terrain.h; sourceTree = SOURCE_ROOT; };
@@ -599,15 +598,16 @@
 		64B4D0F614CC79A0000F20C3 /* LoopLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoopLayer.mm; path = TinyDrift/LoopLayer.mm; sourceTree = SOURCE_ROOT; };
 		64B4D0F814CC79C1000F20C3 /* LoopLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoopLayer.h; path = TinyDrift/LoopLayer.h; sourceTree = SOURCE_ROOT; };
 		64B4D0FD14D4C365000F20C3 /* SoundEffects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SoundEffects.plist; sourceTree = "<group>"; };
-		64B4D10114D5C630000F20C3 /* road_pattern_fade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = road_pattern_fade.png; path = TinyDrift/road_pattern_fade.png; sourceTree = SOURCE_ROOT; };
 		64B4D10314D5EE08000F20C3 /* dirtcar_loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dirtcar_loop.wav; sourceTree = "<group>"; };
 		64B4D10514DE2D9F000F20C3 /* leaves.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaves.png; path = TinyDrift/leaves.png; sourceTree = SOURCE_ROOT; };
 		64B4D10914DF0611000F20C3 /* Race2Layer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Race2Layer.mm; path = TinyDrift/Race2Layer.mm; sourceTree = SOURCE_ROOT; };
 		64B4D10B14DF0637000F20C3 /* Race2Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Race2Layer.h; path = TinyDrift/Race2Layer.h; sourceTree = SOURCE_ROOT; };
 		64B4D10C14DF073D000F20C3 /* Race2Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Race2Scene.h; path = TinyDrift/Race2Scene.h; sourceTree = SOURCE_ROOT; };
 		64B4D10D14DF076A000F20C3 /* Race2Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Race2Scene.mm; path = TinyDrift/Race2Scene.mm; sourceTree = SOURCE_ROOT; };
-		64B4D10F14E6F581000F20C3 /* road_pattern_fade_inverted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = road_pattern_fade_inverted.png; path = TinyDrift/road_pattern_fade_inverted.png; sourceTree = SOURCE_ROOT; };
-		64B4D11014E6F583000F20C3 /* road_pattern_inverted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = road_pattern_inverted.png; path = TinyDrift/road_pattern_inverted.png; sourceTree = SOURCE_ROOT; };
+		64B4D11314F32306000F20C3 /* road_pattern_inverted_fade-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "road_pattern_inverted_fade-hd.png"; path = "TinyDrift/road_pattern_inverted_fade-hd.png"; sourceTree = SOURCE_ROOT; };
+		64B4D11514F341EA000F20C3 /* road_pattern_inverted_fade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = road_pattern_inverted_fade.png; path = TinyDrift/road_pattern_inverted_fade.png; sourceTree = SOURCE_ROOT; };
+		64B4D11714F3472F000F20C3 /* grid-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grid-hd.png"; path = "TinyDrift/grid-hd.png"; sourceTree = SOURCE_ROOT; };
+		64B4D11814F34731000F20C3 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grid.png; path = TinyDrift/grid.png; sourceTree = SOURCE_ROOT; };
 		64E063EA1430180F007234F4 /* TinyDrift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyDrift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EB35C3148BF28A00B0CDAC /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = TinyDrift/pause.png; sourceTree = SOURCE_ROOT; };
 		E1E7766413A8F71100DF595A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1132,6 +1132,8 @@
 		64476DA2149469B20022FBE6 /* Race */ = {
 			isa = PBXGroup;
 			children = (
+				64B4D11714F3472F000F20C3 /* grid-hd.png */,
+				64B4D11814F34731000F20C3 /* grid.png */,
 				64B4D0EE14CB48BF000F20C3 /* menu_selected-hd.png */,
 				64B4D0EF14CB48C0000F20C3 /* menu_selected.png */,
 				64B4D0F014CB48C1000F20C3 /* menu-hd.png */,
@@ -1153,10 +1155,8 @@
 				643AE516142FFBE00079501A /* GLES-Render.mm */,
 				643AE518142FFBE00079501A /* Noise.png */,
 				64B4D10514DE2D9F000F20C3 /* leaves.png */,
-				643AE51A142FFBE00079501A /* road_pattern.png */,
-				64B4D10114D5C630000F20C3 /* road_pattern_fade.png */,
-				64B4D10F14E6F581000F20C3 /* road_pattern_fade_inverted.png */,
-				64B4D11014E6F583000F20C3 /* road_pattern_inverted.png */,
+				64B4D11314F32306000F20C3 /* road_pattern_inverted_fade-hd.png */,
+				64B4D11514F341EA000F20C3 /* road_pattern_inverted_fade.png */,
 				643AE51E142FFBE00079501A /* Terrain.h */,
 				643AE51F142FFBE00079501A /* Terrain.mm */,
 				64560928149D4098006B4FBA /* resume_selected.png */,
@@ -1368,7 +1368,6 @@
 				643AE50C142FFB9F0079501A /* TinySeal.caf in Resources */,
 				643AE522142FFBE00079501A /* fire.png in Resources */,
 				643AE526142FFBE00079501A /* Noise.png in Resources */,
-				643AE527142FFBE00079501A /* road_pattern.png in Resources */,
 				643AE6E41430064A0079501A /* Icon-72.png in Resources */,
 				643AE6E51430064A0079501A /* Icon-Small-50.png in Resources */,
 				643AE6E61430064A0079501A /* Icon-Small.png in Resources */,
@@ -1420,11 +1419,12 @@
 				64B4D0F414CB48C3000F20C3 /* menu-hd.png in Resources */,
 				64B4D0F514CB48C3000F20C3 /* menu.png in Resources */,
 				64B4D0FE14D4C365000F20C3 /* SoundEffects.plist in Resources */,
-				64B4D10214D5C631000F20C3 /* road_pattern_fade.png in Resources */,
 				64B4D10414D5EE08000F20C3 /* dirtcar_loop.wav in Resources */,
 				64B4D10614DE2DA1000F20C3 /* leaves.png in Resources */,
-				64B4D11114E6F584000F20C3 /* road_pattern_fade_inverted.png in Resources */,
-				64B4D11214E6F584000F20C3 /* road_pattern_inverted.png in Resources */,
+				64B4D11414F32309000F20C3 /* road_pattern_inverted_fade-hd.png in Resources */,
+				64B4D11614F341EB000F20C3 /* road_pattern_inverted_fade.png in Resources */,
+				64B4D11914F34732000F20C3 /* grid-hd.png in Resources */,
+				64B4D11A14F34732000F20C3 /* grid.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

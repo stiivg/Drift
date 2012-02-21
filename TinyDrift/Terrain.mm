@@ -151,7 +151,7 @@ int _lastRoadPoint = 100;
     CGPoint l0, r0;
     CGFloat roadDistance = 0;
     
-    int half_road_width = 256; // for half width 64;
+    int half_road_width = 256; 
     
     _targetRoadIndex= 1;
     p0 = _pathPoints[0];
@@ -185,6 +185,14 @@ int _lastRoadPoint = 100;
     _debugDraw->SetFlags(b2DebugDraw::e_shapeBit | b2DebugDraw::e_jointBit);
 }
 
+- (void)addGate {
+    CCSprite *grid = [CCSprite spriteWithFile:@"grid.png"];
+    CGPoint driveEndPoint = _pathPoints[_lastRoadPoint-kPointsToEnd];
+    driveEndPoint = ccpMult(driveEndPoint, 1/CC_CONTENT_SCALE_FACTOR());
+    grid.position = driveEndPoint;
+    [self addChild:grid];
+}
+
 - (id)initWithWorld:(b2World *)world {
     if ((self = [super init])) {
         _world = world;
@@ -200,6 +208,8 @@ int _lastRoadPoint = 100;
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"driftCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"driftCar.plist"];
+        
+        [self addGate];
     }
     return self;
 }
@@ -272,7 +282,7 @@ int _lastRoadPoint = 100;
 
 //True if at end of path drive section
 - (BOOL)atDriveEnd {
-    return _targetRoadIndex >= _lastRoadPoint-160;
+    return _targetRoadIndex >= _lastRoadPoint-kPointsToEnd;
 }
 
 //Returns path curve at the target point

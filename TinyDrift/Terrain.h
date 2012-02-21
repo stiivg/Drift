@@ -16,7 +16,8 @@
 #define kMaxRoadKeyPoints 1000
 #define kRoadSegmentWidth 5
 #define kMaxRoadVertices 4000
-#define kMaxBorderVertices 800 
+#define kMaxBorderVertices 800
+#define kPointsToEnd 160
 
 @interface Terrain : CCNode {
     int _offsetX;

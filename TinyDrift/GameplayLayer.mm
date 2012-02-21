@@ -155,7 +155,7 @@ const bool _fixedDrift = false;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
-        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_fade_inverted.png"];
+        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_inverted_fade.png"];
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
