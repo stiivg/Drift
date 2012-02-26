@@ -14,6 +14,8 @@
 	<dict>
 		<key>ENGINE</key>
 		<string>dirtcar_loop.wav</string>
+		<key>GRAVEL</key>
+		<string>gravel_loop.wav</string>
 	</dict>
 </dict>
 </plist>

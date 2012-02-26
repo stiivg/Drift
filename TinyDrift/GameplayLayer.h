@@ -41,7 +41,8 @@
     BOOL drifting;
     BOOL driftEnabled;
     
-    CDSoundSource* driftingSound;
+    CDSoundSource* engineSound;
+    CDSoundSource* gravelSound;
 }
 -(void)startGame;
 

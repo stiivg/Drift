@@ -179,6 +179,13 @@ const bool _fixedDrift = false;
     return self;
 }
 
+- (void)clearWeightedSpeed {
+    for(int i = 0; i < NUM_PREV_SPEEDS; ++i) {
+        _prevSpeeds[i] = 0;
+    }
+   
+}
+
 -(void)scaleWithSpeed {
     
     float speed = _car.getSpeed;
@@ -212,18 +219,43 @@ const bool _fixedDrift = false;
             self.scale = targetScale;
         }
     }
-    //    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
+//    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
     
-
+    if (engineSound == nil) {
+        engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
+    }
+    engineSound.looping = YES;
+    
+    if (weightedSpeed == 0) {
+        [engineSound stop];
+    } else {
+        if (engineSound.isPlaying == NO) {
+            [engineSound play];
+        }
+    }
+    
+    float speedGain = 0.02 +  weightedSpeed / 100;
+    speedGain = MIN(speedGain, 1.0);
+    
+    float speedPitch = 0.8 + weightedSpeed / 70;
+    speedPitch = MIN(speedPitch, 1.6);
+    
+    if(drifting == NO) {
+        engineSound.gain = speedGain;   
+        engineSound.pitch = speedPitch;
+    }
+    
+    
+    
 }
 
 -(void)startDrift {
     //Only create the sound source when needed
-    if (driftingSound == nil) {
-        driftingSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
+    if (gravelSound == nil) {
+        gravelSound = [[GameManager sharedGameManager] createSoundSource:@"GRAVEL"];
     }
-    driftingSound.looping = YES;
-    [driftingSound play];
+    gravelSound.looping = YES;
+    [gravelSound play];
     _turbo_emitter.emissionRate = 0.0;
     _emitter = _drift_emitter;
     _emitter.emissionRate = 50.0;
@@ -231,10 +263,10 @@ const bool _fixedDrift = false;
 }
 
 -(void)endDrift {
-    if (driftingSound != 0) {
+    if (gravelSound != 0) {
 //        [CDPropertyModifierAction fadeSoundEffect:0.1f finalVolume:0.0f curveType:kIT_Linear shouldStop:YES effect:driftingSound];
 
-        [driftingSound stop];
+        [gravelSound stop];
     }
     //test if end of turbo drift
     if (turboDrifting) {
@@ -271,7 +303,11 @@ const bool _fixedDrift = false;
 - (void)update:(ccTime)dt {
     
     //test if paused
-    if ([[GameManager sharedGameManager] isGamePaused]) return;
+    if ([[GameManager sharedGameManager] isGamePaused]) {
+        [gravelSound stop];
+        [engineSound stop];
+        return;
+    }
     
     [self updatePhysics:dt];
     
@@ -336,8 +372,11 @@ const bool _fixedDrift = false;
         float soundPitch = 1.0 + ABS(_driftControlAngle) / 3;
         soundPitch = MIN(soundPitch, 2.0);
                            
-        driftingSound.gain = soundGain;    //0.0 - 1.0
-        driftingSound.pitch = soundPitch;  //0.5 - 2.0
+        engineSound.gain = soundGain;    //0.2 - 1.0
+        engineSound.pitch = soundPitch;  //1.0 - 2.0
+        
+        gravelSound.gain = soundGain+.5;    //0.2 - 1.0
+        gravelSound.pitch = soundPitch;  //1.0 - 2.0
         
         
         
@@ -367,6 +406,7 @@ const bool _fixedDrift = false;
     driftEnabled = YES;
     //Reset the target point after the car has stopped
     [_terrain resetTargetPoint];
+    [self clearWeightedSpeed];
     
 }
 
@@ -425,7 +465,8 @@ static CGPoint startLoc;
 -(void) dealloc {
     
     //Release all our retained objects
-    [driftingSound release];
+    [engineSound release];
+    [gravelSound release];
     [super dealloc];
 }
 
