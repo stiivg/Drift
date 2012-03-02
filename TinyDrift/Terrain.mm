@@ -151,7 +151,7 @@ int _lastRoadPoint = 100;
     CGPoint l0, r0;
     CGFloat roadDistance = 0;
     
-    int half_road_width = 256; 
+    int half_road_width = 128 * CC_CONTENT_SCALE_FACTOR(); 
     
     _targetRoadIndex= 1;
     p0 = _pathPoints[0];
