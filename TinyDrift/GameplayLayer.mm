@@ -153,6 +153,10 @@ const bool _fixedDrift = false;
         
         targetScale = 1.0;
         
+        _carRoadIndex = 1;
+        _chaseCarRoadIndex = 1;
+
+        
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
         CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_inverted_fade.png"];
@@ -164,10 +168,16 @@ const bool _fixedDrift = false;
         self.isTouchEnabled = YES;  
         [self scheduleUpdate];
         
-        _car = [[[Car alloc] initWithWorld:_world] autorelease];
+        _car = [[[Car alloc] initWithWorld:_world spriteFrameName:@"car_body.png"] autorelease];
         [_terrain.batchNode addChild:_car];
         _car.fixedDrift = _fixedDrift;
         
+        _chaseCar = [[[Car alloc] initWithWorld:_world spriteFrameName:@"chase_car_body.png"] autorelease];
+        [_terrain.batchNode addChild:_chaseCar];
+        
+        _chaseCar.roadSpeed = 30;
+        [_chaseCar drive];
+
         [self setupEmitters];
         _emitter = _drift_emitter;        
         
@@ -324,7 +334,8 @@ const bool _fixedDrift = false;
     if (driftEnabled) {
         _car.driftAngle = _driftControlAngle;
     }
-            
+    
+    _terrain.targetRoadIndex = _carRoadIndex;
     CGPoint target = [_terrain nextTargetPoint:_car.position];
     if ([_terrain atDriveEnd]) {
         //end of path drive section
@@ -350,6 +361,22 @@ const bool _fixedDrift = false;
     float offsetX = _car.position.x;
     float offsetY = _car.position.y;
     
+    _carRoadIndex = _terrain.targetRoadIndex;
+    _terrain.targetRoadIndex = _chaseCarRoadIndex;
+    
+    target = [_terrain nextTargetPoint:_chaseCar.position];
+    [_chaseCar setTarget:target];
+    targetCurve = [_terrain targetCurve];
+    [_chaseCar setPathCurve:targetCurve];
+    
+    // CCLOG(@"drift:  target x=%4.2f y=%4.2f  ", target.x, target.y);
+    tangent = [_terrain targetTangent];
+    [_chaseCar setPathTangent:tangent];
+    
+    [_chaseCar update];
+    _chaseCarRoadIndex = _terrain.targetRoadIndex;
+   
+
     
     CGSize textureSize = _background.textureRect.size;
     [_background setTextureRect:CGRectMake(offsetX, -offsetY, textureSize.width, textureSize.height)];
@@ -401,11 +428,26 @@ const bool _fixedDrift = false;
     
 }
 
+-(void)destroyBodies {
+    //Destroy any body if exists
+    b2Body* body_list =  _world->GetBodyList();
+    if (body_list != NULL) {
+        _world->DestroyBody(body_list);
+    }
+}
+
 -(void)startGame {
+    [self destroyBodies];
+    
     [_car resetDrive];
+    [_chaseCar resetDrive];
+    _chaseCar.roadSpeed = 50;
+    [_chaseCar drive];
+
     driftEnabled = YES;
     //Reset the target point after the car has stopped
-    [_terrain resetTargetPoint];
+    _carRoadIndex = 1;
+    _chaseCarRoadIndex = 1;
     [self clearWeightedSpeed];
     
 }

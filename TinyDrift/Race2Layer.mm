@@ -126,7 +126,7 @@ CCParticleSystem * _turbo3_emitter;
         self.isTouchEnabled = YES;  
         [self scheduleUpdate];
         
-        _car = [[[Car alloc] initWithWorld:_world] autorelease];
+        _car = [[[Car alloc] initWithWorld:_world spriteFrameName:@"car_body.png"] autorelease];
         [_terrain.batchNode addChild:_car];
         
         [self setupEmitters];

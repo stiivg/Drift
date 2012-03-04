@@ -12,6 +12,7 @@
 @implementation Terrain
 @synthesize batchNode = _batchNode;
 @synthesize roadTexture = _roadTexture;
+@synthesize targetRoadIndex = _targetRoadIndex;
 
 int _lastRoadPoint = 100;
 
@@ -314,7 +315,7 @@ int _lastRoadPoint = 100;
 //Subtract the constant pixel offset desired
 //Divide by scale to convert pixels to scaled units
 -(void) setOffset:(CGPoint)newOffset {
-    const float kBaseOffset = 100;
+    const float kBaseOffset = 200;
     CGSize winSize = [CCDirector sharedDirector].winSize;
     float scale = self.parent.scale;
     float viewOffset  = (winSize.height/2 * (1 - scale) - kBaseOffset) / scale;

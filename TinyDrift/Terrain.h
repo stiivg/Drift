@@ -44,6 +44,7 @@
 
 @property (retain) CCSpriteBatchNode * batchNode;
 @property (retain) CCSprite * roadTexture;
+@property int targetRoadIndex;
 
 - (void)resetTargetPoint;
 - (CGPoint)nextTargetPoint:(CGPoint)position;

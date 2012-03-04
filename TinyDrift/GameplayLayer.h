@@ -29,6 +29,10 @@
     
     Car * _car;
     CCParticleSystem * _emitter;
+    int _carRoadIndex;
+    
+    Car * _chaseCar;
+    int _chaseCarRoadIndex;
     
     float _prevSpeeds[NUM_PREV_SPEEDS];
     int _nextSpeed;

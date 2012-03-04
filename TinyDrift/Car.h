@@ -18,9 +18,12 @@
 @interface Car : CCSprite {
     b2World *_world;
     b2Body *_body;
+    float last_distance;
     
     CCSprite *leftWheel;
     CCSprite *rightWheel;
+    
+    CCSprite *shadow;
     BOOL _driving;
     float _driftAngle;
     CGPoint target;
@@ -48,7 +51,7 @@
 - (void)setTarget: (CGPoint) newTarget;
 - (void)setPathTangent: (CGPoint) newTangent;
 - (void)setPathCurve: (float) newCurve;
-- (id)initWithWorld:(b2World *)world;
+- (id)initWithWorld:(b2World *)world spriteFrameName:(NSString*)name;
 - (void)update;
 - (float)getSpeed;
 

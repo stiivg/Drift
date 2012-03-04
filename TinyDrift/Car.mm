@@ -24,13 +24,7 @@ const float kTurboImpulse = 80;
 
 bool curvetoright = false;
 
-- (void)createBody {
-    //Destroy any body if exists
-    b2Body* body_list =  _world->GetBodyList();
-    if (body_list != NULL) {
-        _world->DestroyBody(body_list);
-    }
-    
+- (void)createBody {    
     float radius = 16.0f;
     CGSize size = [[CCDirector sharedDirector] winSize];
     int screenW = size.width;
@@ -58,13 +52,19 @@ bool curvetoright = false;
     
 }
 
-- (id)initWithWorld:(b2World *)world {
+- (id)initWithWorld:(b2World *)world spriteFrameName:(NSString*)name {
     
-    if ((self = [super initWithSpriteFrameName:@"car_body.png"])) {
+    if ((self = [super initWithSpriteFrameName:name])) {
         _world = world;
         [self createBody];
         self.scale = 1.0;
         
+        last_distance = 0;
+        
+        
+        shadow = [CCSprite spriteWithSpriteFrameName:@"shadow.png"];
+        shadow.position = ccp(15+5, 24-5);
+        [self addChild:shadow z:-1];
         
         leftWheel = [CCSprite spriteWithSpriteFrameName:@"wheel.png"];
         leftWheel.position = ccp(2, 40);
@@ -84,7 +84,7 @@ bool curvetoright = false;
 - (CGPoint) toPixels:(b2Vec2)vec {
     return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
-static float last_distance = 0;
+
 
 - (void)_applyForce {
     //The force is calculated as two perpendicular components
@@ -188,6 +188,11 @@ static float last_distance = 0;
         
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
+        //place shadow for rotation
+        CGPoint shadowOffset = ccpForAngle(angle);
+        shadowOffset = ccpMult(shadowOffset, 5);
+        shadow.position = ccp(15+shadowOffset.y, 24-shadowOffset.x);
+
         [self _applyDriftForce];
         
     }    
@@ -213,7 +218,6 @@ static float last_distance = 0;
     
     [_normalAnimate stop];
     _normalAnimate = nil;
-    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"car_body.png"]];
     
     //    _body->SetActive(false);
     [self createBody];
