@@ -52,6 +52,12 @@ bool curvetoright = false;
     
 }
 
+-(void)positionShadow: (float)angle {
+    CGPoint shadowOffset = ccpForAngle(angle);
+    shadowOffset = ccpMult(shadowOffset, SHADOW_OFFSET);
+    shadow.position = ccp(15+shadowOffset.y, 24-shadowOffset.x);  
+}
+
 - (id)initWithWorld:(b2World *)world spriteFrameName:(NSString*)name {
     
     if ((self = [super initWithSpriteFrameName:name])) {
@@ -63,7 +69,7 @@ bool curvetoright = false;
         
         
         shadow = [CCSprite spriteWithSpriteFrameName:@"shadow.png"];
-        shadow.position = ccp(15+5, 24-5);
+        [self positionShadow:0];
         [self addChild:shadow z:-1];
         
         leftWheel = [CCSprite spriteWithSpriteFrameName:@"wheel.png"];
@@ -188,10 +194,8 @@ bool curvetoright = false;
         
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
-        //place shadow for rotation
-        CGPoint shadowOffset = ccpForAngle(angle);
-        shadowOffset = ccpMult(shadowOffset, 5);
-        shadow.position = ccp(15+shadowOffset.y, 24-shadowOffset.x);
+        
+        [self positionShadow:angle];
 
         [self _applyDriftForce];
         
@@ -224,6 +228,8 @@ bool curvetoright = false;
     //Reset the car position to the starting body position
     self.position = [self toPixels:_body->GetPosition()];
     self.roadSpeed = kDefaultRoadSpeed;
+    [self positionShadow:0];
+
 
 }
 

@@ -14,6 +14,7 @@
 #define NUM_PREV_VELS   5
 #define PTM_RATIO   32.0
 #define START_DOWN_ROAD 200
+#define SHADOW_OFFSET 8
 
 @interface Car : CCSprite {
     b2World *_world;
