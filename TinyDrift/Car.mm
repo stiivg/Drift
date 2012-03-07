@@ -13,6 +13,7 @@
 @synthesize followRoad;
 @synthesize fixedDrift;
 @synthesize roadSpeed;
+@synthesize startPosition;
 
 const float kDriftAcc = 40;
 
@@ -24,13 +25,19 @@ const float kTurboImpulse = 80;
 
 bool curvetoright = false;
 
+- (CGPoint) toPixels:(b2Vec2)vec {
+    return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
+}
+
 - (void)createBody {    
+    
+    //Destroy any body if exists
+    if (_body != NULL) {
+        _world->DestroyBody(_body);
+    }
+    
     float radius = 16.0f;
-    CGSize size = [[CCDirector sharedDirector] winSize];
-    int screenW = size.width;
-    
-    CGPoint startPosition = ccp(screenW/2, START_DOWN_ROAD);
-    
+        
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.linearDamping = 0.4f;
@@ -62,12 +69,15 @@ bool curvetoright = false;
     
     if ((self = [super initWithSpriteFrameName:name])) {
         _world = world;
-        [self createBody];
+        
+        CGSize size = [[CCDirector sharedDirector] winSize];
+        int screenW = size.width;
+        self.startPosition = ccp(screenW/2, START_DOWN_ROAD);
+        
         self.scale = 1.0;
         
         last_distance = 0;
-        
-        
+                
         shadow = [CCSprite spriteWithSpriteFrameName:@"shadow.png"];
         [self positionShadow:0];
         [self addChild:shadow z:-1];
@@ -84,11 +94,6 @@ bool curvetoright = false;
     }
     return self;
     
-}
-
-
-- (CGPoint) toPixels:(b2Vec2)vec {
-    return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
 
 
@@ -305,6 +310,18 @@ bool curvetoright = false;
         [self runNormalAnimation];
     }
 }   
+
+- (void)setStartPosition:(CGPoint)newStartPosition {
+    startPosition = newStartPosition;
+    [self createBody];
+    self.position = [self toPixels:_body->GetPosition()];
+
+}
+
+- (CGPoint)startPosition {
+    return startPosition;
+}
+
 - (float)getSpeed {
     b2Vec2 vel2b = _body->GetLinearVelocity();
     return vel2b.Length();

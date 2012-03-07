@@ -112,18 +112,19 @@ const bool _fixedDrift = false;
     _world = new b2World(gravity, doSleep);            
 }
 
+//Position at 0,0 then use source position to follow car
 -(void)setupEmitters {
     //Normal Drift
     _drift_emitter = [CCParticleDrift node];
     _drift_emitter.emissionRate = 0.0;
     [_terrain addChild: _drift_emitter];
-    [_drift_emitter setPosition:ccp(_car.position.x, _car.position.y)];
-    
+    [_drift_emitter setPosition:ccp(0,0)];
+
     //Turbo drift
     _turbo_emitter = [CCParticleTurbo node];
     _turbo_emitter.emissionRate = 0.0;
     [_terrain addChild: _turbo_emitter];
-    [_turbo_emitter setPosition:ccp(_car.position.x, _car.position.y)];
+    [_turbo_emitter setPosition:ccp(0,0)];
 }
 
 - (void)createTestBodyAtPosition:(CGPoint)position {
@@ -171,12 +172,21 @@ const bool _fixedDrift = false;
         _car = [[[Car alloc] initWithWorld:_world spriteFrameName:@"car_body.png"] autorelease];
         [_terrain.batchNode addChild:_car];
         _car.fixedDrift = _fixedDrift;
+        //Offset race car to left of path
+        CGPoint startPos = _car.startPosition;
+        startPos.x -= CAR_SIDE_OFFSET;
+        _car.startPosition = startPos;
         
         _chaseCar = [[[Car alloc] initWithWorld:_world spriteFrameName:@"chase_car_body.png"] autorelease];
         [_terrain.batchNode addChild:_chaseCar];
         
-        _chaseCar.roadSpeed = 30;
-        [_chaseCar drive];
+        //Offset chase car to right of path
+        startPos = _chaseCar.startPosition;
+        startPos.x += CAR_SIDE_OFFSET;
+        _chaseCar.startPosition = startPos;
+        
+        _chaseCar.roadSpeed = CHASE_CAR_SPEED;
+         [_chaseCar drive];
 
         [self setupEmitters];
         _emitter = _drift_emitter;        
@@ -436,9 +446,7 @@ const bool _fixedDrift = false;
     }
 }
 
--(void)startGame {
-    [self destroyBodies];
-    
+-(void)startGame {    
     [_car resetDrive];
     [_chaseCar resetDrive];
     _chaseCar.roadSpeed = 50;

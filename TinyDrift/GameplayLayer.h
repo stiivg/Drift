@@ -18,6 +18,8 @@
 #define MIN_SCALE 0.5
 #define MAX_SCALE 1.0
 #define END_SPEED 35
+#define CAR_SIDE_OFFSET 30
+#define CHASE_CAR_SPEED 30
 
 
 @interface GameplayLayer : CCLayer

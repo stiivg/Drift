@@ -44,6 +44,7 @@
 @property float driftAngle;
 @property BOOL fixedDrift;
 @property float roadSpeed;
+@property CGPoint startPosition;
 
 - (void)runNormalAnimation;
 - (void)drive;
