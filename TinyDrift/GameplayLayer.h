@@ -46,6 +46,7 @@
     BOOL turboDrifting;
     BOOL drifting;
     BOOL driftEnabled;
+    BOOL racing;
     
     CDSoundSource* engineSound;
     CDSoundSource* gravelSound;

@@ -156,6 +156,7 @@ const bool _fixedDrift = false;
         
         _carRoadIndex = 1;
         _chaseCarRoadIndex = 1;
+        racing = NO;
 
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
@@ -186,7 +187,6 @@ const bool _fixedDrift = false;
         _chaseCar.startPosition = startPos;
         
         _chaseCar.roadSpeed = CHASE_CAR_SPEED;
-//         [_chaseCar drive];
 
         [self setupEmitters];
         _emitter = _drift_emitter;        
@@ -331,7 +331,7 @@ const bool _fixedDrift = false;
     
     [self updatePhysics:dt];
     
-    if (_tapDown) {
+    if (_tapDown && racing) {
         if (!_car.driving) {
             [_car drive];
         } else if(driftEnabled && !drifting) {
@@ -447,7 +447,9 @@ const bool _fixedDrift = false;
 }
 
 
--(void)resetStart {    
+-(void)resetStart {
+    racing = NO;
+    
     [_car resetDrive];
     [_chaseCar resetDrive];
     _chaseCar.roadSpeed = CHASE_CAR_SPEED;
@@ -462,6 +464,8 @@ const bool _fixedDrift = false;
 
 -(void)startRace {
     [_chaseCar drive];
+    _tapDown = NO; //force a new touch at start
+    racing = YES;
 }
 
 //remember the touch start location for relative slides

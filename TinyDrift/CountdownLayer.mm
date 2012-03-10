@@ -67,10 +67,5 @@
     
 }
 
-- (void)dealloc {
-    [_label release];
-    _label = nil;
-    [super dealloc];
-}
 
 @end
