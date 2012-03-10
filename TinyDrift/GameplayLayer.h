@@ -19,7 +19,7 @@
 #define MAX_SCALE 1.0
 #define END_SPEED 35
 #define CAR_SIDE_OFFSET 30
-#define CHASE_CAR_SPEED 30
+#define CHASE_CAR_SPEED 50
 
 
 @interface GameplayLayer : CCLayer
@@ -50,6 +50,7 @@
     CDSoundSource* engineSound;
     CDSoundSource* gravelSound;
 }
--(void)startGame;
+-(void)resetStart;
+-(void)startRace;
 
 @end

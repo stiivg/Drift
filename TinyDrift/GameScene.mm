@@ -13,6 +13,7 @@
 @implementation GameScene
 
 GameplayLayer *gamePlayLayer = nil;
+CountdownLayer *countdownLayer = nil;
 
 -(id)init {
     self = [super init];
@@ -21,14 +22,24 @@ GameplayLayer *gamePlayLayer = nil;
         gamePlayLayer = [GameplayLayer node];
         [self addChild:gamePlayLayer z:0 tag:1];
         //Game button layer
-         GameBtnLayer *gameBtnLayer = [GameBtnLayer node];
+        GameBtnLayer *gameBtnLayer = [GameBtnLayer node];
         [self addChild:gameBtnLayer];
+        
+        countdownLayer = [CountdownLayer node];
+        [self addChild:countdownLayer];
+        
+        [self startGame];
     }
     return self;
 }
 
 -(void)startGame {
-    [gamePlayLayer startGame];
+    [gamePlayLayer resetStart];
+    [countdownLayer startCountdown:self withSelector:@selector(startRace)];
+}
+
+-(void)startRace {
+    [gamePlayLayer startRace];
 }
 
 @end

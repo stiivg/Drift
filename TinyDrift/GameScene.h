@@ -12,10 +12,12 @@
 #import "cocos2d.h"
 #import "GameplayLayer.h"
 #import "GameBtnLayer.h"
+#import "CountdownLayer.h"
 @interface GameScene : CCScene {
 }
 
 -(void)startGame;
+-(void)startRace;
 
 @end
 

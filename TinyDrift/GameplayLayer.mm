@@ -186,7 +186,7 @@ const bool _fixedDrift = false;
         _chaseCar.startPosition = startPos;
         
         _chaseCar.roadSpeed = CHASE_CAR_SPEED;
-         [_chaseCar drive];
+//         [_chaseCar drive];
 
         [self setupEmitters];
         _emitter = _drift_emitter;        
@@ -446,18 +446,22 @@ const bool _fixedDrift = false;
     }
 }
 
--(void)startGame {    
+
+-(void)resetStart {    
     [_car resetDrive];
     [_chaseCar resetDrive];
-    _chaseCar.roadSpeed = 50;
-    [_chaseCar drive];
+    _chaseCar.roadSpeed = CHASE_CAR_SPEED;
 
     driftEnabled = YES;
     //Reset the target point after the car has stopped
     _carRoadIndex = 1;
     _chaseCarRoadIndex = 1;
-    [self clearWeightedSpeed];
+    [self clearWeightedSpeed];    
     
+}
+
+-(void)startRace {
+    [_chaseCar drive];
 }
 
 //remember the touch start location for relative slides
