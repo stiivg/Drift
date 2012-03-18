@@ -9,3 +9,5 @@ TinyDrift/libs/.DS_Store
 .com.apple.timemachine.supported
 TinyDrift/Sprite Sheets/.DS_Store
 .xcodeproj/ !*.xcodeproj/project.pbxproj
+TinyDrift.xcodeproj/xcuserdata/*
+TinyDrift.xcodeproj/project.xcworkspace/xcuserdata/*
