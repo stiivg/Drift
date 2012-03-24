@@ -14,6 +14,7 @@
 
 GameplayLayer *gamePlayLayer = nil;
 CountdownLayer *countdownLayer = nil;
+StatusLayer *statusLayer = nil;
 
 -(id)init {
     self = [super init];
@@ -27,6 +28,9 @@ CountdownLayer *countdownLayer = nil;
         
         countdownLayer = [CountdownLayer node];
         [self addChild:countdownLayer];
+        
+        statusLayer = [StatusLayer node];
+        [self addChild:statusLayer];
         
         [self startGame];
     }

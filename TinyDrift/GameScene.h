@@ -13,6 +13,8 @@
 #import "GameplayLayer.h"
 #import "GameBtnLayer.h"
 #import "CountdownLayer.h"
+#import "StatusLayer.h"
+
 @interface GameScene : CCScene {
 }
 
