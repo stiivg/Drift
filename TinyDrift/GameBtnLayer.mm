@@ -15,12 +15,13 @@
 @implementation GameBtnLayer
 
 CCMenuItem *pauseMenuItem;
-CCMenuItem *stopMenuItem;
-CCMenuItem *resumeMenuItem;
-CCMenuItem *menuMenuItem;
+CCMenuItemLabel *raceAgainMenuItem;
+CCMenuItemLabel *resumeMenuItem;
+CCMenuItemLabel *menuMenuItem;
 
 -(id) init {
     if((self=[super init])) {
+        
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         // Create pause button
@@ -33,31 +34,28 @@ CCMenuItem *menuMenuItem;
         [self addChild:pauseMenu];
         [pauseMenuItem setVisible:true];
         
-        // Create stop button
-        stopMenuItem = [CCMenuItemImage 
-                        itemFromNormalImage:@"stop.png" selectedImage:@"stop_selected.png" 
-                        target:self selector:@selector(stopAction:)];
-        stopMenuItem.position = ccp(30, winSize.height - 30);
-        CCMenu *stopMenu = [CCMenu menuWithItems:stopMenuItem, nil];
+        // Create Race Again button        
+        CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" fontName:@"Arial" fontSize:32];
+        raceAgainMenuItem = [CCMenuItemLabel itemWithLabel:raceAgainLabel target:self selector:@selector(stopAction:)];
+        raceAgainMenuItem.position = ccp(winSize.width / 2, 60);
+        CCMenu *stopMenu = [CCMenu menuWithItems:raceAgainMenuItem, nil];
         stopMenu.position = CGPointZero;
         [self addChild:stopMenu];
-        [stopMenuItem setVisible:false];
+        [raceAgainMenuItem setVisible:false];
         
         // Create menu button
-        menuMenuItem = [CCMenuItemImage 
-                        itemFromNormalImage:@"menu.png" selectedImage:@"menu_selected.png" 
-                        target:self selector:@selector(menuAction:)];
-        menuMenuItem.position = ccp(winSize.width / 2, 60);
+        CCLabelBMFont *menuLabel = [CCLabelTTF labelWithString:@"Menu" fontName:@"Arial" fontSize:20];
+        menuMenuItem = [CCMenuItemLabel itemWithLabel:menuLabel target:self selector:@selector(menuAction:)];
+        menuMenuItem.position = ccp(60, winSize.height - 30);
         CCMenu *menuMenu = [CCMenu menuWithItems:menuMenuItem, nil];
         menuMenu.position = CGPointZero;
         [self addChild:menuMenu];
         [menuMenuItem setVisible:false];
         
         // Create resume button
-        resumeMenuItem = [CCMenuItemImage 
-                        itemFromNormalImage:@"resume.png" selectedImage:@"resume_selected.png" 
-                        target:self selector:@selector(resumeAction:)];
-        resumeMenuItem.position = ccp(winSize.width - 30, winSize.height - 30);
+        CCLabelBMFont *resumeLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"Arial" fontSize:20];
+        resumeMenuItem = [CCMenuItemLabel itemWithLabel:resumeLabel target:self selector:@selector(resumeAction:)];
+        resumeMenuItem.position = ccp(winSize.width - 60, winSize.height - 30);
         CCMenu *resumeMenu = [CCMenu menuWithItems:resumeMenuItem, nil];
         resumeMenu.position = CGPointZero;
         [self addChild:resumeMenu];
@@ -70,7 +68,7 @@ CCMenuItem *menuMenuItem;
 - (void)pauseAction:(id)sender {
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:true];
-    [stopMenuItem setVisible:true];
+    [raceAgainMenuItem setVisible:true];
     [menuMenuItem setVisible:true];
     [[GameManager sharedGameManager] pauseGame ];
     
@@ -80,7 +78,7 @@ CCMenuItem *menuMenuItem;
 - (void)stopAction:(id)sender {
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
-    [stopMenuItem setVisible:false];
+    [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] playGame];
     
@@ -89,7 +87,7 @@ CCMenuItem *menuMenuItem;
 - (void)resumeAction:(id)sender {
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
-    [stopMenuItem setVisible:false];
+    [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] resumeGame];
     
@@ -98,7 +96,7 @@ CCMenuItem *menuMenuItem;
 - (void)menuAction:(id)sender {
     [pauseMenuItem setVisible:true];
     [resumeMenuItem setVisible:false];
-    [stopMenuItem setVisible:false];
+    [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] runSceneWithID:kMainScene];
     

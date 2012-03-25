@@ -29,9 +29,10 @@ StatusLayer *statusLayer = nil;
         countdownLayer = [CountdownLayer node];
         [self addChild:countdownLayer];
         
-        statusLayer = [StatusLayer node];
-        [self addChild:statusLayer];
-        
+        //Disable status for now
+//        statusLayer = [StatusLayer node];
+//        [self addChild:statusLayer];
+//        
         [self startGame];
     }
     return self;

@@ -378,6 +378,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)pauseGame {
     _paused = YES;
+
 }
 
 -(void)resumeGame {
@@ -392,7 +393,8 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)endRace {
     //end of first race scene
-    [self runSceneWithID:kRace2Scene];
+    _paused = YES;
+//    [self runSceneWithID:kRace2Scene];
     
 }
 

@@ -326,8 +326,14 @@ const bool _fixedDrift = false;
     if ([[GameManager sharedGameManager] isGamePaused]) {
         [gravelSound stop];
         [engineSound stop];
+        
+        //Freeze the particles
+        [[CCScheduler sharedScheduler] pauseTarget:_emitter];
         return;
     }
+    
+    //Unfreeze particles
+    [[CCScheduler sharedScheduler] resumeTarget:_emitter];
     
     [self updatePhysics:dt];
     
@@ -348,15 +354,9 @@ const bool _fixedDrift = false;
     _terrain.targetRoadIndex = _carRoadIndex;
     CGPoint target = [_terrain nextTargetPoint:_car.position];
     if ([_terrain atDriveEnd]) {
-        //end of path drive section
-        _car.followRoad = YES;
-        [self endDrift];
-        driftEnabled = NO;
-        _car.driftAngle = 0;
-        _car.roadSpeed = END_SPEED;
-        
-//        [[GameManager sharedGameManager] endRace ];
-//        return;
+//        //end of path drive section
+        [[GameManager sharedGameManager] endRace ];
+        return;
     }
     [_car setTarget:target];
     
