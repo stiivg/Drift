@@ -53,5 +53,8 @@
 }
 -(void)resetStart;
 -(void)startRace;
+-(void)pauseRace;
+-(void)resumeRace;
+-(void)endrace;
 
 @end

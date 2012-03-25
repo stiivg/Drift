@@ -378,11 +378,13 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)pauseGame {
     _paused = YES;
+    [((GameScene*)[[CCDirector sharedDirector] runningScene]) pauseRace];
 
 }
 
 -(void)resumeGame {
     _paused = NO;
+    [((GameScene*)[[CCDirector sharedDirector] runningScene]) resumeRace];
 }
 
 -(void)playGame {
@@ -393,8 +395,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)endRace {
     //end of first race scene
-    _paused = YES;
-//    [self runSceneWithID:kRace2Scene];
+    [((GameScene*)[[CCDirector sharedDirector] runningScene]) endRace];
     
 }
 

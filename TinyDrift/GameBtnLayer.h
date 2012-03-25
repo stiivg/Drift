@@ -17,6 +17,8 @@
 
 }
 
+-(void)endRace;
+
 @end
 
 

@@ -127,6 +127,16 @@ const bool _fixedDrift = false;
     [_turbo_emitter setPosition:ccp(0,0)];
 }
 
+-(void)freezeEmitters {
+    [[CCScheduler sharedScheduler] pauseTarget:_drift_emitter];
+    [[CCScheduler sharedScheduler] pauseTarget:_turbo_emitter];
+}
+
+-(void)resumeEmitters {
+    [[CCScheduler sharedScheduler] resumeTarget:_drift_emitter];
+    [[CCScheduler sharedScheduler] resumeTarget:_turbo_emitter];
+}
+
 - (void)createTestBodyAtPosition:(CGPoint)position {
     
     b2BodyDef testBodyDef;
@@ -297,6 +307,7 @@ const bool _fixedDrift = false;
     _emitter.emissionRate = 0.0;
 }
 
+
 -(void)updatePhysics:(ccTime)dt {
     static double UPDATE_INTERVAL = 1.0f/60.0f;
     static double MAX_CYCLES_PER_FRAME = 5;
@@ -321,19 +332,7 @@ const bool _fixedDrift = false;
 }
 
 - (void)update:(ccTime)dt {
-    
-    //test if paused
-    if ([[GameManager sharedGameManager] isGamePaused]) {
-        [gravelSound stop];
-        [engineSound stop];
         
-        //Freeze the particles
-        [[CCScheduler sharedScheduler] pauseTarget:_emitter];
-        return;
-    }
-    
-    //Unfreeze particles
-    [[CCScheduler sharedScheduler] resumeTarget:_emitter];
     
     [self updatePhysics:dt];
     
@@ -458,14 +457,35 @@ const bool _fixedDrift = false;
     //Reset the target point after the car has stopped
     _carRoadIndex = 1;
     _chaseCarRoadIndex = 1;
-    [self clearWeightedSpeed];    
-    
+    [self clearWeightedSpeed];
+    [self resumeEmitters];
+    [self resumeSchedulerAndActions];    
 }
 
 -(void)startRace {
     [_chaseCar drive];
     _tapDown = NO; //force a new touch at start
     racing = YES;
+    [self resumeEmitters];
+    [self resumeSchedulerAndActions];
+}
+
+-(void)pauseRace {
+    [gravelSound stop];
+    [engineSound stop];
+    
+    //Freeze the particles
+    [self freezeEmitters];
+    [self pauseSchedulerAndActions]; 
+}
+
+-(void)resumeRace {
+    [self resumeEmitters];
+    [self resumeSchedulerAndActions];    
+}
+
+-(void)endrace {
+    [self pauseRace];
 }
 
 //remember the touch start location for relative slides

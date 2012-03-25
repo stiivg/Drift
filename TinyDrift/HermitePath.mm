@@ -152,7 +152,6 @@
 -(void) generateKeyPoints {
     float startx = 0;
     float starty = 0;
-    int segmentCount = 16;
     int i = 0;
         
     //straight line at start
@@ -163,7 +162,7 @@
     nextPathPoint = ccpAdd(nextPathPoint, nextVector);
     _keyPoints[i++] = nextPathPoint; //key point
     
-    for (int j=0; j<segmentCount; j++) {
+    for (int j=0; j<SEGMENT_COUNT; j++) {
         //vector to next road point
         nextPathPoint = ccpAdd(nextPathPoint, nextVector);
         _keyPoints[i++] = nextPathPoint; //key point

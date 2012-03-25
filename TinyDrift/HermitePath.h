@@ -11,12 +11,13 @@
 
 #import "cocos2d.h"
 
-#define kMaxRoadKeyPoints 1000
+#define MAX_ROAD_KEY_POINTS 1000
+#define SEGMENT_COUNT 16
 
 @interface HermitePath : NSObject {
-    CGPoint _roadControlPoints[kMaxRoadKeyPoints];
+    CGPoint _roadControlPoints[MAX_ROAD_KEY_POINTS];
     int _numControlPoints;
-    CGPoint _keyPoints[kMaxRoadKeyPoints];
+    CGPoint _keyPoints[MAX_ROAD_KEY_POINTS];
     int _numKeyPoints;
     CGPoint * _pathPoints;
     int _numPathPoints;

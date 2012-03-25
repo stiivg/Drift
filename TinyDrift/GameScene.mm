@@ -15,6 +15,7 @@
 GameplayLayer *gamePlayLayer = nil;
 CountdownLayer *countdownLayer = nil;
 StatusLayer *statusLayer = nil;
+GameBtnLayer *gameBtnLayer = nil;
 
 -(id)init {
     self = [super init];
@@ -23,7 +24,7 @@ StatusLayer *statusLayer = nil;
         gamePlayLayer = [GameplayLayer node];
         [self addChild:gamePlayLayer z:0 tag:1];
         //Game button layer
-        GameBtnLayer *gameBtnLayer = [GameBtnLayer node];
+        gameBtnLayer = [GameBtnLayer node];
         [self addChild:gameBtnLayer];
         
         countdownLayer = [CountdownLayer node];
@@ -45,6 +46,19 @@ StatusLayer *statusLayer = nil;
 
 -(void)startRace {
     [gamePlayLayer startRace];
+}
+
+-(void)pauseRace {
+    [gamePlayLayer pauseRace];
+}
+
+-(void)resumeRace {
+    [gamePlayLayer resumeRace];
+}
+
+-(void)endRace {
+    [gamePlayLayer endrace];
+    [gameBtnLayer endRace];
 }
 
 @end

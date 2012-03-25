@@ -102,7 +102,24 @@ CCMenuItemLabel *menuMenuItem;
     
 }
 
+-(void)endRace {
+    [pauseMenuItem setVisible:false];
+    [resumeMenuItem setVisible:false];
+    [raceAgainMenuItem setVisible:true];
+    [menuMenuItem setVisible:true];
+    
+}
+
 
 @end
+
+
+
+
+
+
+
+
+
 
 
