@@ -20,6 +20,8 @@ static GameManager* _sharedGameManager = nil;
 @synthesize managerSoundState;
 @synthesize listOfSoundEffectFiles;
 @synthesize soundEffectsState;
+@synthesize raceWon;
+@synthesize raceTime;
 
 @synthesize isGamePaused = _paused;
 

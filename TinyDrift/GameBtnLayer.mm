@@ -61,6 +61,12 @@ CCMenuItemLabel *menuMenuItem;
         [self addChild:resumeMenu];
         [resumeMenuItem setVisible:false];
 
+        winlabel = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:48];
+        winlabel.color = ccc3(0,0,0);
+        winlabel.position = ccp(winSize.width/2, winSize.height/2);
+        [self addChild:winlabel];
+        winlabel.visible = false;
+
     }
     return self;
 }
@@ -68,6 +74,7 @@ CCMenuItemLabel *menuMenuItem;
 - (void)pauseAction:(id)sender {
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:true];
+    [raceAgainMenuItem setString:@"New Race"];
     [raceAgainMenuItem setVisible:true];
     [menuMenuItem setVisible:true];
     [[GameManager sharedGameManager] pauseGame ];
@@ -81,6 +88,7 @@ CCMenuItemLabel *menuMenuItem;
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] playGame];
+    winlabel.visible = false;
     
 }
 
@@ -90,7 +98,6 @@ CCMenuItemLabel *menuMenuItem;
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] resumeGame];
-    
 }
 
 - (void)menuAction:(id)sender {
@@ -99,15 +106,37 @@ CCMenuItemLabel *menuMenuItem;
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] runSceneWithID:kMainScene];
+    winlabel.visible = false;
+}
+
+- (void)showWinLoss {
+    [winlabel setScale:0.8];
+    BOOL raceWon = [[GameManager sharedGameManager] raceWon];
+    if (raceWon) {
+        [winlabel setString:@"You Won!"];
+    } else {
+        [winlabel setString:@"You Lost"];
+    }
+    winlabel.opacity = 0;
+    winlabel.visible = true;
+    CCAction *scaleAction = [CCScaleTo  actionWithDuration:0.8 scale:1.0];
+    CCAction *fadeInAction = [CCFadeIn actionWithDuration:1.0];
+    [winlabel runAction:scaleAction];
+    [winlabel runAction:fadeInAction];    
+    
+    [winlabel runAction:[CCSequence actions:
+                       [CCDelayTime actionWithDuration:1], nil]];
     
 }
 
 -(void)endRace {
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:false];
+    [raceAgainMenuItem setString:@"Race Again"];
     [raceAgainMenuItem setVisible:true];
     [menuMenuItem setVisible:true];
     
+    [self showWinLoss];
 }
 
 

@@ -20,6 +20,8 @@
 
 -(void)startGame;
 -(void)startRace;
+-(void)pauseRace;
+-(void)resumeRace;
 -(void)endRace;
 
 @end

@@ -12,6 +12,7 @@
 #import "cocos2d.h"
 
 #define MAX_ROAD_KEY_POINTS 1000
+//normal race 16
 #define SEGMENT_COUNT 16
 
 @interface HermitePath : NSObject {

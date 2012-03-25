@@ -32,6 +32,10 @@
 @property (nonatomic, retain) NSMutableDictionary *listOfSoundEffectFiles;
 @property (nonatomic, retain) NSMutableDictionary *soundEffectsState;
 
+//Race properties
+@property (readwrite) BOOL raceWon;
+@property (readwrite) float raceTime;
+
 
 +(GameManager*)sharedGameManager;
 -(void)pauseGame;

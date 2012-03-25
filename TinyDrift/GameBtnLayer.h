@@ -14,6 +14,7 @@
 
 @interface GameBtnLayer : CCLayer
 {
+    CCLabelTTF *winlabel;
 
 }
 

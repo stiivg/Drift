@@ -1348,7 +1348,7 @@
 		E1E7765713A8F71100DF595A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Steve Gallagher";
 			};
 			buildConfigurationList = E1E7765A13A8F71100DF595A /* Build configuration list for PBXProject "TinyDrift" */;

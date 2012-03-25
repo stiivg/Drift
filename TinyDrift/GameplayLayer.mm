@@ -331,6 +331,20 @@ const bool _fixedDrift = false;
    
 }
 
+-(void)raceEnded {
+    [self endDrift];
+    driftEnabled = NO;
+    _car.driftAngle = 0;
+    _car.roadSpeed = 0;
+    
+    //determine if won or lost
+    float carY = _car.position.y;
+    float chaseCarY = _chaseCar.position.y;
+    
+    [GameManager sharedGameManager].raceWon  = carY >= chaseCarY;
+    [[GameManager sharedGameManager] endRace ];   
+}
+
 - (void)update:(ccTime)dt {
         
     
@@ -354,7 +368,7 @@ const bool _fixedDrift = false;
     CGPoint target = [_terrain nextTargetPoint:_car.position];
     if ([_terrain atDriveEnd]) {
 //        //end of path drive section
-        [[GameManager sharedGameManager] endRace ];
+        [self raceEnded];
         return;
     }
     [_car setTarget:target];
