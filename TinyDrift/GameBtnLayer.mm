@@ -122,10 +122,8 @@ CCMenuItemLabel *menuMenuItem;
     CCAction *scaleAction = [CCScaleTo  actionWithDuration:0.8 scale:1.0];
     CCAction *fadeInAction = [CCFadeIn actionWithDuration:1.0];
     [winlabel runAction:scaleAction];
-    [winlabel runAction:fadeInAction];    
-    
-    [winlabel runAction:[CCSequence actions:
-                       [CCDelayTime actionWithDuration:1], nil]];
+    [winlabel runAction:fadeInAction];  
+
     
 }
 

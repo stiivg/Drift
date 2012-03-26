@@ -507,20 +507,22 @@ const bool _fixedDrift = false;
 
 -(void)endrace {
     [self pauseRace];
-    //zoom into finish
-    CCAction *scaleAction = [CCScaleTo  actionWithDuration:3.0 scale:2.0];
+
+    
     CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
-    [self runAction:scaleAction];
     //Only create the sound source when needed
     if (cameraSound == nil) {
         cameraSound = [[GameManager sharedGameManager] createSoundSource:@"CAMERA"];
     }
     [cameraSound play];
+    
+    //Full screen white
+    [flashLayer setOpacity:1.];
+    //Zoom in while hidden
+    [self setScale:1.0];
 
+    //Fade out the full white screen
     [flashLayer runAction:fadeOutAction];
-
-    
-    
 }
 
 //remember the touch start location for relative slides
