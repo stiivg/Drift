@@ -63,7 +63,7 @@ CCMenuItemLabel *menuMenuItem;
 
         winlabel = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:48];
         winlabel.color = ccc3(0,0,0);
-        winlabel.position = ccp(winSize.width/2, winSize.height/2);
+        winlabel.position = ccp(winSize.width/2, winSize.height*2/3);
         [self addChild:winlabel];
         winlabel.visible = false;
 

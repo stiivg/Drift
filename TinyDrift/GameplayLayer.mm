@@ -204,6 +204,12 @@ const bool _fixedDrift = false;
         driftEnabled = YES;
         [[GameManager sharedGameManager] playBackgroundTrack:BACKGROUND_TRACK_RACE];
         
+        flashLayer = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
+        //make large enough to cover screen at smallest scale
+        [flashLayer setScale:1 / MIN_SCALE];
+        [flashLayer setOpacity:0]; //Clear for now
+        [self addChild: flashLayer z:2];
+
         
     }
     return self;
@@ -332,9 +338,10 @@ const bool _fixedDrift = false;
 }
 
 -(void)raceEnded {
-    [self endDrift];
-    driftEnabled = NO;
-    _car.driftAngle = 0;
+//    [self endDrift];
+//    driftEnabled = NO;
+//    _car.driftAngle = 0;
+    turboDrifting = NO;
     _car.roadSpeed = 0;
     
     //determine if won or lost
@@ -500,6 +507,20 @@ const bool _fixedDrift = false;
 
 -(void)endrace {
     [self pauseRace];
+    //zoom into finish
+    CCAction *scaleAction = [CCScaleTo  actionWithDuration:3.0 scale:2.0];
+    CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
+    [self runAction:scaleAction];
+    //Only create the sound source when needed
+    if (cameraSound == nil) {
+        cameraSound = [[GameManager sharedGameManager] createSoundSource:@"CAMERA"];
+    }
+    [cameraSound play];
+
+    [flashLayer runAction:fadeOutAction];
+
+    
+    
 }
 
 //remember the touch start location for relative slides

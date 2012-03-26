@@ -12,6 +12,8 @@
 	<dict/>
 	<key>kGameScene</key>
 	<dict>
+		<key>CAMERA</key>
+		<string>camera1.wav</string>
 		<key>ENGINE</key>
 		<string>dirtcar_loop.wav</string>
 		<key>GRAVEL</key>

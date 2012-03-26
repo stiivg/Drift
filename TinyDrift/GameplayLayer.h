@@ -27,6 +27,8 @@
 	CCSprite * _background;
     Terrain * _terrain;
     
+    CCLayerColor *flashLayer;
+    
     b2World * _world;
     
     Car * _car;
@@ -50,6 +52,7 @@
     
     CDSoundSource* engineSound;
     CDSoundSource* gravelSound;
+    CDSoundSource* cameraSound;
 }
 -(void)resetStart;
 -(void)startRace;

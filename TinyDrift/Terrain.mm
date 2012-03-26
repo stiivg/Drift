@@ -208,6 +208,8 @@ int _lastRoadPoint = 100;
         
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"driftCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
+        //plist puts the targetfilename under a target node not expected by this call
+        //May be fixed in future Zwoptex release
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"driftCar.plist"];
         
         [self addGate];

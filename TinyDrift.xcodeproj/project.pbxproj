@@ -221,6 +221,7 @@
 		64B4D11C14F99186000F20C3 /* gravel_loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D11B14F99186000F20C3 /* gravel_loop.wav */; };
 		64B4D1271509BEF5000F20C3 /* CountdownLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D1261509BEF5000F20C3 /* CountdownLayer.mm */; };
 		64B4D12B15158747000F20C3 /* StatusLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D12A15158746000F20C3 /* StatusLayer.mm */; };
+		64DF6DCD151FB01900B9DD99 /* camera1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64DF6DCC151FB01900B9DD99 /* camera1.wav */; };
 		64EB35C4148BF28A00B0CDAC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EB35C3148BF28A00B0CDAC /* pause.png */; };
 		E1E7766513A8F71100DF595A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766413A8F71100DF595A /* QuartzCore.framework */; };
 		E1E7766713A8F71100DF595A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7766613A8F71100DF595A /* OpenGLES.framework */; };
@@ -616,6 +617,7 @@
 		64B4D1261509BEF5000F20C3 /* CountdownLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CountdownLayer.mm; path = TinyDrift/CountdownLayer.mm; sourceTree = SOURCE_ROOT; };
 		64B4D12915158720000F20C3 /* StatusLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusLayer.h; path = TinyDrift/StatusLayer.h; sourceTree = SOURCE_ROOT; };
 		64B4D12A15158746000F20C3 /* StatusLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = StatusLayer.mm; path = TinyDrift/StatusLayer.mm; sourceTree = SOURCE_ROOT; };
+		64DF6DCC151FB01900B9DD99 /* camera1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera1.wav; sourceTree = "<group>"; };
 		64E063EA1430180F007234F4 /* TinyDrift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyDrift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EB35C3148BF28A00B0CDAC /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = TinyDrift/pause.png; sourceTree = SOURCE_ROOT; };
 		E1E7766413A8F71100DF595A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1084,6 +1086,7 @@
 		643AE50A142FFB9F0079501A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				64DF6DCC151FB01900B9DD99 /* camera1.wav */,
 				64B4D11B14F99186000F20C3 /* gravel_loop.wav */,
 				64B4D10314D5EE08000F20C3 /* dirtcar_loop.wav */,
 				64B4D0FD14D4C365000F20C3 /* SoundEffects.plist */,
@@ -1439,6 +1442,7 @@
 				64B4D11914F34732000F20C3 /* grid-hd.png in Resources */,
 				64B4D11A14F34732000F20C3 /* grid.png in Resources */,
 				64B4D11C14F99186000F20C3 /* gravel_loop.wav in Resources */,
+				64DF6DCD151FB01900B9DD99 /* camera1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

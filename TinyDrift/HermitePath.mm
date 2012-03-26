@@ -162,6 +162,9 @@
     nextPathPoint = ccpAdd(nextPathPoint, nextVector);
     _keyPoints[i++] = nextPathPoint; //key point
     
+    nextPathPoint = ccpAdd(nextPathPoint, nextVector);
+    _keyPoints[i++] = nextPathPoint; //key point
+    
     for (int j=0; j<SEGMENT_COUNT; j++) {
         //vector to next road point
         nextPathPoint = ccpAdd(nextPathPoint, nextVector);
