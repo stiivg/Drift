@@ -29,6 +29,8 @@
     
     CCLayerColor *flashLayer;
     
+    float viewOffset;
+    
     b2World * _world;
     
     Car * _car;

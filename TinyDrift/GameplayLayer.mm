@@ -338,11 +338,8 @@ const bool _fixedDrift = false;
 }
 
 -(void)raceEnded {
-//    [self endDrift];
-//    driftEnabled = NO;
-//    _car.driftAngle = 0;
     turboDrifting = NO;
-    _car.roadSpeed = 0;
+//    _car.roadSpeed = 0;
     
     //determine if won or lost
     float carY = _car.position.y;
@@ -448,8 +445,12 @@ const bool _fixedDrift = false;
         [_emitter setSourcePosition:ccp(_car.position.x / _emitter.scale, _car.position.y / _emitter.scale)];        
     }
     
+    //Gradually center on car after start
+    if (_car.driving && viewOffset > 0.2) {
+        viewOffset -= 0.2;
+    }
   
-    [_terrain setOffset:ccp(_car.position.x, _car.position.y)];
+    [_terrain setOffset:ccp(_car.position.x+viewOffset, _car.position.y)];
     
     [self scaleWithSpeed];
     
@@ -469,6 +470,8 @@ const bool _fixedDrift = false;
 
 -(void)resetStart {
     racing = NO;
+    //Center road in view
+    viewOffset = CAR_SIDE_OFFSET;
     
     [_car resetDrive];
     [_chaseCar resetDrive];
@@ -506,8 +509,10 @@ const bool _fixedDrift = false;
 }
 
 -(void)endrace {
+    //Full screen white
+    [flashLayer setOpacity:1.];
+    
     [self pauseRace];
-
     
     CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
     //Only create the sound source when needed
@@ -516,10 +521,9 @@ const bool _fixedDrift = false;
     }
     [cameraSound play];
     
-    //Full screen white
-    [flashLayer setOpacity:1.];
     //Zoom in while hidden
     [self setScale:1.0];
+    [_terrain setOffset:ccp(_car.position.x, _car.position.y-50)];
 
     //Fade out the full white screen
     [flashLayer runAction:fadeOutAction];

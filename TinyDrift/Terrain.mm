@@ -318,10 +318,10 @@ int _lastRoadPoint = 100;
 //Divide by scale to convert pixels to scaled units
 -(void) setOffset:(CGPoint)newOffset {
     const float kBaseOffset = 200;
+    
     CGSize winSize = [CCDirector sharedDirector].winSize;
     float scale = self.parent.scale;
     float viewOffset  = (winSize.height/2 * (1 - scale) - kBaseOffset) / scale;
-    
     
     _offsetX = newOffset.x;
     _offsetY = newOffset.y;
