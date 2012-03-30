@@ -137,6 +137,12 @@ const bool _fixedDrift = false;
     [[CCScheduler sharedScheduler] resumeTarget:_turbo_emitter];
 }
 
+-(void)resetEmitters {
+    [_drift_emitter resetSystem];
+    [_turbo_emitter resetSystem];
+    [self resumeEmitters];
+}
+
 - (void)createTestBodyAtPosition:(CGPoint)position {
     
     b2BodyDef testBodyDef;
@@ -482,7 +488,7 @@ const bool _fixedDrift = false;
     _carRoadIndex = 1;
     _chaseCarRoadIndex = 1;
     [self clearWeightedSpeed];
-    [self resumeEmitters];
+    [self resetEmitters];
     [self resumeSchedulerAndActions];    
 }
 

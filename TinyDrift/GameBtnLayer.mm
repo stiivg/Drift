@@ -115,8 +115,12 @@ CCMenuItemLabel *menuMenuItem;
     BOOL raceWon = [[GameManager sharedGameManager] raceWon];
     if (raceWon) {
         [winlabel setString:@"You Won!"];
+        winlabel.rotation = -10;
+
     } else {
         [winlabel setString:@"You Lost"];
+        winlabel.rotation = 0;
+
     }
     winlabel.opacity = 0;
     winlabel.visible = true;
