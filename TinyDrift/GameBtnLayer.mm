@@ -19,6 +19,7 @@ CCMenuItemLabel *raceAgainMenuItem;
 CCMenuItemLabel *resumeMenuItem;
 CCMenuItemLabel *menuMenuItem;
 
+
 -(id) init {
     if((self=[super init])) {
         
@@ -35,7 +36,7 @@ CCMenuItemLabel *menuMenuItem;
         [pauseMenuItem setVisible:true];
         
         // Create Race Again button        
-        CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" fontName:@"Arial" fontSize:32];
+        CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" fontName:@"Quasart" fontSize:32];
         raceAgainMenuItem = [CCMenuItemLabel itemWithLabel:raceAgainLabel target:self selector:@selector(stopAction:)];
         raceAgainMenuItem.position = ccp(winSize.width / 2, 60);
         CCMenu *stopMenu = [CCMenu menuWithItems:raceAgainMenuItem, nil];
@@ -44,7 +45,7 @@ CCMenuItemLabel *menuMenuItem;
         [raceAgainMenuItem setVisible:false];
         
         // Create menu button
-        CCLabelBMFont *menuLabel = [CCLabelTTF labelWithString:@"Menu" fontName:@"Arial" fontSize:20];
+        CCLabelBMFont *menuLabel = [CCLabelTTF labelWithString:@"Menu" fontName:@"Quasart" fontSize:20];
         menuMenuItem = [CCMenuItemLabel itemWithLabel:menuLabel target:self selector:@selector(menuAction:)];
         menuMenuItem.position = ccp(60, winSize.height - 30);
         CCMenu *menuMenu = [CCMenu menuWithItems:menuMenuItem, nil];
@@ -53,7 +54,7 @@ CCMenuItemLabel *menuMenuItem;
         [menuMenuItem setVisible:false];
         
         // Create resume button
-        CCLabelBMFont *resumeLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"Arial" fontSize:20];
+        CCLabelBMFont *resumeLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"Quasart" fontSize:20];
         resumeMenuItem = [CCMenuItemLabel itemWithLabel:resumeLabel target:self selector:@selector(resumeAction:)];
         resumeMenuItem.position = ccp(winSize.width - 60, winSize.height - 30);
         CCMenu *resumeMenu = [CCMenu menuWithItems:resumeMenuItem, nil];
@@ -61,7 +62,7 @@ CCMenuItemLabel *menuMenuItem;
         [self addChild:resumeMenu];
         [resumeMenuItem setVisible:false];
 
-        winlabel = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:48];
+        winlabel = [CCLabelTTF labelWithString:@"" fontName:@"Quasart" fontSize:48];
         winlabel.color = ccc3(0,0,0);
         winlabel.position = ccp(winSize.width/2, winSize.height*0.8);
         [self addChild:winlabel];

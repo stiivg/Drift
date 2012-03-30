@@ -170,19 +170,12 @@
 		64476DAB14952E8D0022FBE6 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DAA14952E8D0022FBE6 /* GameScene.mm */; };
 		64476DB0149542D20022FBE6 /* pause_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64476DAF149542D20022FBE6 /* pause_selected.png */; };
 		64476DB31495449D0022FBE6 /* GameBtnLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DB21495449C0022FBE6 /* GameBtnLayer.mm */; };
-		64476DB5149574BC0022FBE6 /* resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 64476DB4149574BC0022FBE6 /* resume.png */; };
 		64476DBB149C5C2B0022FBE6 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64476DBA149C5C2B0022FBE6 /* GameManager.mm */; };
-		64560926149D3C3A006B4FBA /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560924149D3C3A006B4FBA /* stop.png */; };
-		64560927149D3C3A006B4FBA /* stop_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560925149D3C3A006B4FBA /* stop_selected.png */; };
-		64560929149D4098006B4FBA /* resume_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64560928149D4098006B4FBA /* resume_selected.png */; };
 		64639A6314817065006DB651 /* HermitePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64639A6214817065006DB651 /* HermitePath.mm */; };
 		64639A661481BA36006DB651 /* keypoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64639A651481BA36006DB651 /* keypoints.tsv */; };
+		649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFF415254DFC00D32067 /* Quasart.ttf */; };
 		64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */; };
 		64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */; };
-		64B4D0BB14ABA10D000F20C3 /* resume_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0B714ABA10D000F20C3 /* resume_selected-hd.png */; };
-		64B4D0BC14ABA10D000F20C3 /* resume-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0B814ABA10D000F20C3 /* resume-hd.png */; };
-		64B4D0BD14ABA10D000F20C3 /* stop_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0B914ABA10D000F20C3 /* stop_selected-hd.png */; };
-		64B4D0BE14ABA10D000F20C3 /* stop-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0BA14ABA10D000F20C3 /* stop-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
 		64B4D0C314B2AF4B000F20C3 /* controlpoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C214B2AF4A000F20C3 /* controlpoints.tsv */; };
 		64B4D0C614BA288A000F20C3 /* driftCar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0C414BA2889000F20C3 /* driftCar-hd.plist */; };
@@ -555,22 +548,15 @@
 		64476DAF149542D20022FBE6 /* pause_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_selected.png; path = TinyDrift/pause_selected.png; sourceTree = SOURCE_ROOT; };
 		64476DB11495449C0022FBE6 /* GameBtnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameBtnLayer.h; path = TinyDrift/GameBtnLayer.h; sourceTree = SOURCE_ROOT; };
 		64476DB21495449C0022FBE6 /* GameBtnLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameBtnLayer.mm; path = TinyDrift/GameBtnLayer.mm; sourceTree = SOURCE_ROOT; };
-		64476DB4149574BC0022FBE6 /* resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resume.png; path = TinyDrift/resume.png; sourceTree = SOURCE_ROOT; };
 		64476DB9149C5C2B0022FBE6 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameManager.h; path = TinyDrift/GameManager.h; sourceTree = SOURCE_ROOT; };
 		64476DBA149C5C2B0022FBE6 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameManager.mm; path = TinyDrift/GameManager.mm; sourceTree = SOURCE_ROOT; };
 		64476DBC149C67820022FBE6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = TinyDrift/Constants.h; sourceTree = SOURCE_ROOT; };
-		64560924149D3C3A006B4FBA /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop.png; path = TinyDrift/stop.png; sourceTree = SOURCE_ROOT; };
-		64560925149D3C3A006B4FBA /* stop_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop_selected.png; path = TinyDrift/stop_selected.png; sourceTree = SOURCE_ROOT; };
-		64560928149D4098006B4FBA /* resume_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = resume_selected.png; path = TinyDrift/resume_selected.png; sourceTree = SOURCE_ROOT; };
 		64639A6114817065006DB651 /* HermitePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HermitePath.h; path = TinyDrift/HermitePath.h; sourceTree = SOURCE_ROOT; };
 		64639A6214817065006DB651 /* HermitePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HermitePath.mm; path = TinyDrift/HermitePath.mm; sourceTree = SOURCE_ROOT; };
 		64639A651481BA36006DB651 /* keypoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keypoints.tsv; sourceTree = "<group>"; };
+		649FAFF415254DFC00D32067 /* Quasart.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quasart.ttf; sourceTree = "<group>"; };
 		64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause_selected-hd.png"; path = "TinyDrift/pause_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-hd.png"; path = "TinyDrift/pause-hd.png"; sourceTree = SOURCE_ROOT; };
-		64B4D0B714ABA10D000F20C3 /* resume_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resume_selected-hd.png"; path = "TinyDrift/resume_selected-hd.png"; sourceTree = SOURCE_ROOT; };
-		64B4D0B814ABA10D000F20C3 /* resume-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "resume-hd.png"; path = "TinyDrift/resume-hd.png"; sourceTree = SOURCE_ROOT; };
-		64B4D0B914ABA10D000F20C3 /* stop_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stop_selected-hd.png"; path = "TinyDrift/stop_selected-hd.png"; sourceTree = SOURCE_ROOT; };
-		64B4D0BA14ABA10D000F20C3 /* stop-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stop-hd.png"; path = "TinyDrift/stop-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
 		64B4D0C014AE5286000F20C3 /* emitters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = emitters.m; path = TinyDrift/emitters.m; sourceTree = SOURCE_ROOT; };
 		64B4D0C214B2AF4A000F20C3 /* controlpoints.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = controlpoints.tsv; path = TinyDrift/controlpoints.tsv; sourceTree = SOURCE_ROOT; };
@@ -1065,6 +1051,7 @@
 		643AE4F3142FFB7A0079501A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				649FAFF415254DFC00D32067 /* Quasart.ttf */,
 				64B4D0CC14BA8947000F20C3 /* Default@2x.png */,
 				643AE6EA143006670079501A /* Default.png */,
 				643AE6DE143006490079501A /* Icon-72.png */,
@@ -1159,10 +1146,6 @@
 				64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */,
 				64476DAF149542D20022FBE6 /* pause_selected.png */,
 				64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */,
-				64560924149D3C3A006B4FBA /* stop.png */,
-				64B4D0BA14ABA10D000F20C3 /* stop-hd.png */,
-				64560925149D3C3A006B4FBA /* stop_selected.png */,
-				64B4D0B914ABA10D000F20C3 /* stop_selected-hd.png */,
 				643AE515142FFBE00079501A /* GLES-Render.h */,
 				643AE516142FFBE00079501A /* GLES-Render.mm */,
 				643AE518142FFBE00079501A /* Noise.png */,
@@ -1171,10 +1154,6 @@
 				64B4D11514F341EA000F20C3 /* road_pattern_inverted_fade.png */,
 				643AE51E142FFBE00079501A /* Terrain.h */,
 				643AE51F142FFBE00079501A /* Terrain.mm */,
-				64560928149D4098006B4FBA /* resume_selected.png */,
-				64B4D0B714ABA10D000F20C3 /* resume_selected-hd.png */,
-				64476DB4149574BC0022FBE6 /* resume.png */,
-				64B4D0B814ABA10D000F20C3 /* resume-hd.png */,
 				64476DA914952E8D0022FBE6 /* GameScene.h */,
 				64476DAA14952E8D0022FBE6 /* GameScene.mm */,
 				6419A80914703E4B00DA3619 /* Path.h */,
@@ -1402,16 +1381,8 @@
 				64639A661481BA36006DB651 /* keypoints.tsv in Resources */,
 				64EB35C4148BF28A00B0CDAC /* pause.png in Resources */,
 				64476DB0149542D20022FBE6 /* pause_selected.png in Resources */,
-				64476DB5149574BC0022FBE6 /* resume.png in Resources */,
-				64560926149D3C3A006B4FBA /* stop.png in Resources */,
-				64560927149D3C3A006B4FBA /* stop_selected.png in Resources */,
-				64560929149D4098006B4FBA /* resume_selected.png in Resources */,
 				64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */,
 				64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */,
-				64B4D0BB14ABA10D000F20C3 /* resume_selected-hd.png in Resources */,
-				64B4D0BC14ABA10D000F20C3 /* resume-hd.png in Resources */,
-				64B4D0BD14ABA10D000F20C3 /* stop_selected-hd.png in Resources */,
-				64B4D0BE14ABA10D000F20C3 /* stop-hd.png in Resources */,
 				64B4D0C314B2AF4B000F20C3 /* controlpoints.tsv in Resources */,
 				64B4D0C614BA288A000F20C3 /* driftCar-hd.plist in Resources */,
 				64B4D0C714BA288A000F20C3 /* driftCar-hd.png in Resources */,
@@ -1443,6 +1414,7 @@
 				64B4D11A14F34732000F20C3 /* grid.png in Resources */,
 				64B4D11C14F99186000F20C3 /* gravel_loop.wav in Resources */,
 				64DF6DCD151FB01900B9DD99 /* camera1.wav in Resources */,
+				649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,7 +18,7 @@
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         
-        _label = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:32];
+        _label = [CCLabelTTF labelWithString:@"" fontName:@"Quasart" fontSize:32];
         _label.color = ccc3(0,0,0);
         _label.position = ccp(winSize.width/2, winSize.height/2);
         [self addChild:_label];
