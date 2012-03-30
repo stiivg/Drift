@@ -13,8 +13,11 @@
 #import "MainLayer.h"
 
 @interface MainScene : CCScene {
+    
 }
 
+-(void)backToMain;
+-(void)showOptions;
 
 @end
 

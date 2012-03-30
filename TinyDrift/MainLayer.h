@@ -11,11 +11,12 @@
 
 #import "cocos2d.h"
 
-
 @interface MainLayer : CCLayer
 {
-    
+  CCScene *_mainScene;  
 }
+
+- (id)initWithMain:(CCScene *)mainScene;
 
 @end
 

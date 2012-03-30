@@ -10,6 +10,7 @@
 
 #import "MainLayer.h"
 #import "GameManager.h"
+#import "MainScene.h"
 
 @implementation MainLayer
 
@@ -17,8 +18,11 @@ CCMenuItem *playMenuItem;
 CCMenuItem *statsMenuItem;
 CCMenuItem *optionsMenuItem;
 
--(id) init {
-    if((self=[super init])) {
+
+
+- (id)initWithMain:(CCScene *)mainScene {
+    if ((self = [super init])) {
+        _mainScene = mainScene;
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         // Create play button
@@ -63,7 +67,8 @@ CCMenuItem *optionsMenuItem;
 }
 
 - (void)optionsAction:(id)sender {
-    
+    [(MainScene *)_mainScene showOptions];
+
 }
 
 
