@@ -9,13 +9,8 @@
 
 #import "LoopLayer.h"
 #import "GameManager.h"
-#import "emitters.h"
 
 @implementation LoopLayer
-
-//SJG TODO link failed when same name as GameplayLayer
-CCParticleSystem * _drift2_emitter;
-CCParticleSystem * _turbo2_emitter;
 
 
 -(CCSprite *)spriteWithColor:(ccColor4F)bgColor textureSize:(float)textureSize {
@@ -91,20 +86,6 @@ CCParticleSystem * _turbo2_emitter;
     _world = new b2World(gravity, doSleep);            
 }
 
--(void)setupEmitters {
-    //Normal Drift
-    _drift2_emitter = [CCParticleDrift node];
-    _drift2_emitter.emissionRate = 0.0;
-    [_terrain addChild: _drift2_emitter];
-    [_drift2_emitter setPosition:ccp(_car.position.x, _car.position.y)];
-    
-    //Turbo drift
-    _turbo2_emitter = [CCParticleTurbo node];
-    _turbo2_emitter.emissionRate = 0.0;
-    [_terrain addChild: _turbo2_emitter];
-    [_turbo2_emitter setPosition:ccp(_car.position.x, _car.position.y)];
-}
-
 
 -(id) init {
     if((self=[super init])) {
@@ -117,107 +98,16 @@ CCParticleSystem * _turbo2_emitter;
         
         _terrain = [[[Terrain alloc] initWithWorld:_world] autorelease];
         [self addChild:_terrain z:1];
-        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern.png"];
+        CCSprite *road = [CCSprite spriteWithFile:@"road_pattern_inverted_fade.png"];
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
         
         [self genBackground];
-        self.isTouchEnabled = YES;  
-        [self scheduleUpdate];
-        
-        _car = [[[Car alloc] initWithWorld:_world spriteFrameName:@"car_body.png"] autorelease];
-        [_terrain.batchNode addChild:_car];
-        
-        [self setupEmitters];
-        _emitter = _drift2_emitter;        
-//        [_car drive];
-        
-        
-        //SJG continuous background music off
-        //      [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TinyDrift.caf" loop:YES];
         
     }
     return self;
 }
 
-
-- (void)update:(ccTime)dt {
-        
-    static double UPDATE_INTERVAL = 1.0f/60.0f;
-    static double MAX_CYCLES_PER_FRAME = 5;
-    static double timeAccumulator = 0;
-    
-    timeAccumulator += dt;    
-    if (timeAccumulator > (MAX_CYCLES_PER_FRAME * UPDATE_INTERVAL)) {
-        timeAccumulator = UPDATE_INTERVAL;
-    }    
-    
-    int32 velocityIterations = 3;
-    int32 positionIterations = 2;
-    while (timeAccumulator >= UPDATE_INTERVAL) {        
-        timeAccumulator -= UPDATE_INTERVAL;       
-                
-        _world->Step(UPDATE_INTERVAL, 
-                     velocityIterations, positionIterations);        
-        _world->ClearForces();
-        
-    }
-    
-    CGPoint target = [_terrain nextTargetPoint:_car.position];
-    [_car setTarget:target];
-    
-    // CCLOG(@"drift:  target x=%4.2f y=%4.2f  ", target.x, target.y);
-    CGPoint tangent = [_terrain targetTangent];
-    [_car setPathTangent:tangent];
-    
-    [_car update];
-    float offsetX = _car.position.x;
-    float offsetY = _car.position.y;
-    
-    
-    CGSize textureSize = _background.textureRect.size;
-    [_background setTextureRect:CGRectMake(offsetX, -offsetY, textureSize.width, textureSize.height)];
-    
-    [_terrain setOffset:ccp(_car.position.x, _car.position.y)];
-    
-    float speed = _car.getSpeed;
-    float weightedSpeed = speed;
-    const float kZoomOutSpeed = 20;
-    const float kZoomInSpeed = 10;
-    
-    for(int i = 0; i < NUM_PREV_SPEEDS; ++i) {
-        weightedSpeed += _prevSpeeds[i];
-    }
-    weightedSpeed = weightedSpeed / NUM_PREV_SPEEDS;    
-    _prevSpeeds[_nextSpeed++] = speed;
-    if (_nextSpeed >= NUM_PREV_SPEEDS) _nextSpeed = 0;
-    
-    //set the target scale with hysteresis
-    //Zoom out at kZoomOutSpeed zoom in to 1.0 at kZoomInSpeed
-    if (weightedSpeed > kZoomOutSpeed && targetScale == 1.0) {
-        targetScale = MIN_SCALE;
-    } else if (weightedSpeed < kZoomInSpeed && targetScale < 1.0){
-        targetScale = 1.0;
-    }
-    
-    if (self.scale > targetScale) {
-        self.scale *= 0.99;
-        if (self.scale < targetScale) { //clamp to target
-            self.scale = targetScale;
-        }
-    } else if (self.scale < targetScale){
-        self.scale *= 1.01;
-        if (self.scale > targetScale) { //clamp to target
-            self.scale = targetScale;
-        }
-    }
-    //    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
-    
-    
-    //uncomment to rotate view with car
-    //    [_terrain updateRotation:_car.rotation];
-    
-}
 
 @end

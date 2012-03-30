@@ -23,8 +23,8 @@ LoopLayer *loopLayer = nil;
         mainLayer = [MainLayer node];
         [self addChild:mainLayer z:1 tag:1];
         //Background loop layer
-//        loopLayer = [LoopLayer node];
-//        [self addChild:loopLayer z:0 tag:2];
+        loopLayer = [LoopLayer node];
+        [self addChild:loopLayer z:0 tag:2];
     }
     return self;
 }
