@@ -8,6 +8,7 @@
 
 
 #import "MainScene.h"
+#import "MainLayer.h"
 #import "LoopLayer.h"
 #import "OptionsLayer.h"
 
@@ -24,11 +25,7 @@ OptionsLayer *optionsLayer = nil;
         //Main button layer
         mainLayer = [[[MainLayer alloc] initWithMain:self] autorelease];
         [self addChild:mainLayer z:2 tag:1];
-        
-        optionsLayer = [[[OptionsLayer alloc] initWithMain:self] autorelease];
-        optionsLayer.visible = false;
-        [self addChild:optionsLayer z:1 tag:2];
-        
+
         //Background loop layer
         loopLayer = [LoopLayer node];
         [self addChild:loopLayer z:0 tag:3];
@@ -38,12 +35,17 @@ OptionsLayer *optionsLayer = nil;
 
 -(void)showOptions {
     mainLayer.visible = false;
-    optionsLayer.visible = true;
+    
+    optionsLayer = [[[OptionsLayer alloc] initWithMain:self] autorelease];
+    [self addChild:optionsLayer z:1 tag:2];
+//    optionsLayer.visible = true;
 }
 
 -(void)backToMain {
     mainLayer.visible = true;
-    optionsLayer.visible = false;
+    
+	[self removeChild:optionsLayer cleanup:YES];
+//    optionsLayer.visible = false;
     
 }
 

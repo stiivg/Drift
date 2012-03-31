@@ -10,7 +10,6 @@
 #define TinyDrift_MainScene_h
 
 #import "cocos2d.h"
-#import "MainLayer.h"
 
 @interface MainScene : CCScene {
     

@@ -11,11 +11,19 @@
 
 #import "cocos2d.h"
 
+#define CONTROL_TOP 180
+#define CONTROL_OFFSET 60
 
 @interface OptionsLayer : CCLayer
 {
     CCScene *_mainScene;
-
+    
+    CCMenuItemLabel *backMenuItem;
+    CCLabelBMFont *title;
+    
+    UISwitch *tutorialSwitch;
+    UISlider *musicSlider;
+    UISlider *soundSlider;
 }
 
 - (id)initWithMain:(CCScene *)mainScene;
