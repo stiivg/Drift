@@ -15,16 +15,16 @@
 
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
+
+@synthesize isGamePaused;
 @synthesize isMusicON;
 @synthesize isSoundEffectsON;
+@synthesize isTutorialOn;
 @synthesize managerSoundState;
 @synthesize listOfSoundEffectFiles;
 @synthesize soundEffectsState;
 @synthesize raceWon;
 @synthesize raceTime;
-
-@synthesize isGamePaused = _paused;
-
 
 +(GameManager*)sharedGameManager {
     @synchronized([GameManager class])
@@ -330,7 +330,7 @@ static GameManager* _sharedGameManager = nil;
         
         currentScene = kNoSceneUninitialized;
         isGamePaused = NO;
-        isMusicON = NO;
+        isMusicON = YES;
         isSoundEffectsON = YES;
     }
     return self;
@@ -342,7 +342,7 @@ static GameManager* _sharedGameManager = nil;
     id sceneToRun = nil;
     switch (sceneID) {
         case kGameScene:
-            _paused = NO;
+            isGamePaused = NO;
             sceneToRun  = [GameScene node];
             break;
             
@@ -379,26 +379,45 @@ static GameManager* _sharedGameManager = nil;
 }
 
 -(void)pauseGame {
-    _paused = YES;
+    isGamePaused = YES;
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) pauseRace];
 
 }
 
 -(void)resumeGame {
-    _paused = NO;
+    isGamePaused = NO;
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) resumeRace];
 }
 
 -(void)playGame {
     //stop this game and start next game
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) startGame];
-    _paused = NO;
+    isGamePaused = NO;
 }
 
 -(void)endRace {
     //end of first race scene
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) endRace];
     
+}
+
+-(void)setBackgroundVolume:(float)backgroundVolume {
+//    if (backgroundVolume == 0) {
+//        <#statements#>
+//    }
+    [soundEngine setBackgroundMusicVolume:backgroundVolume];
+}
+
+-(float)backgroundVolume {
+    return [soundEngine backgroundMusicVolume];
+}
+
+-(void)setEffectsVolume:(float)effectsVolume {
+    [soundEngine setEffectsVolume:effectsVolume];
+}
+
+-(float)effectsVolume {
+    return [soundEngine effectsVolume];
 }
 
 

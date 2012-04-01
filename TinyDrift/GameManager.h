@@ -11,10 +11,7 @@
 #import "SimpleAudioEngine.h"
 
 @interface GameManager : NSObject {
-    BOOL isMusicON;
-    BOOL isSoundEffectsON;
     
-    BOOL isGamePaused;
     SceneTypes currentScene;
     // Added for audio
     BOOL hasAudioBeenInitialized;
@@ -28,6 +25,11 @@
 @property (readwrite) BOOL isGamePaused;
 @property (readwrite) BOOL isMusicON;
 @property (readwrite) BOOL isSoundEffectsON;
+@property (readwrite) BOOL isTutorialOn;
+
+@property (readwrite) float backgroundVolume;
+@property (readwrite) float effectsVolume;
+
 @property (readwrite) GameManagerSoundState managerSoundState;
 @property (nonatomic, retain) NSMutableDictionary *listOfSoundEffectFiles;
 @property (nonatomic, retain) NSMutableDictionary *soundEffectsState;

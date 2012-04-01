@@ -10,6 +10,7 @@
 #define TinyDrift_OptionsLayer_h
 
 #import "cocos2d.h"
+#import "SimpleAudioEngine.h"
 
 #define CONTROL_TOP 180
 #define CONTROL_OFFSET 60
@@ -24,6 +25,9 @@
     UISwitch *tutorialSwitch;
     UISlider *musicSlider;
     UISlider *soundSlider;
+    
+    CDSoundSource* engineSound;
+
 }
 
 - (id)initWithMain:(CCScene *)mainScene;

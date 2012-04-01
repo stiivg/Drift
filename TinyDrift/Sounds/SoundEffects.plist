@@ -5,7 +5,10 @@
 	<key>kNoSceneUninitialized</key>
 	<dict/>
 	<key>kMainScene</key>
-	<dict/>
+	<dict>
+		<key>ENGINE_TEST</key>
+		<string>dirtcar_loop.wav</string>
+	</dict>
 	<key>kOptionsScene</key>
 	<dict/>
 	<key>kCreditsScene</key>

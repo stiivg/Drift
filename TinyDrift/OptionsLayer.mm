@@ -25,10 +25,13 @@
     
     musicSlider = [[ UISlider alloc ] initWithFrame: CGRectMake(0, 0, 125, 50) ];
     musicSlider.backgroundColor = [UIColor clearColor]; 
-    musicSlider.value = 1;
+
+    float soundVolume = [[GameManager sharedGameManager] backgroundVolume];
+    musicSlider.value = soundVolume;
+    
     musicSlider.center =  CGPointMake(winSize.width/2 + 60, winSize.height - height);
     
-    //    [sliderMusicCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [musicSlider addTarget:self action:@selector(musicAction:) forControlEvents:UIControlEventValueChanged];
     [[[CCDirector sharedDirector] openGLView] addSubview:musicSlider];
     [musicSlider release];   // don't forget to release memory
 }
@@ -44,10 +47,13 @@
     
     soundSlider = [[ UISlider alloc ] initWithFrame: CGRectMake(0, 0, 125, 50) ];
     soundSlider.backgroundColor = [UIColor clearColor]; 
-    soundSlider.value = 0;
+    
+    float effectsVolume = [[GameManager sharedGameManager] effectsVolume];
+    soundSlider.value = effectsVolume;
+    
     soundSlider.center =  CGPointMake(winSize.width/2 + 60, winSize.height - height);
     
-    //    [sliderMusicCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [soundSlider addTarget:self action:@selector(soundAction:) forControlEvents:UIControlEventValueChanged];
     [[[CCDirector sharedDirector] openGLView] addSubview:soundSlider];
     [soundSlider release];   // don't forget to release memory
 }
@@ -64,8 +70,10 @@
     tutorialSwitch = [[ UISwitch alloc ] initWithFrame: CGRectZero ];
     tutorialSwitch.center =  CGPointMake(winSize.width/2 + 60, winSize.height - height);
     
-    tutorialSwitch.on = YES;  //set to be ON at start
-    [tutorialSwitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    BOOL tutorialOn = [[GameManager sharedGameManager] isTutorialOn];
+
+    tutorialSwitch.on = tutorialOn;  
+    [tutorialSwitch addTarget:self action:@selector(tutorialAction:) forControlEvents:UIControlEventValueChanged];
     [[[CCDirector sharedDirector] openGLView] addSubview:tutorialSwitch];
     [tutorialSwitch release];   // don't forget to release memory
 }
@@ -74,9 +82,22 @@
     if ((self = [super init])) {
         _mainScene = mainScene;
         
+        //Play background first to ensure the soundEngine is initialized
+        //So the volume levels are available for the slider defaults
+        [[GameManager sharedGameManager] playBackgroundTrack:BACKGROUND_TRACK_RACE];
+        
         [self initMusicSlider];
         [self initSoundSlider];
         [self initTutorialSwitch];
+        
+        
+        if (engineSound == nil) {
+            engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE_TEST"];
+        }
+        engineSound.looping = YES;
+        engineSound.gain = 0.3;   //Typical value when driving
+        [engineSound play];
+
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         // Create Options title label        
@@ -97,10 +118,17 @@
     return self;
 }
 
-- (void)switchAction:(id)sender
+- (void)tutorialAction:(id)sender
 {
-    // Your logic when the switch it used
-    // NSLog(@"switchAction: value = %d", [sender isOn]);
+    [[GameManager sharedGameManager] setIsTutorialOn:[sender isOn]];
+}
+
+-(void)musicAction:(id)sender {
+    [[GameManager sharedGameManager] setBackgroundVolume:[(UISlider *)sender value]];    
+}
+
+-(void)soundAction:(id)sender {
+    [[GameManager sharedGameManager] setEffectsVolume:[(UISlider *)sender value]];    
 }
 
 - (void)backAction:(id)sender {
@@ -114,6 +142,10 @@
     [musicSlider removeFromSuperview];
     [soundSlider removeFromSuperview];
     [tutorialSwitch removeFromSuperview];
+    
+    [engineSound stop];
+    [engineSound release];
+
     [super dealloc];
 }
 
