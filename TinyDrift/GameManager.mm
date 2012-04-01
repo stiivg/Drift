@@ -73,6 +73,8 @@ static GameManager* _sharedGameManager = nil;
         if ([soundEngine isBackgroundMusicPlaying]) {
             [soundEngine stopBackgroundMusic];
         }
+        //Set the volume level
+        [soundEngine setBackgroundMusicVolume:backgroundVolumeDefault];
         [soundEngine preloadBackgroundMusic:trackFileName];
         [soundEngine playBackgroundMusic:trackFileName loop:YES];
     }
@@ -92,6 +94,9 @@ static GameManager* _sharedGameManager = nil;
 
     ALuint soundID = 0;
     if (managerSoundState == kAudioManagerReady) {
+        //set the volume level
+        [soundEngine setEffectsVolume:effectsVolumeDefault];
+
         NSNumber *isSFXLoaded = [soundEffectsState objectForKey:soundEffectKey];
         if ([isSFXLoaded boolValue] == SFX_LOADED) {
             soundID = [soundEngine playEffect:[listOfSoundEffectFiles objectForKey:soundEffectKey]];
@@ -402,22 +407,25 @@ static GameManager* _sharedGameManager = nil;
 }
 
 -(void)setBackgroundVolume:(float)backgroundVolume {
-//    if (backgroundVolume == 0) {
-//        <#statements#>
-//    }
+    backgroundVolumeDefault = backgroundVolume;
+    //Try to set the volume live
+    //May fail if the soundEngine is not ready
     [soundEngine setBackgroundMusicVolume:backgroundVolume];
 }
 
 -(float)backgroundVolume {
-    return [soundEngine backgroundMusicVolume];
+    return backgroundVolumeDefault;
 }
 
 -(void)setEffectsVolume:(float)effectsVolume {
+    effectsVolumeDefault = effectsVolume;
+    //Try to set the volume live
+    //May fail if the soundEngine is not ready
     [soundEngine setEffectsVolume:effectsVolume];
 }
 
 -(float)effectsVolume {
-    return [soundEngine effectsVolume];
+    return effectsVolumeDefault;
 }
 
 

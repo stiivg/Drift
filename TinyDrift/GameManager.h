@@ -20,6 +20,8 @@
     NSMutableDictionary *listOfSoundEffectFiles;
     NSMutableDictionary *soundEffectsState;
     
+    float backgroundVolumeDefault;
+    float effectsVolumeDefault;
     
 }
 @property (readwrite) BOOL isGamePaused;

@@ -17,6 +17,25 @@
 
 @synthesize window;
 
+// if this is the first time ever running
+// this app we need some default defaults
++ (void)initialize{
+    NSDictionary *appDefaults = [NSDictionary
+                                 dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                        [NSNumber numberWithFloat:0.2],
+                                                        [NSNumber numberWithFloat:0.8],
+                                                        [NSNumber numberWithBool:YES],
+                                                        nil]
+                                 forKeys:[NSArray arrayWithObjects:
+                                          @"MusicLevel", // starts at score of 0.2
+                                          @"SoundLevel", // starts at level 0.8
+                                          @"Tutorial",   // starts with tutorial on
+                                          nil]];
+    [[NSUserDefaults standardUserDefaults]
+     registerDefaults:appDefaults];
+} 
+
+
 - (void) removeStartupFlicker
 {
 	//
@@ -41,6 +60,21 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+    
+    // we are starting up
+    // get the settings
+    // that we saved when we last quit
+    // or if its the first time ever running this game
+    // it will load the default defaults
+    float musicLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"MusicLevel"];
+    [[GameManager sharedGameManager] setBackgroundVolume:musicLevel];    
+    
+    float soundLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"SoundLevel"];
+    [[GameManager sharedGameManager] setEffectsVolume:soundLevel];    
+
+    BOOL tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"];
+    [[GameManager sharedGameManager] setIsTutorialOn:tutorial];    
+    
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -116,8 +150,21 @@
     [[GameManager sharedGameManager] runSceneWithID:kMainScene];
 }
 
+-(void)saveSettings {
+    // save current settings to the defaults
+    float musicLevel = [[GameManager sharedGameManager] backgroundVolume];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:musicLevel] forKey:@"MusicLevel"];
+    
+    float soundLevel = [[GameManager sharedGameManager] effectsVolume];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:soundLevel] forKey:@"SoundLevel"];
+    
+    BOOL tutorial = [[GameManager sharedGameManager] isTutorialOn];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:tutorial] forKey:@"Tutorial"];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [self saveSettings];
 	[[CCDirector sharedDirector] pause];
 }
 
@@ -130,6 +177,7 @@
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application {
+    [self saveSettings];
 	[[CCDirector sharedDirector] stopAnimation];
 }
 
@@ -138,6 +186,8 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [self saveSettings];
+
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	[[director openGLView] removeFromSuperview];
@@ -147,6 +197,7 @@
 	[window release];
 	
 	[director end];	
+    
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
