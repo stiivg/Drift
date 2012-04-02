@@ -12,6 +12,7 @@
 #import "Box2D.h"
 #import "Car.h"
 #import "GameManager.h"
+#import "TutorialLayer.h"
 
 #define PTM_RATIO   32.0
 #define NUM_PREV_SPEEDS   60
@@ -28,6 +29,8 @@
     Terrain * _terrain;
     
     CCLayerColor *flashLayer;
+    TutorialLayer *tutorialLayer;
+
     
     float viewOffset;
     
@@ -56,6 +59,10 @@
     CDSoundSource* gravelSound;
     CDSoundSource* cameraSound;
 }
+
+- (id)init:(TutorialLayer *)tLayer;
+
+
 -(void)resetStart;
 -(void)startRace;
 -(void)pauseRace;

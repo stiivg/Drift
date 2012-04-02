@@ -22,8 +22,8 @@
 + (void)initialize{
     NSDictionary *appDefaults = [NSDictionary
                                  dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                        [NSNumber numberWithFloat:0.2],
-                                                        [NSNumber numberWithFloat:0.8],
+                                                        [NSNumber numberWithFloat:0.1],
+                                                        [NSNumber numberWithFloat:0.5],
                                                         [NSNumber numberWithBool:YES],
                                                         nil]
                                  forKeys:[NSArray arrayWithObjects:

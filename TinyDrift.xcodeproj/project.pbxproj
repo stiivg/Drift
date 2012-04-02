@@ -175,6 +175,7 @@
 		64639A661481BA36006DB651 /* keypoints.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 64639A651481BA36006DB651 /* keypoints.tsv */; };
 		649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFF415254DFC00D32067 /* Quasart.ttf */; };
 		649FAFF91525706F00D32067 /* OptionsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FAFF81525706F00D32067 /* OptionsLayer.mm */; };
+		649FAFFC1528DCD000D32067 /* TutorialLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */; };
 		64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */; };
 		64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
@@ -558,6 +559,8 @@
 		649FAFF415254DFC00D32067 /* Quasart.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quasart.ttf; sourceTree = "<group>"; };
 		649FAFF71525704900D32067 /* OptionsLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OptionsLayer.h; path = TinyDrift/OptionsLayer.h; sourceTree = SOURCE_ROOT; };
 		649FAFF81525706F00D32067 /* OptionsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OptionsLayer.mm; path = TinyDrift/OptionsLayer.mm; sourceTree = SOURCE_ROOT; };
+		649FAFFA1528DCB000D32067 /* TutorialLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TutorialLayer.h; path = TinyDrift/TutorialLayer.h; sourceTree = SOURCE_ROOT; };
+		649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TutorialLayer.mm; path = TinyDrift/TutorialLayer.mm; sourceTree = SOURCE_ROOT; };
 		64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause_selected-hd.png"; path = "TinyDrift/pause_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-hd.png"; path = "TinyDrift/pause-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
@@ -1174,6 +1177,8 @@
 			children = (
 				643AE513142FFBE00079501A /* GameplayLayer.h */,
 				643AE514142FFBE00079501A /* GameplayLayer.mm */,
+				649FAFFA1528DCB000D32067 /* TutorialLayer.h */,
+				649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */,
 				64B4D1241509BEC8000F20C3 /* CountdownLayer.h */,
 				64B4D1261509BEF5000F20C3 /* CountdownLayer.mm */,
 				64B4D12915158720000F20C3 /* StatusLayer.h */,
@@ -1580,6 +1585,7 @@
 				64B4D1271509BEF5000F20C3 /* CountdownLayer.mm in Sources */,
 				64B4D12B15158747000F20C3 /* StatusLayer.mm in Sources */,
 				649FAFF91525706F00D32067 /* OptionsLayer.mm in Sources */,
+				649FAFFC1528DCD000D32067 /* TutorialLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

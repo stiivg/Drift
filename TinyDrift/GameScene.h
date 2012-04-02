@@ -14,6 +14,7 @@
 #import "GameBtnLayer.h"
 #import "CountdownLayer.h"
 #import "StatusLayer.h"
+#import "TutorialLayer.h"
 
 @interface GameScene : CCScene {
 }

@@ -20,6 +20,7 @@ double driftStartTime;
 CCParticleSystem * _drift_emitter;
 CCParticleSystem * _turbo_emitter;
 
+
 const bool _fixedDrift = false;
 
 -(CCSprite *)spriteWithColor:(ccColor4F)bgColor textureSize:(float)textureSize {
@@ -161,8 +162,9 @@ const bool _fixedDrift = false;
     
 }
 
--(id) init {
+-(id) init:(TutorialLayer *)tLayer {
     if((self=[super init])) {
+        tutorialLayer = tLayer;
         
         [self setupWorld];
         //set to 0.5 to zoom out
@@ -215,7 +217,6 @@ const bool _fixedDrift = false;
         [flashLayer setScale:1 / MIN_SCALE];
         [flashLayer setOpacity:0]; //Clear for now
         [self addChild: flashLayer z:2];
-
         
     }
     return self;
@@ -355,6 +356,14 @@ const bool _fixedDrift = false;
     [[GameManager sharedGameManager] endRace ];   
 }
 
+- (void)startTurbo {
+    turboDrifting = YES;
+    _drift_emitter.emissionRate = 0.0;
+    _emitter = _turbo_emitter;
+    _emitter.emissionRate = 50.0;
+    [tutorialLayer turboMessage];
+}
+
 - (void)update:(ccTime)dt {
         
     
@@ -419,10 +428,7 @@ const bool _fixedDrift = false;
         //if turbo time change emitter
         double drift_time = CACurrentMediaTime() - driftStartTime; 
         if (drift_time > k_turbo_time) {
-            turboDrifting = YES;
-            _drift_emitter.emissionRate = 0.0;
-            _emitter = _turbo_emitter;
-            _emitter.emissionRate = 50.0;
+            [self startTurbo];
         }
         
 
@@ -490,6 +496,7 @@ const bool _fixedDrift = false;
     [self clearWeightedSpeed];
     [self resetEmitters];
     [self resumeSchedulerAndActions];    
+    [tutorialLayer setVisible:false];
 }
 
 -(void)startRace {
@@ -498,6 +505,9 @@ const bool _fixedDrift = false;
     racing = YES;
     [self resumeEmitters];
     [self resumeSchedulerAndActions];
+    [tutorialLayer touchOffMessage];
+    BOOL tutorialOn = [[GameManager sharedGameManager] isTutorialOn];
+    [tutorialLayer setVisible:tutorialOn];
 }
 
 -(void)pauseRace {
@@ -507,11 +517,14 @@ const bool _fixedDrift = false;
     //Freeze the particles
     [self freezeEmitters];
     [self pauseSchedulerAndActions]; 
+    [tutorialLayer setVisible:false];
 }
 
 -(void)resumeRace {
     [self resumeEmitters];
     [self resumeSchedulerAndActions];    
+    BOOL tutorialOn = [[GameManager sharedGameManager] isTutorialOn];
+    [tutorialLayer setVisible:tutorialOn];
 }
 
 -(void)endrace {
@@ -533,11 +546,12 @@ const bool _fixedDrift = false;
 
     //Fade out the full white screen
     [flashLayer runAction:fadeOutAction];
+    //Cancel tutorial at end of race
+    [[GameManager sharedGameManager] setIsTutorialOn:false];
 }
 
 //remember the touch start location for relative slides
 static CGPoint startLoc;
-//remember the touch start time
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     _tapDown = YES;
@@ -551,6 +565,7 @@ static CGPoint startLoc;
         _driftControlAngle = 0.7;
     }
     
+    [tutorialLayer touchOnMessage];
    // CCLOG(@"drift:  touches began x=%4.2f y=%4.2f  ", cLoc.x, cLoc.y);
 
     
@@ -578,11 +593,13 @@ static CGPoint startLoc;
 }
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [tutorialLayer touchOffMessage];
     _tapDown = NO;
     _driftControlAngle = 0;
 }
 
 - (void)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [tutorialLayer touchOffMessage];
     _tapDown = NO;
     _driftControlAngle = 0;
 }
