@@ -36,7 +36,18 @@
     CCAction *scaleAction = [CCScaleTo  actionWithDuration:1.0 scale:8];
     CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
     [_label runAction:scaleAction];
-    [_label runAction:fadeOutAction];    
+    [_label runAction:fadeOutAction];   
+    
+    if (beepLSound == nil) {
+        beepLSound = [[GameManager sharedGameManager] createSoundSource:@"BEEPLOW"];
+    }
+    beepLSound.gain = 2.0;
+    
+    if (beepHSound == nil) {
+        beepHSound = [[GameManager sharedGameManager] createSoundSource:@"BEEPHIGH"];
+    }
+    
+    [beepLSound play];
     
     [_label runAction:[CCSequence actions:
                        [CCDelayTime actionWithDuration:1],
@@ -49,6 +60,7 @@
     if (_count > 0) {
         [self fadeNumber];
     } else {
+        [beepHSound play];
         [callbackObject performSelector:callbackSelector withObject:self];
     }
 }
@@ -67,5 +79,12 @@
     
 }
 
+-(void) dealloc {
+    
+    //Release all our retained objects
+    [beepLSound release];
+    [beepHSound release];
+    [super dealloc];
+}
 
 @end

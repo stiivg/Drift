@@ -9,7 +9,6 @@
 
 #import "GameplayLayer.h"
 #import "GameManager.h"
-#import "SimpleAudioEngine.h"
 #import "emitters.h"
 
 @implementation GameplayLayer

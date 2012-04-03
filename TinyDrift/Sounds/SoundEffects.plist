@@ -15,6 +15,10 @@
 	<dict/>
 	<key>kGameScene</key>
 	<dict>
+		<key>BEEPHIGH</key>
+		<string>beep_high.wav</string>
+		<key>BEEPLOW</key>
+		<string>beep_low.wav</string>
 		<key>CAMERA</key>
 		<string>camera1.wav</string>
 		<key>ENGINE</key>

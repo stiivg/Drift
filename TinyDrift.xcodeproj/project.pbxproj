@@ -176,6 +176,8 @@
 		649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFF415254DFC00D32067 /* Quasart.ttf */; };
 		649FAFF91525706F00D32067 /* OptionsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FAFF81525706F00D32067 /* OptionsLayer.mm */; };
 		649FAFFC1528DCD000D32067 /* TutorialLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */; };
+		649FAFFF152AB21700D32067 /* beep_high.wav in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFFD152AB21700D32067 /* beep_high.wav */; };
+		649FB000152AB21700D32067 /* beep_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFFE152AB21700D32067 /* beep_low.wav */; };
 		64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */; };
 		64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
@@ -561,6 +563,8 @@
 		649FAFF81525706F00D32067 /* OptionsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OptionsLayer.mm; path = TinyDrift/OptionsLayer.mm; sourceTree = SOURCE_ROOT; };
 		649FAFFA1528DCB000D32067 /* TutorialLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TutorialLayer.h; path = TinyDrift/TutorialLayer.h; sourceTree = SOURCE_ROOT; };
 		649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TutorialLayer.mm; path = TinyDrift/TutorialLayer.mm; sourceTree = SOURCE_ROOT; };
+		649FAFFD152AB21700D32067 /* beep_high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep_high.wav; sourceTree = "<group>"; };
+		649FAFFE152AB21700D32067 /* beep_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep_low.wav; sourceTree = "<group>"; };
 		64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause_selected-hd.png"; path = "TinyDrift/pause_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-hd.png"; path = "TinyDrift/pause-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
@@ -1079,6 +1083,8 @@
 		643AE50A142FFB9F0079501A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				649FAFFD152AB21700D32067 /* beep_high.wav */,
+				649FAFFE152AB21700D32067 /* beep_low.wav */,
 				64DF6DCC151FB01900B9DD99 /* camera1.wav */,
 				64B4D11B14F99186000F20C3 /* gravel_loop.wav */,
 				64B4D10314D5EE08000F20C3 /* dirtcar_loop.wav */,
@@ -1425,6 +1431,8 @@
 				64B4D11C14F99186000F20C3 /* gravel_loop.wav in Resources */,
 				64DF6DCD151FB01900B9DD99 /* camera1.wav in Resources */,
 				649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */,
+				649FAFFF152AB21700D32067 /* beep_high.wav in Resources */,
+				649FB000152AB21700D32067 /* beep_low.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

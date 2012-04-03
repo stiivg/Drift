@@ -10,6 +10,7 @@
 #define TinyDrift_CountdownLayer_h
 
 #import "cocos2d.h"
+#import "SimpleAudioEngine.h"
 
 #define START_COUNT 3
 
@@ -19,6 +20,10 @@
     int _count;
     id callbackObject;
     SEL callbackSelector;
+    
+    CDSoundSource* beepLSound;
+    CDSoundSource* beepHSound;
+
 }
 
 -(void)startCountdown:(id)object withSelector:(SEL)selector;
