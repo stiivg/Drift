@@ -51,6 +51,7 @@ TutorialLayer *tutorialLayer = nil;
 
 -(void)startRace {
     [gamePlayLayer startRace];
+    [gameBtnLayer startRace];
 }
 
 -(void)pauseRace {

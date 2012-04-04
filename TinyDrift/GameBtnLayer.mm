@@ -33,7 +33,7 @@ CCMenuItemLabel *menuMenuItem;
         CCMenu *pauseMenu = [CCMenu menuWithItems:pauseMenuItem, nil];
         pauseMenu.position = CGPointZero;
         [self addChild:pauseMenu];
-        [pauseMenuItem setVisible:true];
+        [pauseMenuItem setVisible:false];
         
         // Create Race Again button        
         CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" fontName:@"Quasart" fontSize:32];
@@ -84,7 +84,7 @@ CCMenuItemLabel *menuMenuItem;
 }
 
 - (void)stopAction:(id)sender {
-    [pauseMenuItem setVisible:true];
+    [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:false];
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
@@ -102,7 +102,7 @@ CCMenuItemLabel *menuMenuItem;
 }
 
 - (void)menuAction:(id)sender {
-    [pauseMenuItem setVisible:true];
+    [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:false];
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
@@ -131,6 +131,11 @@ CCMenuItemLabel *menuMenuItem;
 
     
 }
+
+-(void)startRace {
+    [pauseMenuItem setVisible:true];
+}
+
 
 -(void)endRace {
     [pauseMenuItem setVisible:false];
