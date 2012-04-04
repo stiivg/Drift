@@ -276,7 +276,7 @@ const bool _fixedDrift = false;
         }
     }
     
-    float speedGain = 0.02 +  weightedSpeed / 100;
+    float speedGain = 0.02 +  weightedSpeed / 200;
     speedGain = MIN(speedGain, 1.0);
     
     float speedPitch = 0.8 + weightedSpeed / 70;
@@ -431,17 +431,20 @@ const bool _fixedDrift = false;
         }
         
 
-        float soundGain = 0.2 +  ABS(_driftControlAngle) / 4;
+        float soundGain = 0.1 +  ABS(_driftControlAngle) / 6;
         soundGain = MIN(soundGain, 1.0);
         
         float soundPitch = 1.0 + ABS(_driftControlAngle) / 3;
         soundPitch = MIN(soundPitch, 2.0);
                            
-        engineSound.gain = soundGain;    //0.2 - 1.0
+//        CCLOG(@"gain=%4.2f", soundGain);
+        engineSound.gain = soundGain;    //0.1 - 1.0
         engineSound.pitch = soundPitch;  //1.0 - 2.0
         
-        gravelSound.gain = soundGain+.5;    //0.2 - 1.0
+        gravelSound.gain = soundGain+.3;    //0.4 - 1.0
         gravelSound.pitch = soundPitch;  //1.0 - 2.0
+        gravelSound.pan = -1 *_driftControlAngle ;
+//        CCLOG(@"pan=%4.2f", _driftControlAngle );
         
         
         
@@ -537,6 +540,7 @@ const bool _fixedDrift = false;
     if (cameraSound == nil) {
         cameraSound = [[GameManager sharedGameManager] createSoundSource:@"CAMERA"];
     }
+    cameraSound.gain = 0.5;
     [cameraSound play];
     
     //Zoom in while hidden

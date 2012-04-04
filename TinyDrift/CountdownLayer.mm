@@ -41,7 +41,6 @@
     if (beepLSound == nil) {
         beepLSound = [[GameManager sharedGameManager] createSoundSource:@"BEEPLOW"];
     }
-    beepLSound.gain = 2.0;
     
     if (beepHSound == nil) {
         beepHSound = [[GameManager sharedGameManager] createSoundSource:@"BEEPHIGH"];

@@ -95,7 +95,8 @@
             engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE_TEST"];
         }
         engineSound.looping = YES;
-        engineSound.gain = 0.3;   //Typical value when driving
+        engineSound.gain = 0.1;   //Typical value when driving
+        [self soundAction:soundSlider];
         [engineSound play];
 
         
