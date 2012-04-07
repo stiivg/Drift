@@ -174,7 +174,7 @@
     
     //Straight line at end
     nextVector = CGPointMake(0, 100);
-    for (int j=0; j<16; j++) {
+    for (int j=0; j<12; j++) {
         //vector to next road point
         nextPathPoint = ccpAdd(nextPathPoint, nextVector);
         _keyPoints[i++] = nextPathPoint; //key point

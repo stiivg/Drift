@@ -103,6 +103,12 @@
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
         
+        //Offset to make sure end of road is offscreen
+        CGSize winSize = [CCDirector sharedDirector].winSize;
+        float scalemult = 0.01;
+        _terrain.scale = scalemult;
+        [_terrain setOffset: ccp(scalemult*winSize.width/2, (winSize.height/3)/scalemult)];
+        
         [self genBackground];
         
     }
