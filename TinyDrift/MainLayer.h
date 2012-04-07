@@ -11,9 +11,14 @@
 
 #import "cocos2d.h"
 
-@interface MainLayer : CCLayer
+#define MAX_LENGTH 10
+
+@interface MainLayer : CCLayer <UITextFieldDelegate>
 {
-  CCScene *_mainScene;  
+    CCScene *_mainScene; 
+    UITextField *name;
+    CCMenuItemLabel *nameMenuItem;
+
 }
 
 - (id)initWithMain:(CCScene *)mainScene;

@@ -25,6 +25,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize soundEffectsState;
 @synthesize raceWon;
 @synthesize raceTime;
+@synthesize userName;
 
 +(GameManager*)sharedGameManager {
     @synchronized([GameManager class])
@@ -427,7 +428,6 @@ static GameManager* _sharedGameManager = nil;
 -(float)effectsVolume {
     return effectsVolumeDefault;
 }
-
 
 @end
 

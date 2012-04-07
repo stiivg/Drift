@@ -25,11 +25,13 @@
                                                         [NSNumber numberWithFloat:0.1],
                                                         [NSNumber numberWithFloat:0.5],
                                                         [NSNumber numberWithBool:YES],
+                                                        [NSString stringWithString:@"You"],
                                                         nil]
                                  forKeys:[NSArray arrayWithObjects:
                                           @"MusicLevel", // starts at score of 0.2
                                           @"SoundLevel", // starts at level 0.8
                                           @"Tutorial",   // starts with tutorial on
+                                          @"UserName",   // starts with "You"
                                           nil]];
     [[NSUserDefaults standardUserDefaults]
      registerDefaults:appDefaults];
@@ -74,6 +76,9 @@
 
     BOOL tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"];
     [[GameManager sharedGameManager] setIsTutorialOn:tutorial];    
+    
+    NSString *user = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserName"];
+    [[GameManager sharedGameManager] setUserName:user];    
     
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -160,6 +165,9 @@
     
     BOOL tutorial = [[GameManager sharedGameManager] isTutorialOn];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:tutorial] forKey:@"Tutorial"];
+
+    NSString *user = [[GameManager sharedGameManager] userName];
+    [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"UserName"];
 }
 
 

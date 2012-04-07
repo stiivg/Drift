@@ -62,7 +62,7 @@ CCMenuItemLabel *menuMenuItem;
         [self addChild:resumeMenu];
         [resumeMenuItem setVisible:false];
 
-        winlabel = [CCLabelTTF labelWithString:@"" fontName:@"Quasart" fontSize:48];
+        winlabel = [CCLabelTTF labelWithString:@"" dimensions:CGSizeMake(300, 100) alignment:UITextAlignmentCenter  fontName:@"Quasart" fontSize:48];
         winlabel.color = ccc3(0,0,0);
         winlabel.position = ccp(winSize.width/2, winSize.height*0.8);
         [self addChild:winlabel];
@@ -111,14 +111,15 @@ CCMenuItemLabel *menuMenuItem;
 }
 
 - (void)showWinLoss {
+    NSString *userName = [[GameManager sharedGameManager] userName];
     [winlabel setScale:0.8];
     BOOL raceWon = [[GameManager sharedGameManager] raceWon];
     if (raceWon) {
-        [winlabel setString:@"You Won!"];
+        [winlabel setString:[userName stringByAppendingString:@" Won!"]];
         winlabel.rotation = -10;
 
     } else {
-        [winlabel setString:@"You Lost"];
+        [winlabel setString:[userName stringByAppendingString:@" Lost"]];
         winlabel.rotation = 0;
 
     }

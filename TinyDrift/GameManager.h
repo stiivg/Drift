@@ -22,6 +22,7 @@
     
     float backgroundVolumeDefault;
     float effectsVolumeDefault;
+    NSString *userNameDefault;
     
 }
 @property (readwrite) BOOL isGamePaused;
@@ -31,6 +32,7 @@
 
 @property (readwrite) float backgroundVolume;
 @property (readwrite) float effectsVolume;
+@property (nonatomic, copy) NSString *userName;
 
 @property (readwrite) GameManagerSoundState managerSoundState;
 @property (nonatomic, retain) NSMutableDictionary *listOfSoundEffectFiles;

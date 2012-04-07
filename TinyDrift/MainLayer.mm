@@ -18,6 +18,67 @@ CCMenuItem *playMenuItem;
 CCMenuItem *statsMenuItem;
 CCMenuItem *optionsMenuItem;
 
+- (BOOL)textFieldShouldReturn:(UITextField*)textField {
+    //Terminate editing
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField*)textField {
+    if (textField==name) {
+        [name endEditing:YES];
+        [[GameManager sharedGameManager] setUserName:textField.text];
+    }
+}
+
+- (void)specifyStartLevel
+{
+    [name setText:[nameMenuItem label].string ];
+    [name becomeFirstResponder];    
+}
+
+
+-(void)initName {
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    
+    // Create Name button        
+    NSString *userName = [[GameManager sharedGameManager] userName];
+    CCLabelBMFont *nameLabel = [CCLabelTTF labelWithString:userName fontName:@"Quasart" fontSize:32];
+    nameMenuItem = [CCMenuItemLabel itemWithLabel:nameLabel target:self selector:@selector(nameAction:)];
+    nameMenuItem.position = ccp(winSize.width/2, winSize.height - 60);
+    CCMenu *nameMenu = [CCMenu menuWithItems:nameMenuItem, nil];
+    nameMenu.position = CGPointZero;
+    [self addChild:nameMenu];
+    
+    //Create offscreen edit field to edit the name label
+    name = [[ UITextField alloc ] initWithFrame: CGRectZero ];
+    [[[CCDirector sharedDirector] openGLView] addSubview:name];
+    [name setDelegate:self];
+    [name addTarget:self action:@selector(editNameAction:) forControlEvents:UIControlEventAllEditingEvents];
+    //    [name release];   // don't forget to release memory
+    
+
+}
+
+- (void)nameAction:(id)sender {
+    [self specifyStartLevel];  
+    
+}
+
+//Limit the name entered to MAX_LENGTH
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    return newLength <= MAX_LENGTH;
+}
+
+- (void)editNameAction:(id)sender {
+    [nameMenuItem setString: name.text];
+}
 
 
 - (id)initWithMain:(CCScene *)mainScene {
@@ -52,6 +113,8 @@ CCMenuItem *optionsMenuItem;
         optionsMenu.position = CGPointZero;
         [self addChild:optionsMenu];
         
+        [self initName];
+        
     }
     return self;
 }
@@ -63,7 +126,6 @@ CCMenuItem *optionsMenuItem;
 }
 
 - (void)statsAction:(id)sender {
-    
 }
 
 - (void)optionsAction:(id)sender {
