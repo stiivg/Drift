@@ -45,6 +45,11 @@ CCMenuItemLabel *menuMenuItem;
     [self addChild:timeLabel];
     timeLabel.position = ccp(winSize.width/2 - TITLE_LENGTH/2, winSize.height - TOP_LINE - LINE_SPACING);
     
+    leadLabel = [CCLabelTTF labelWithString:@"Lead: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:12];
+    leadLabel.color = resultsColor;
+    [self addChild:leadLabel];
+    leadLabel.position = ccp(winSize.width/2+10, winSize.height - TOP_LINE - LINE_SPACING - 22);
+    
     driftsLabel = [CCLabelTTF labelWithString:@"Drifts: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:FONT_SIZE];
     driftsLabel.color = resultsColor;
     [self addChild:driftsLabel];
@@ -64,10 +69,15 @@ CCMenuItemLabel *menuMenuItem;
     [self addChild:rankValue];
     rankValue.position = ccp(winSize.width/2+TITLE_LENGTH+10, winSize.height - TOP_LINE - 22);
     
-    timeValue = [CCLabelTTF labelWithString:@"43s" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
+    timeValue = [CCLabelTTF labelWithString:@"43.6s" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
     timeValue.color = resultsColor;
     [self addChild:timeValue];
     timeValue.position = ccp(winSize.width/2 + TITLE_LENGTH/2, winSize.height - TOP_LINE - LINE_SPACING);
+    
+    leadValue = [CCLabelTTF labelWithString:@"5.2s" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:12];
+    leadValue.color = resultsColor;
+    [self addChild:leadValue];
+    leadValue.position = ccp(winSize.width/2+TITLE_LENGTH+10, winSize.height - TOP_LINE - LINE_SPACING - 22);
     
     driftsValue = [CCLabelTTF labelWithString:@"4" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
     driftsValue.color = resultsColor;
@@ -174,11 +184,13 @@ CCMenuItemLabel *menuMenuItem;
     scoreLabel.visible = true;
     rankLabel.visible = true;
     timeLabel.visible = true;
+    leadLabel.visible = true;
     driftsLabel.visible = true;
     
     scoreValue.visible = true;
     rankValue.visible = true;
     timeValue.visible = true;
+    leadValue.visible = true;
     driftsValue.visible = true;
 }
 
@@ -186,11 +198,13 @@ CCMenuItemLabel *menuMenuItem;
     scoreLabel.visible = false;
     rankLabel.visible = false;
     timeLabel.visible = false;
+    leadLabel.visible = false;
     driftsLabel.visible = false;
     
     scoreValue.visible = false;
     rankValue.visible = false;
     timeValue.visible = false;
+    leadValue.visible = false;
     driftsValue.visible = false;
 }
 

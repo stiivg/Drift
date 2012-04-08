@@ -18,6 +18,10 @@ CCMenuItem *playMenuItem;
 CCMenuItem *statsMenuItem;
 CCMenuItem *optionsMenuItem;
 
+//Trim all leading and trailing spaces
+#define allTrim( object ) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet] ]
+
+
 - (BOOL)textFieldShouldReturn:(UITextField*)textField {
     //Terminate editing
     [textField resignFirstResponder];
@@ -27,13 +31,22 @@ CCMenuItem *optionsMenuItem;
 - (void)textFieldDidEndEditing:(UITextField*)textField {
     if (textField==name) {
         [name endEditing:YES];
-        [[GameManager sharedGameManager] setUserName:textField.text];
+        NSString *endString = allTrim(textField.text);
+
+        if ([endString length]==0) {
+            endString = origString;
+        }
+        [nameMenuItem setString:endString];
+        
+        [[GameManager sharedGameManager] setUserName:endString];
     }
 }
 
 - (void)specifyStartLevel
 {
-    [name setText:[nameMenuItem label].string ];
+    origString = [nameMenuItem label].string;
+    //Start with a space so first char backspace will call the edit name action
+    [name setText:@" " ];
     [name becomeFirstResponder];    
 }
 
@@ -54,14 +67,21 @@ CCMenuItem *optionsMenuItem;
     name = [[ UITextField alloc ] initWithFrame: CGRectZero ];
     [[[CCDirector sharedDirector] openGLView] addSubview:name];
     [name setDelegate:self];
-    [name addTarget:self action:@selector(editNameAction:) forControlEvents:UIControlEventAllEditingEvents];
+    [name addTarget:self action:@selector(editNameAction:) forControlEvents:UIControlEventEditingChanged];
     //    [name release];   // don't forget to release memory
     
+    nameEditing = false;
 
 }
 
 - (void)nameAction:(id)sender {
-    [self specifyStartLevel];  
+    if (nameEditing) {
+        nameEditing = false;
+        [name resignFirstResponder];
+    } else {
+        nameEditing = true;
+        [self specifyStartLevel];  
+    }
     
 }
 
@@ -76,8 +96,11 @@ CCMenuItem *optionsMenuItem;
     return newLength <= MAX_LENGTH;
 }
 
+
+//Called on every edit action like press key
 - (void)editNameAction:(id)sender {
-    [nameMenuItem setString: name.text];
+    //TrRim leading and trailing spaces
+    [nameMenuItem setString: allTrim(name.text)];
 }
 
 

@@ -19,11 +19,13 @@
     CCLabelBMFont *scoreLabel;
     CCLabelBMFont *rankLabel;
     CCLabelBMFont *timeLabel;
+    CCLabelBMFont *leadLabel;
     CCLabelBMFont *driftsLabel;
     
     CCLabelBMFont *scoreValue;
     CCLabelBMFont *rankValue;
     CCLabelBMFont *timeValue;
+    CCLabelBMFont *leadValue;
     CCLabelBMFont *driftsValue;
     
 }

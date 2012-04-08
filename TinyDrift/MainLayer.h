@@ -18,7 +18,8 @@
     CCScene *_mainScene; 
     UITextField *name;
     CCMenuItemLabel *nameMenuItem;
-
+    NSString *origString;
+    BOOL nameEditing;
 }
 
 - (id)initWithMain:(CCScene *)mainScene;
