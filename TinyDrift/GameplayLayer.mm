@@ -493,8 +493,17 @@ const bool _fixedDrift = false;
     double now = [[NSDate date] timeIntervalSince1970];
     [GameManager sharedGameManager].time = now -raceStartTime;
     
+    float leadEstimate = 0;
     int leadDistance = _carRoadIndex - _chaseCarRoadIndex;
-    [GameManager sharedGameManager].lead = leadDistance * 10 / _chaseCar.speedT;
+    if (leadDistance < 6) {
+        //accurate lead time
+        float leadpixels = _car.position.y - _chaseCar.position.y;
+        leadEstimate = leadpixels /31 / _chaseCar.speedT;
+    } else {
+        leadEstimate = leadDistance * 1.56 / CHASE_CAR_SPEED;
+    }
+    
+    [GameManager sharedGameManager].lead = leadEstimate;
     
 }
 
