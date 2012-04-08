@@ -313,6 +313,8 @@ const bool _fixedDrift = false;
     //test if end of turbo drift
     if (turboDrifting) {
         turboDrifting = NO;
+        //Increment the drifts count
+        [GameManager sharedGameManager].drifts += 1;
         [_car turboBoost];
     }
     drifting = NO;
@@ -487,6 +489,14 @@ const bool _fixedDrift = false;
     }
 }
 
+-(void)saveStatistics {
+    double now = [[NSDate date] timeIntervalSince1970];
+    [GameManager sharedGameManager].time = now -raceStartTime;
+    
+    int leadDistance = _carRoadIndex - _chaseCarRoadIndex;
+    [GameManager sharedGameManager].lead = leadDistance * 10 / _chaseCar.speedT;
+    
+}
 
 -(void)resetStart {
     racing = NO;
@@ -508,6 +518,8 @@ const bool _fixedDrift = false;
 }
 
 -(void)startRace {
+    raceStartTime = [[NSDate date] timeIntervalSince1970];
+    
     [_chaseCar drive];
     _tapDown = NO; //force a new touch at start
     racing = YES;
@@ -540,7 +552,7 @@ const bool _fixedDrift = false;
     [flashLayer setOpacity:1.];
     
     [self pauseRace];
-    
+
     CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
     //Only create the sound source when needed
     if (cameraSound == nil) {
@@ -557,6 +569,9 @@ const bool _fixedDrift = false;
     [flashLayer runAction:fadeOutAction];
     //Cancel tutorial at end of race
     [[GameManager sharedGameManager] setIsTutorialOn:false];
+
+    //Calc while fading out before GameScene displays results
+    [self saveStatistics];
 }
 
 //remember the touch start location for relative slides

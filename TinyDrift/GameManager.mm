@@ -16,6 +16,12 @@
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
 
+@synthesize score;
+@synthesize time;
+@synthesize lead;
+@synthesize rank;
+@synthesize drifts;
+
 @synthesize isGamePaused;
 @synthesize isMusicON;
 @synthesize isSoundEffectsON;
@@ -349,6 +355,7 @@ static GameManager* _sharedGameManager = nil;
     switch (sceneID) {
         case kGameScene:
             isGamePaused = NO;
+            [self clearStatistics];
             sceneToRun  = [GameScene node];
             break;
             
@@ -384,6 +391,14 @@ static GameManager* _sharedGameManager = nil;
 
 }
 
+-(void)clearStatistics {
+    score = 0;
+    time = 0.0;
+    lead = 0.0;
+    rank = 0;
+    drifts = 0;
+}
+
 -(void)pauseGame {
     isGamePaused = YES;
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) pauseRace];
@@ -397,6 +412,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)playGame {
     //stop this game and start next game
+    [self clearStatistics];
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) startGame];
     isGamePaused = NO;
 }

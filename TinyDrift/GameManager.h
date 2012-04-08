@@ -25,6 +25,13 @@
     NSString *userNameDefault;
     
 }
+
+@property (readwrite) int score;
+@property (readwrite) double time;
+@property (readwrite) double lead;
+@property (readwrite) int rank;
+@property (readwrite) int drifts;
+
 @property (readwrite) BOOL isGamePaused;
 @property (readwrite) BOOL isMusicON;
 @property (readwrite) BOOL isSoundEffectsON;

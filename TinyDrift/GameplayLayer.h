@@ -55,6 +55,8 @@
     BOOL driftEnabled;
     BOOL racing;
     
+    double raceStartTime;
+    
     CDSoundSource* engineSound;
     CDSoundSource* gravelSound;
     CDSoundSource* cameraSound;

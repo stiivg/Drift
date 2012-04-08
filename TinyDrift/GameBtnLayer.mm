@@ -130,7 +130,7 @@ CCMenuItemLabel *menuMenuItem;
 
         winlabel = [CCLabelTTF labelWithString:@"" dimensions:CGSizeMake(300, 100) alignment:UITextAlignmentCenter  fontName:@"Quasart" fontSize:48];
         winlabel.color = ccc3(0,0,0);
-        winlabel.position = ccp(winSize.width/2, winSize.height*0.7);
+        winlabel.position = ccp(winSize.width/2, winSize.height*0.75);
         [self addChild:winlabel];
         winlabel.visible = false;
         
@@ -180,7 +180,24 @@ CCMenuItemLabel *menuMenuItem;
     [self hideResults];
 }
 
+-(void)setResults {
+    int score = [GameManager sharedGameManager].score;
+    int rank = [GameManager sharedGameManager].rank;
+    double time = [GameManager sharedGameManager].time;
+    double lead = [GameManager sharedGameManager].lead;
+    int drifts = [GameManager sharedGameManager].drifts;
+    
+    [scoreValue setString: [NSString stringWithFormat:@"%d", score]]; 
+    [rankValue setString: [NSString stringWithFormat:@"%d", rank]]; 
+    [timeValue setString: [NSString stringWithFormat:@"%4.2fs", time]]; 
+    [leadValue setString: [NSString stringWithFormat:@"%4.2f", lead]]; 
+    [driftsValue setString: [NSString stringWithFormat:@"%d", drifts]]; 
+    
+}
+
 -(void)showResults {
+    [self setResults];
+    
     scoreLabel.visible = true;
     rankLabel.visible = true;
     timeLabel.visible = true;

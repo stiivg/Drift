@@ -45,6 +45,7 @@
 @property BOOL fixedDrift;
 @property float roadSpeed;
 @property CGPoint startPosition;
+@property float speedT;
 
 - (void)runNormalAnimation;
 - (void)drive;

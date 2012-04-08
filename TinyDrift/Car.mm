@@ -14,6 +14,7 @@
 @synthesize fixedDrift;
 @synthesize roadSpeed;
 @synthesize startPosition;
+@synthesize speedT;
 
 const float kDriftAcc = 40;
 
@@ -141,7 +142,7 @@ bool curvetoright = false;
     
     //Add force along path if needed
     CGPoint velT = ccpProject(velocity, pathTangent);
-    float speedT = ccpLength(velT);
+    speedT = ccpLength(velT);
     if (speedT < roadSpeed) {
         accTangential = ccpNormalize(pathTangent);
         accTangential = ccpMult(accTangential, kDefaultRoadAcc);
