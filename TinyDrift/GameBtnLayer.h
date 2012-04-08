@@ -13,9 +13,19 @@
 
 
 @interface GameBtnLayer : CCLayer
-{
+{    
     CCLabelTTF *winlabel;
-
+    //Results
+    CCLabelBMFont *scoreLabel;
+    CCLabelBMFont *rankLabel;
+    CCLabelBMFont *timeLabel;
+    CCLabelBMFont *driftsLabel;
+    
+    CCLabelBMFont *scoreValue;
+    CCLabelBMFont *rankValue;
+    CCLabelBMFont *timeValue;
+    CCLabelBMFont *driftsValue;
+    
 }
 
 -(void)startRace;

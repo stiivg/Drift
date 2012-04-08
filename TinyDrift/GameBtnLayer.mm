@@ -19,6 +19,62 @@ CCMenuItemLabel *raceAgainMenuItem;
 CCMenuItemLabel *resumeMenuItem;
 CCMenuItemLabel *menuMenuItem;
 
+#define TITLE_LENGTH 80
+#define LINE_SPACING 40
+#define TOP_LINE 300
+#define FONT_SIZE 20
+
+
+-(void)initResults {
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    ccColor3B resultsColor =ccBLACK; // ccc3(255,215,76);
+    
+    // Create result labels   
+    scoreLabel = [CCLabelTTF labelWithString:@"Score: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:FONT_SIZE];
+    scoreLabel.color = resultsColor;
+    [self addChild:scoreLabel];
+    scoreLabel.position = ccp(winSize.width/2 - TITLE_LENGTH/2, winSize.height - TOP_LINE);
+
+    rankLabel = [CCLabelTTF labelWithString:@"Rank No.: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:12];
+    rankLabel.color = resultsColor;
+    [self addChild:rankLabel];
+    rankLabel.position = ccp(winSize.width/2+10, winSize.height - TOP_LINE - 22);
+    
+    timeLabel = [CCLabelTTF labelWithString:@"Time: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:FONT_SIZE];
+    timeLabel.color = resultsColor;
+    [self addChild:timeLabel];
+    timeLabel.position = ccp(winSize.width/2 - TITLE_LENGTH/2, winSize.height - TOP_LINE - LINE_SPACING);
+    
+    driftsLabel = [CCLabelTTF labelWithString:@"Drifts: " dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentRight fontName:@"Arial" fontSize:FONT_SIZE];
+    driftsLabel.color = resultsColor;
+    [self addChild:driftsLabel];
+    driftsLabel.position = ccp(winSize.width/2 - TITLE_LENGTH/2, winSize.height - TOP_LINE - 2*LINE_SPACING);  
+
+    
+    
+    
+    //Create result values
+    scoreValue = [CCLabelTTF labelWithString:@"4126" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
+    scoreValue.color = resultsColor;
+    [self addChild:scoreValue];
+    scoreValue.position = ccp(winSize.width/2 + TITLE_LENGTH/2, winSize.height - TOP_LINE);
+    
+    rankValue = [CCLabelTTF labelWithString:@"1" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:12];
+    rankValue.color = resultsColor;
+    [self addChild:rankValue];
+    rankValue.position = ccp(winSize.width/2+TITLE_LENGTH+10, winSize.height - TOP_LINE - 22);
+    
+    timeValue = [CCLabelTTF labelWithString:@"43s" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
+    timeValue.color = resultsColor;
+    [self addChild:timeValue];
+    timeValue.position = ccp(winSize.width/2 + TITLE_LENGTH/2, winSize.height - TOP_LINE - LINE_SPACING);
+    
+    driftsValue = [CCLabelTTF labelWithString:@"4" dimensions:CGSizeMake(TITLE_LENGTH, LINE_SPACING) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:FONT_SIZE];
+    driftsValue.color = resultsColor;
+    [self addChild:driftsValue];
+    driftsValue.position = ccp(winSize.width/2 + TITLE_LENGTH/2, winSize.height - TOP_LINE - 2*LINE_SPACING);  
+    
+}
 
 -(id) init {
     if((self=[super init])) {
@@ -36,12 +92,12 @@ CCMenuItemLabel *menuMenuItem;
         [pauseMenuItem setVisible:false];
         
         // Create Race Again button        
-        CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" fontName:@"Quasart" fontSize:32];
-        raceAgainMenuItem = [CCMenuItemLabel itemWithLabel:raceAgainLabel target:self selector:@selector(stopAction:)];
+        CCLabelBMFont *raceAgainLabel = [CCLabelTTF labelWithString:@"Race Again" dimensions:CGSizeMake(240, 40) alignment:UITextAlignmentCenter fontName:@"Quasart" fontSize:32];
+        raceAgainMenuItem = [CCMenuItemLabel itemWithLabel:raceAgainLabel target:self selector:@selector(raceAgainAction:)];
         raceAgainMenuItem.position = ccp(winSize.width / 2, 60);
-        CCMenu *stopMenu = [CCMenu menuWithItems:raceAgainMenuItem, nil];
-        stopMenu.position = CGPointZero;
-        [self addChild:stopMenu];
+        CCMenu *raceMenu = [CCMenu menuWithItems:raceAgainMenuItem, nil];
+        raceMenu.position = CGPointZero;
+        [self addChild:raceMenu];
         [raceAgainMenuItem setVisible:false];
         
         // Create menu button
@@ -64,9 +120,12 @@ CCMenuItemLabel *menuMenuItem;
 
         winlabel = [CCLabelTTF labelWithString:@"" dimensions:CGSizeMake(300, 100) alignment:UITextAlignmentCenter  fontName:@"Quasart" fontSize:48];
         winlabel.color = ccc3(0,0,0);
-        winlabel.position = ccp(winSize.width/2, winSize.height*0.8);
+        winlabel.position = ccp(winSize.width/2, winSize.height*0.7);
         [self addChild:winlabel];
         winlabel.visible = false;
+        
+        [self initResults];
+        [self hideResults];
 
     }
     return self;
@@ -83,14 +142,14 @@ CCMenuItemLabel *menuMenuItem;
     
 }
 
-- (void)stopAction:(id)sender {
+- (void)raceAgainAction:(id)sender {
     [pauseMenuItem setVisible:false];
     [resumeMenuItem setVisible:false];
     [raceAgainMenuItem setVisible:false];
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] playGame];
     winlabel.visible = false;
-    
+    [self hideResults];
 }
 
 - (void)resumeAction:(id)sender {
@@ -108,6 +167,31 @@ CCMenuItemLabel *menuMenuItem;
     [menuMenuItem setVisible:false];
     [[GameManager sharedGameManager] runSceneWithID:kMainScene];
     winlabel.visible = false;
+    [self hideResults];
+}
+
+-(void)showResults {
+    scoreLabel.visible = true;
+    rankLabel.visible = true;
+    timeLabel.visible = true;
+    driftsLabel.visible = true;
+    
+    scoreValue.visible = true;
+    rankValue.visible = true;
+    timeValue.visible = true;
+    driftsValue.visible = true;
+}
+
+-(void)hideResults {
+    scoreLabel.visible = false;
+    rankLabel.visible = false;
+    timeLabel.visible = false;
+    driftsLabel.visible = false;
+    
+    scoreValue.visible = false;
+    rankValue.visible = false;
+    timeValue.visible = false;
+    driftsValue.visible = false;
 }
 
 - (void)showWinLoss {
@@ -117,6 +201,7 @@ CCMenuItemLabel *menuMenuItem;
     if (raceWon) {
         [winlabel setString:[userName stringByAppendingString:@" Won!"]];
         winlabel.rotation = -10;
+        [self showResults];
 
     } else {
         [winlabel setString:[userName stringByAppendingString:@" Lost"]];

@@ -16,7 +16,7 @@
 
 #define PTM_RATIO   32.0
 #define NUM_PREV_SPEEDS   60
-#define MIN_SCALE 0.5
+#define MIN_SCALE 0.6
 #define MAX_SCALE 1.0
 #define END_SPEED 35
 #define CAR_SIDE_OFFSET 30

@@ -384,7 +384,7 @@ const bool _fixedDrift = false;
     
     _terrain.targetRoadIndex = _carRoadIndex;
     CGPoint target = [_terrain nextTargetPoint:_car.position];
-    if ([_terrain atDriveEnd]) {
+    if ([_terrain atRaceEnd]) {
 //        //end of path drive section
         [self raceEnded];
         return;
@@ -402,7 +402,9 @@ const bool _fixedDrift = false;
     float offsetX = _car.position.x;
     float offsetY = _car.position.y;
     
+    //Save car position on road
     _carRoadIndex = _terrain.targetRoadIndex;
+    //Set chase car position on road
     _terrain.targetRoadIndex = _chaseCarRoadIndex;
     
     target = [_terrain nextTargetPoint:_chaseCar.position];
@@ -414,7 +416,11 @@ const bool _fixedDrift = false;
     tangent = [_terrain targetTangent];
     [_chaseCar setPathTangent:tangent];
     
-    [_chaseCar update];
+    //Stop chase car at end of road
+    if([_terrain atRoadEnd] == false) {
+        [_chaseCar update];
+    }
+    //Save chase car position on road
     _chaseCarRoadIndex = _terrain.targetRoadIndex;
    
 

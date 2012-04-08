@@ -284,8 +284,13 @@ int _lastRoadPoint = 100;
 }
 
 //True if at end of path drive section
-- (BOOL)atDriveEnd {
+- (BOOL)atRaceEnd {
     return _targetRoadIndex >= _lastRoadPoint-kPointsToEnd;
+}
+
+//True if at end of road
+- (BOOL)atRoadEnd {
+    return _targetRoadIndex >= _lastRoadPoint;
 }
 
 //Returns path curve at the target point
