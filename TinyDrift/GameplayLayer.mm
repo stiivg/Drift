@@ -505,6 +505,9 @@ const bool _fixedDrift = false;
     
     [GameManager sharedGameManager].lead = leadEstimate;
     
+    [GameManager sharedGameManager].score = [GameManager sharedGameManager].time * 100;
+    
+    
 }
 
 -(void)resetStart {

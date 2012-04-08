@@ -395,7 +395,7 @@ static GameManager* _sharedGameManager = nil;
     score = 0;
     time = 0.0;
     lead = 0.0;
-    rank = 0;
+    rank = 1;
     drifts = 0;
 }
 
