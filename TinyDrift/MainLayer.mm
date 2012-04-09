@@ -14,9 +14,9 @@
 
 @implementation MainLayer
 
-CCMenuItem *playMenuItem;
-CCMenuItem *statsMenuItem;
-CCMenuItem *optionsMenuItem;
+CCMenuItemLabel *raceMenuItem;
+CCMenuItemLabel *statsMenuItem;
+CCMenuItemLabel *optionsMenuItem;
 
 //Trim all leading and trailing spaces
 #define allTrim( object ) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet] ]
@@ -110,28 +110,27 @@ CCMenuItem *optionsMenuItem;
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         // Create play button
-        playMenuItem = [CCMenuItemImage 
-                         itemFromNormalImage:@"play.png" selectedImage:@"play_selected.png" 
-                         target:self selector:@selector(playAction:)];
-        playMenuItem.position = ccp(winSize.width / 2, winSize.height / 3);
-        CCMenu *playMenu = [CCMenu menuWithItems:playMenuItem, nil];
-        playMenu.position = CGPointZero;
-        [self addChild:playMenu];
+        CCLabelBMFont *raceLabel = [CCLabelTTF labelWithString:@"Race" fontName:@"Quasart" fontSize:40];
+        raceMenuItem = [CCMenuItemLabel itemWithLabel:raceLabel target:self selector:@selector(raceAction:)];
+        raceMenuItem.position = ccp(winSize.width/2, 80);
+        CCMenu *raceMenu = [CCMenu menuWithItems:raceMenuItem, nil];
+        raceMenu.position = CGPointZero;
+        [self addChild:raceMenu];
         
         // Create stats button
-        statsMenuItem = [CCMenuItemImage 
-                        itemFromNormalImage:@"stats.png" selectedImage:@"stats_selected.png" 
-                        target:self selector:@selector(statsAction:)];
-        statsMenuItem.position = ccp(winSize.width / 2, winSize.height / 2);
+        CCLabelBMFont *statsLabel = [CCLabelTTF labelWithString:@"Scores" fontName:@"Quasart" fontSize:20];
+        statsLabel.color = ccBLACK;
+        statsMenuItem = [CCMenuItemLabel itemWithLabel:statsLabel target:self selector:@selector(statsAction:)];
+        statsMenuItem.position = ccp(winSize.width/2+80, winSize.height / 3);
         CCMenu *statsMenu = [CCMenu menuWithItems:statsMenuItem, nil];
         statsMenu.position = CGPointZero;
         [self addChild:statsMenu];
         
         // Create options button
-        optionsMenuItem = [CCMenuItemImage 
-                          itemFromNormalImage:@"options.png" selectedImage:@"options_selected.png" 
-                          target:self selector:@selector(optionsAction:)];
-        optionsMenuItem.position = ccp(winSize.width / 2, winSize.height * 2 / 3);
+        CCLabelBMFont *optionsLabel = [CCLabelTTF labelWithString:@"Options" fontName:@"Quasart" fontSize:20];
+        optionsLabel.color = ccBLACK;
+        optionsMenuItem = [CCMenuItemLabel itemWithLabel:optionsLabel target:self selector:@selector(optionsAction:)];
+        optionsMenuItem.position = ccp(winSize.width/2-80, winSize.height / 3);
         CCMenu *optionsMenu = [CCMenu menuWithItems:optionsMenuItem, nil];
         optionsMenu.position = CGPointZero;
         [self addChild:optionsMenu];
@@ -142,13 +141,14 @@ CCMenuItem *optionsMenuItem;
     return self;
 }
 
-- (void)playAction:(id)sender {
+- (void)raceAction:(id)sender {
     
     [[GameManager sharedGameManager] runSceneWithID:kGameScene];
     
 }
 
 - (void)statsAction:(id)sender {
+    [(MainScene *)_mainScene showStatistics];
 }
 
 - (void)optionsAction:(id)sender {

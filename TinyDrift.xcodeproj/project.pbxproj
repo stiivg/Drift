@@ -178,6 +178,7 @@
 		649FAFFC1528DCD000D32067 /* TutorialLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */; };
 		649FAFFF152AB21700D32067 /* beep_high.wav in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFFD152AB21700D32067 /* beep_high.wav */; };
 		649FB000152AB21700D32067 /* beep_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 649FAFFE152AB21700D32067 /* beep_low.wav */; };
+		649FB00815326B4100D32067 /* StatisticsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FB00715326B4000D32067 /* StatisticsLayer.mm */; };
 		64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */; };
 		64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
@@ -565,6 +566,8 @@
 		649FAFFB1528DCCF00D32067 /* TutorialLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TutorialLayer.mm; path = TinyDrift/TutorialLayer.mm; sourceTree = SOURCE_ROOT; };
 		649FAFFD152AB21700D32067 /* beep_high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep_high.wav; sourceTree = "<group>"; };
 		649FAFFE152AB21700D32067 /* beep_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep_low.wav; sourceTree = "<group>"; };
+		649FB00515326B0100D32067 /* StatisticsLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StatisticsLayer.h; path = TinyDrift/StatisticsLayer.h; sourceTree = SOURCE_ROOT; };
+		649FB00715326B4000D32067 /* StatisticsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = StatisticsLayer.mm; path = TinyDrift/StatisticsLayer.mm; sourceTree = SOURCE_ROOT; };
 		64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause_selected-hd.png"; path = "TinyDrift/pause_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-hd.png"; path = "TinyDrift/pause-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
@@ -1224,6 +1227,8 @@
 				64B4D0D014CA7AE0000F20C3 /* MainLayer.mm */,
 				649FAFF71525704900D32067 /* OptionsLayer.h */,
 				649FAFF81525706F00D32067 /* OptionsLayer.mm */,
+				649FB00515326B0100D32067 /* StatisticsLayer.h */,
+				649FB00715326B4000D32067 /* StatisticsLayer.mm */,
 				64B4D0F814CC79C1000F20C3 /* LoopLayer.h */,
 				64B4D0F614CC79A0000F20C3 /* LoopLayer.mm */,
 			);
@@ -1594,6 +1599,7 @@
 				64B4D12B15158747000F20C3 /* StatusLayer.mm in Sources */,
 				649FAFF91525706F00D32067 /* OptionsLayer.mm in Sources */,
 				649FAFFC1528DCD000D32067 /* TutorialLayer.mm in Sources */,
+				649FB00815326B4100D32067 /* StatisticsLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@
 
 -(void)backToMain;
 -(void)showOptions;
+-(void)showStatistics;
 
 @end
 

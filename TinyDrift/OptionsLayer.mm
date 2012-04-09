@@ -12,6 +12,8 @@
 
 @implementation OptionsLayer
 
+#define CONTROL_TOP 180
+#define CONTROL_OFFSET 60
 
 
 -(void)initMusicSlider {

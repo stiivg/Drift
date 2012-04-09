@@ -11,13 +11,14 @@
 #import "MainLayer.h"
 #import "LoopLayer.h"
 #import "OptionsLayer.h"
-
+#import "StatisticsLayer.h"
 
 @implementation MainScene
 
 MainLayer *mainLayer = nil;
 LoopLayer *loopLayer = nil;
 OptionsLayer *optionsLayer = nil;
+StatisticsLayer  *statisticsLayer = nil;
 
 -(id)init {
     self = [super init];
@@ -38,15 +39,20 @@ OptionsLayer *optionsLayer = nil;
     
     optionsLayer = [[[OptionsLayer alloc] initWithMain:self] autorelease];
     [self addChild:optionsLayer z:1 tag:2];
-//    optionsLayer.visible = true;
+}
+
+-(void)showStatistics {
+    mainLayer.visible = false;
+    
+    statisticsLayer = [[[StatisticsLayer alloc] initWithMain:self] autorelease];
+    [self addChild:statisticsLayer z:1 tag:2];
 }
 
 -(void)backToMain {
     mainLayer.visible = true;
     
-	[self removeChild:optionsLayer cleanup:YES];
-//    optionsLayer.visible = false;
-    
+	[self removeChild:optionsLayer cleanup:YES];    
+	[self removeChild:statisticsLayer cleanup:YES];    
 }
 
 @end
