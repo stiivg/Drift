@@ -20,12 +20,11 @@
     CCMenuItemLabel *backMenuItem;
     CCLabelBMFont *title;
     
-    UISwitch *tutorialSwitch;
-    UISlider *musicSlider;
-    UISlider *soundSlider;
-    
-    CDSoundSource* engineSound;
-    
+    UIScrollView *scroll;
+    UITextView *rankScroll;
+    UITextView *nameScroll;
+    UITextView *scoreScroll;
+        
 }
 
 - (id)initWithMain:(CCScene *)mainScene;

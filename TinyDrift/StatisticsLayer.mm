@@ -10,6 +10,7 @@
 #import "GameManager.h"
 #import "MainScene.h"
 
+#define SCROLL_CONTENT_HEIGHT 760
 
 @implementation StatisticsLayer
 
@@ -34,6 +35,54 @@
         backMenu.position = CGPointZero;
         [self addChild:backMenu];
         
+        scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(5,100, 300, 300)];
+        UIFont *statsFont = [UIFont fontWithName:@"arial" size:18];
+        
+        rankScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+        rankScroll.font = statsFont;
+        rankScroll.backgroundColor = [UIColor clearColor];
+        rankScroll.textColor = [UIColor whiteColor];
+        rankScroll.userInteractionEnabled=NO;
+        rankScroll.textAlignment = UITextAlignmentRight;
+        
+        [scroll addSubview:rankScroll];
+        
+        nameScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+        nameScroll.font = statsFont;
+        nameScroll.backgroundColor = [UIColor clearColor];
+        nameScroll.textColor = [UIColor whiteColor];
+        nameScroll.userInteractionEnabled=NO;
+        
+        [scroll addSubview:nameScroll];
+        
+        scoreScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+        scoreScroll.font = statsFont;
+        scoreScroll.backgroundColor = [UIColor clearColor];
+        scoreScroll.textColor = [UIColor whiteColor];
+        scoreScroll.userInteractionEnabled=NO;
+        scoreScroll.textAlignment = UITextAlignmentRight;
+        
+        [scroll addSubview:scoreScroll];
+        
+        
+        
+        [[[CCDirector sharedDirector]openGLView]addSubview:scroll]; 
+        [scroll setContentSize:CGSizeMake(200, SCROLL_CONTENT_HEIGHT)];
+        
+        
+        rankScroll.frame =  CGRectMake(0, 0, 45, SCROLL_CONTENT_HEIGHT);
+        nameScroll.frame =  CGRectMake(45, 0, 170, SCROLL_CONTENT_HEIGHT);
+        scoreScroll.frame =  CGRectMake(215, 0, 90, SCROLL_CONTENT_HEIGHT);
+        
+        NSMutableString *ranks = [[NSMutableString alloc] init];
+        for (int i=1; i<=32; i++) {
+            [ranks appendFormat:@"%d.\n",i];
+        }
+        rankScroll.text = ranks;
+        
+        nameScroll.text = @"Stiiv\nKai\nHanako\nKailarious\nmmmmmmmmmm\n";
+        scoreScroll.text = @"321453\n320692\n280232\n438\n5\n";
+        
     }
     return self;
 }
@@ -45,14 +94,12 @@
 
 -(void) dealloc {
     
-    //Release all our retained objects
-    [musicSlider removeFromSuperview];
-    [soundSlider removeFromSuperview];
-    [tutorialSwitch removeFromSuperview];
-    
-    [engineSound stop];
-    [engineSound release];
-    
+    //Release all our retained objects   
+    [scroll removeFromSuperview];
+
+    [rankScroll release];
+    [nameScroll release];
+    [scoreScroll release];
     [super dealloc];
 }
 
