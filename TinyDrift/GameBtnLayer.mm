@@ -181,31 +181,30 @@ CCMenuItemLabel *menuMenuItem;
 }
 
 -(void)setResults {
-    int score = [GameManager sharedGameManager].score;
-    int rank = [GameManager sharedGameManager].rank;
-    double time = [GameManager sharedGameManager].time;
-    double lead = [GameManager sharedGameManager].lead;
-    int drifts = [GameManager sharedGameManager].drifts;
-    
-    [scoreValue setString: [NSString stringWithFormat:@"%d", score]]; 
-    [rankValue setString: [NSString stringWithFormat:@"%d", rank]]; 
-    [timeValue setString: [NSString stringWithFormat:@"%4.2fs", time]]; 
-    [leadValue setString: [NSString stringWithFormat:@"%4.2f", lead]]; 
-    [driftsValue setString: [NSString stringWithFormat:@"%d", drifts]]; 
+    Statistics *stats = [GameManager sharedGameManager].getStatistics;
+       
+    [scoreValue setString: [NSString stringWithFormat:@"%d", stats.score]];
+    [rankValue setString: [NSString stringWithFormat:@"%d", stats.rank]]; 
+    [timeValue setString: [NSString stringWithFormat:@"%4.2fs", stats.time]]; 
+    [leadValue setString: [NSString stringWithFormat:@"%4.2f", stats.lead]]; 
+    [driftsValue setString: [NSString stringWithFormat:@"%d", stats.drifts]]; 
     
 }
 
 -(void)showResults {
     [self setResults];
     
+    Statistics *stats = [GameManager sharedGameManager].getStatistics;
+
     scoreLabel.visible = true;
-    rankLabel.visible = true;
+    //only show rank if on leaderboard
+    rankLabel.visible = (stats.rank > 0);
     timeLabel.visible = true;
     leadLabel.visible = true;
     driftsLabel.visible = true;
     
     scoreValue.visible = true;
-    rankValue.visible = true;
+    rankValue.visible = (stats.rank > 0);
     timeValue.visible = true;
     leadValue.visible = true;
     driftsValue.visible = true;

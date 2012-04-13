@@ -10,6 +10,7 @@
 #import "GameplayLayer.h"
 #import "GameManager.h"
 #import "emitters.h"
+#import "Statistics.h"
 
 @implementation GameplayLayer
 
@@ -314,7 +315,8 @@ const bool _fixedDrift = false;
     if (turboDrifting) {
         turboDrifting = NO;
         //Increment the drifts count
-        [GameManager sharedGameManager].drifts += 1;
+        Statistics *stats = [GameManager sharedGameManager].getStatistics;
+        stats.drifts += 1;
         [_car turboBoost];
     }
     drifting = NO;
@@ -490,8 +492,10 @@ const bool _fixedDrift = false;
 }
 
 -(void)saveStatistics {
+    Statistics *stats = [GameManager sharedGameManager].getStatistics;
+
     double now = [[NSDate date] timeIntervalSince1970];
-    [GameManager sharedGameManager].time = now -raceStartTime;
+    stats.time = now -raceStartTime;
     
     float leadEstimate = 0;
     int leadDistance = _carRoadIndex - _chaseCarRoadIndex;
@@ -503,11 +507,11 @@ const bool _fixedDrift = false;
         leadEstimate = leadDistance * 1.56 / CHASE_CAR_SPEED;
     }
     
-    [GameManager sharedGameManager].lead = leadEstimate;
+    stats.lead = leadEstimate;
     
-    [GameManager sharedGameManager].score = [GameManager sharedGameManager].time * 100;
-    
-    
+    if([[GameManager sharedGameManager] raceWon]) {
+        [stats calcScore];
+    }
 }
 
 -(void)resetStart {
@@ -533,7 +537,10 @@ const bool _fixedDrift = false;
     raceStartTime = [[NSDate date] timeIntervalSince1970];
     
     [_chaseCar drive];
-    _tapDown = NO; //force a new touch at start
+//    _tapDown = NO; //force a new touch at start
+    //Just restart the drift boost time
+    driftStartTime = CACurrentMediaTime();
+    
     racing = YES;
     [self resumeEmitters];
     [self resumeSchedulerAndActions];

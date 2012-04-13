@@ -35,7 +35,7 @@
         backMenu.position = CGPointZero;
         [self addChild:backMenu];
         
-        scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(5,100, 300, 300)];
+        scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(5,100, 300, 254)];
         UIFont *statsFont = [UIFont fontWithName:@"arial" size:18];
         
         rankScroll = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -80,8 +80,25 @@
         }
         rankScroll.text = ranks;
         
-        nameScroll.text = @"Stiiv\nKai\nHanako\nKailarious\nmmmmmmmmmm\n";
-        scoreScroll.text = @"321453\n320692\n280232\n438\n5\n";
+        NSArray *highScoreData = [[HighScores getLocalHighScores] retain];
+        
+        NSMutableString *names = [[NSMutableString alloc] init];
+        NSMutableString *scores = [[NSMutableString alloc] init];
+        
+        int count = [highScoreData count];
+        for (int row = 0; row < count; row++) {
+            HighScoreRecord *record = (HighScoreRecord *)[highScoreData objectAtIndex:row];
+            
+            [names appendFormat:@"%@\n",record.name];
+            [scores appendFormat:@"%d\n",[record.totalScore intValue]];
+            
+//            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//            [dateFormat setDateFormat:@"yyyy-MM-dd"];
+//            
+//            cell.dateLabel.text = [dateFormat stringFromDate:record.dateRecorded];
+        }
+        nameScroll.text = names; //@"Stiiv\nKai\nHanako\nKailarious\nmmmmmmmmmm\n";
+        scoreScroll.text = scores; //@"321453\n320692\n280232\n438\n5\n";
         
     }
     return self;

@@ -16,12 +16,6 @@
 @implementation GameManager
 static GameManager* _sharedGameManager = nil;
 
-@synthesize score;
-@synthesize time;
-@synthesize lead;
-@synthesize rank;
-@synthesize drifts;
-
 @synthesize isGamePaused;
 @synthesize isMusicON;
 @synthesize isSoundEffectsON;
@@ -32,6 +26,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize raceWon;
 @synthesize raceTime;
 @synthesize userName;
+
 
 +(GameManager*)sharedGameManager {
     @synchronized([GameManager class])
@@ -344,6 +339,8 @@ static GameManager* _sharedGameManager = nil;
         isGamePaused = NO;
         isMusicON = YES;
         isSoundEffectsON = YES;
+        
+        _statistics = [Statistics alloc];
     }
     return self;
 }
@@ -355,7 +352,7 @@ static GameManager* _sharedGameManager = nil;
     switch (sceneID) {
         case kGameScene:
             isGamePaused = NO;
-            [self clearStatistics];
+            [_statistics clearStatistics];
             sceneToRun  = [GameScene node];
             break;
             
@@ -391,13 +388,6 @@ static GameManager* _sharedGameManager = nil;
 
 }
 
--(void)clearStatistics {
-    score = 0;
-    time = 0.0;
-    lead = 0.0;
-    rank = 1;
-    drifts = 0;
-}
 
 -(void)pauseGame {
     isGamePaused = YES;
@@ -412,7 +402,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void)playGame {
     //stop this game and start next game
-    [self clearStatistics];
+    [_statistics clearStatistics];
     [((GameScene*)[[CCDirector sharedDirector] runningScene]) startGame];
     isGamePaused = NO;
 }
@@ -445,10 +435,12 @@ static GameManager* _sharedGameManager = nil;
     return effectsVolumeDefault;
 }
 
+
+-(Statistics*)getStatistics {
+    return _statistics;
+}
+
 @end
-
-
-
 
 
 

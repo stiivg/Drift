@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 #import "SimpleAudioEngine.h"
+#import "Statistics.h"
 
 @interface GameManager : NSObject {
     
@@ -23,14 +24,9 @@
     float backgroundVolumeDefault;
     float effectsVolumeDefault;
     NSString *userNameDefault;
-    
-}
+    Statistics *_statistics;
 
-@property (readwrite) int score;
-@property (readwrite) double time;
-@property (readwrite) double lead;
-@property (readwrite) int rank;
-@property (readwrite) int drifts;
+}
 
 @property (readwrite) BOOL isGamePaused;
 @property (readwrite) BOOL isMusicON;
@@ -61,5 +57,5 @@
 -(ALuint)playSoundEffect:(NSString*)soundEffectKey;
 -(void)stopSoundEffect:(ALuint)soundEffectID;
 -(void)playBackgroundTrack:(NSString*)trackFileName;
-
+-(Statistics*)getStatistics;
 @end

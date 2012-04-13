@@ -33,8 +33,7 @@
                                           @"Tutorial",   // starts with tutorial on
                                           @"UserName",   // starts with "You"
                                           nil]];
-    [[NSUserDefaults standardUserDefaults]
-     registerDefaults:appDefaults];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 } 
 
 
