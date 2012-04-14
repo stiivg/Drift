@@ -12,9 +12,10 @@
 
 @implementation OptionsLayer
 
-#define CONTROL_TOP 180
+#define CONTROL_TOP 200
 #define CONTROL_OFFSET 60
 
+#define ABOUT_WIDTH 300
 
 -(void)initMusicSlider {
     CGSize winSize = [CCDirector sharedDirector].winSize;
@@ -80,6 +81,64 @@
     [tutorialSwitch release];   // don't forget to release memory
 }
 
+-(void)initAbout {
+    scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(5,10, ABOUT_WIDTH, 180)];
+    UIFont *titleFont = [UIFont fontWithName:@"arial" size:12];
+    UIFont *aboutFont = [UIFont fontWithName:@"arial" size:16];
+    
+    titleMeScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+    titleMeScroll.font = titleFont;
+    titleMeScroll.backgroundColor = [UIColor clearColor];
+    titleMeScroll.textColor = [UIColor blackColor];
+    titleMeScroll.userInteractionEnabled=NO;
+    titleMeScroll.textAlignment = UITextAlignmentCenter;
+    
+    [scroll addSubview:titleMeScroll];
+    
+    meScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+    meScroll.font = aboutFont;
+    meScroll.backgroundColor = [UIColor clearColor];
+    meScroll.textColor = [UIColor blackColor];
+    meScroll.userInteractionEnabled=NO;
+    meScroll.textAlignment = UITextAlignmentCenter;
+    
+    [scroll addSubview:meScroll];
+    
+    thanksTitleScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+    thanksTitleScroll.font = titleFont;
+    thanksTitleScroll.backgroundColor = [UIColor clearColor];
+    thanksTitleScroll.textColor = [UIColor blackColor];
+    thanksTitleScroll.userInteractionEnabled=NO;
+    thanksTitleScroll.textAlignment = UITextAlignmentCenter;
+    
+    [scroll addSubview:thanksTitleScroll];
+    
+    thanksScroll = [[UITextView alloc] initWithFrame:CGRectZero];
+    thanksScroll.font = aboutFont;
+    thanksScroll.backgroundColor = [UIColor clearColor];
+    thanksScroll.textColor = [UIColor blackColor];
+    thanksScroll.userInteractionEnabled=NO;
+    thanksScroll.textAlignment = UITextAlignmentCenter;
+    
+    [scroll addSubview:thanksScroll];
+    
+    
+    [[[CCDirector sharedDirector]openGLView]addSubview:scroll]; 
+    [scroll setContentSize:CGSizeMake(ABOUT_WIDTH, 180)];
+    
+    
+    titleMeScroll.frame =  CGRectMake(0, 0, ABOUT_WIDTH, 22);
+    meScroll.frame =  CGRectMake(0, 16, ABOUT_WIDTH, 30);
+    thanksTitleScroll.frame =  CGRectMake(0, 46, ABOUT_WIDTH, 22);
+    thanksScroll.frame =  CGRectMake(0, 62, ABOUT_WIDTH, 110);
+    
+    titleMeScroll.text = @"Developer:";
+    meScroll.text = @"Steve Gallagher";
+    thanksTitleScroll.text = @"Thanks To:";
+    thanksScroll.text = @"Kai Hanako Keiko\nRay Wenderlich\n\nbox2d cocos2d\n";
+
+}
+
 - (id)initWithMain:(CCScene *)mainScene {
     if ((self = [super init])) {
         _mainScene = mainScene;
@@ -92,6 +151,8 @@
         [self initSoundSlider];
         [self initTutorialSwitch];
         
+        [self initAbout];
+        
         
         if (engineSound == nil) {
             engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE_TEST"];
@@ -103,16 +164,17 @@
 
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
-        // Create Options title label        
-        title = [CCLabelTTF labelWithString:@"Options" fontName:@"Quasart" fontSize:32];
-        title.color = ccc3(0,0,0);
-        title.position = ccp(winSize.width/2, winSize.height - 60);
-        [self addChild:title];
+        
+//        // Create Options title label        
+//        title = [CCLabelTTF labelWithString:@"Options" fontName:@"Quasart" fontSize:32];
+//        title.color = ccc3(0,0,0);
+//        title.position = ccp(winSize.width/2, winSize.height - 60);
+//        [self addChild:title];
         
         // Create Back button        
         CCLabelBMFont *backLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"Quasart" fontSize:20];
         backMenuItem = [CCMenuItemLabel itemWithLabel:backLabel target:self selector:@selector(backAction:)];
-        backMenuItem.position = ccp(winSize.width * 0.8, 60);
+        backMenuItem.position = ccp(winSize.width/2, 60);
         CCMenu *backMenu = [CCMenu menuWithItems:backMenuItem, nil];
         backMenu.position = CGPointZero;
         [self addChild:backMenu];
@@ -146,6 +208,13 @@
     [soundSlider removeFromSuperview];
     [tutorialSwitch removeFromSuperview];
     
+    [scroll removeFromSuperview];
+    
+    [titleMeScroll release];
+    [meScroll release];
+    [thanksTitleScroll release];
+    [thanksScroll release];
+
     [engineSound stop];
     [engineSound release];
 

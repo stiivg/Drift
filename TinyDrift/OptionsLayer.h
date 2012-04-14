@@ -23,6 +23,12 @@
     UISlider *musicSlider;
     UISlider *soundSlider;
     
+    UIScrollView *scroll;
+    UITextView *titleMeScroll;
+    UITextView *meScroll;
+    UITextView *thanksTitleScroll;
+    UITextView *thanksScroll;
+
     CDSoundSource* engineSound;
 
 }

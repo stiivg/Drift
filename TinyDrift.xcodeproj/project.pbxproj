@@ -1105,12 +1105,6 @@
 				643AE51D142FFBE00079501A /* RootViewController.m */,
 				64476DB9149C5C2B0022FBE6 /* GameManager.h */,
 				64476DBA149C5C2B0022FBE6 /* GameManager.mm */,
-				649FB0091536717C00D32067 /* Statistics.h */,
-				649FB00A153671A400D32067 /* Statistics.mm */,
-				649FB00C1536834A00D32067 /* HighScoreRecord.h */,
-				649FB00F153684BF00D32067 /* HighScores.h */,
-				649FB010153684DB00D32067 /* HighScores.m */,
-				649FB00D1536838200D32067 /* HighScoreRecord.m */,
 				64476DBC149C67820022FBE6 /* Constants.h */,
 			);
 			name = Classes;
@@ -1183,6 +1177,12 @@
 				64B4D0CF14CA738A000F20C3 /* Layers */,
 				64B4D0D314CB34D6000F20C3 /* MainScene.h */,
 				64B4D0D414CB3518000F20C3 /* MainScene.mm */,
+				649FB0091536717C00D32067 /* Statistics.h */,
+				649FB00A153671A400D32067 /* Statistics.mm */,
+				649FB00C1536834A00D32067 /* HighScoreRecord.h */,
+				649FB00D1536838200D32067 /* HighScoreRecord.m */,
+				649FB00F153684BF00D32067 /* HighScores.h */,
+				649FB010153684DB00D32067 /* HighScores.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";

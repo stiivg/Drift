@@ -22,7 +22,7 @@
         
         CGSize winSize = [CCDirector sharedDirector].winSize;
         // Create Options title label        
-        title = [CCLabelTTF labelWithString:@"Statistics" fontName:@"Quasart" fontSize:32];
+        title = [CCLabelTTF labelWithString:@"Scores" fontName:@"Quasart" fontSize:32];
         title.color = ccc3(0,0,0);
         title.position = ccp(winSize.width/2, winSize.height - 60);
         [self addChild:title];
@@ -30,7 +30,7 @@
         // Create Back button        
         CCLabelBMFont *backLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"Quasart" fontSize:20];
         backMenuItem = [CCMenuItemLabel itemWithLabel:backLabel target:self selector:@selector(backAction:)];
-        backMenuItem.position = ccp(winSize.width * 0.8, 60);
+        backMenuItem.position = ccp(winSize.width/2, 60);
         CCMenu *backMenu = [CCMenu menuWithItems:backMenuItem, nil];
         backMenu.position = CGPointZero;
         [self addChild:backMenu];
@@ -92,13 +92,13 @@
             [names appendFormat:@"%@\n",record.name];
             [scores appendFormat:@"%d\n",[record.totalScore intValue]];
             
+            //For future date display
 //            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//            [dateFormat setDateFormat:@"yyyy-MM-dd"];
-//            
-//            cell.dateLabel.text = [dateFormat stringFromDate:record.dateRecorded];
+//            [dateFormat setDateFormat:@"MMM d,''yy"]; //Apr 12,'12
+//            [scores appendFormat:@"%@\n",[dateFormat stringFromDate:record.dateRecorded]];
         }
-        nameScroll.text = names; //@"Stiiv\nKai\nHanako\nKailarious\nmmmmmmmmmm\n";
-        scoreScroll.text = scores; //@"321453\n320692\n280232\n438\n5\n";
+        nameScroll.text = names;
+        scoreScroll.text = scores;
         
     }
     return self;
