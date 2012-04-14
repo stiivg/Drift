@@ -220,6 +220,7 @@ bool curvetoright = false;
 - (void)resetDrive {
     _driving = NO;
     _driftAngle = 0;
+    speedT = 0;
     for(int i = 0; i < NUM_PREV_VELS; ++i) {
         _prevVels[i].SetZero();
     }

@@ -229,6 +229,68 @@ const bool _fixedDrift = false;
    
 }
 
+-(void)scaleChaseCarSound {
+    
+    float speed = _chaseCar.speedT;
+    
+    if (chaseEngineSound == nil) {
+        chaseEngineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
+    }
+    chaseEngineSound.looping = YES;
+    float test = _chaseCar.speedT;
+    if (_chaseCar.speedT == 0) {
+        [chaseEngineSound stop];
+    } else {
+        if (chaseEngineSound.isPlaying == NO) {
+            [chaseEngineSound play];
+        }
+    }
+    
+    float speedGain = 0.02 +  speed / 20;
+    speedGain = MIN(speedGain, 1.0);
+    
+    float speedPitch = .4 + speed / 50;
+    speedPitch = MIN(speedPitch, 1.6);
+    
+    float distance  = ccpDistance(_car.position, _chaseCar.position);
+    float distanceGain = 140 / (distance) ;
+//    distance = MIN(distanceGain, 1.0);
+    
+//    CCLOG(@"distance=%4.2f", distance);
+    chaseEngineSound.gain = speedGain * distanceGain;   
+    chaseEngineSound.pitch = speedPitch;
+    
+}
+
+
+-(void)scaleCarSound:(float)weightedSpeed {
+    
+    if (engineSound == nil) {
+        engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
+    }
+    engineSound.looping = YES;
+    
+    if (weightedSpeed == 0) {
+        [engineSound stop];
+    } else {
+        if (engineSound.isPlaying == NO) {
+            [engineSound play];
+        }
+    }
+    
+    float speedGain = 0.02 +  weightedSpeed / 200;
+    speedGain = MIN(speedGain, 1.0);
+    
+    float speedPitch = 0.8 + weightedSpeed / 70;
+    speedPitch = MIN(speedPitch, 1.6);
+    
+    if(drifting == NO) {
+        engineSound.gain = speedGain;   
+        engineSound.pitch = speedPitch;
+    }
+    
+}
+
 -(void)scaleWithSpeed {
     
     float speed = _car.getSpeed;
@@ -264,31 +326,7 @@ const bool _fixedDrift = false;
     }
 //    CCLOG(@"speed=%4.2f scale=%4.2f ", weightedSpeed, self.scale);
     
-    if (engineSound == nil) {
-        engineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
-    }
-    engineSound.looping = YES;
-    
-    if (weightedSpeed == 0) {
-        [engineSound stop];
-    } else {
-        if (engineSound.isPlaying == NO) {
-            [engineSound play];
-        }
-    }
-    
-    float speedGain = 0.02 +  weightedSpeed / 200;
-    speedGain = MIN(speedGain, 1.0);
-    
-    float speedPitch = 0.8 + weightedSpeed / 70;
-    speedPitch = MIN(speedPitch, 1.6);
-    
-    if(drifting == NO) {
-        engineSound.gain = speedGain;   
-        engineSound.pitch = speedPitch;
-    }
-    
-    
+    [self scaleCarSound:weightedSpeed];
     
 }
 
@@ -478,6 +516,8 @@ const bool _fixedDrift = false;
     
     [self scaleWithSpeed];
     
+    [self scaleChaseCarSound];
+    
     //uncomment to rotate view with car
 //    [_terrain updateRotation:_car.rotation];
     
@@ -552,6 +592,7 @@ const bool _fixedDrift = false;
 -(void)pauseRace {
     [gravelSound stop];
     [engineSound stop];
+    [chaseEngineSound stop];
     
     //Freeze the particles
     [self freezeEmitters];
@@ -651,6 +692,7 @@ static CGPoint startLoc;
     
     //Release all our retained objects
     [engineSound release];
+    [chaseEngineSound release];
     [gravelSound release];
     [super dealloc];
 }

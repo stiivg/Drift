@@ -58,6 +58,7 @@
     double raceStartTime;
     
     CDSoundSource* engineSound;
+    CDSoundSource* chaseEngineSound;
     CDSoundSource* gravelSound;
     CDSoundSource* cameraSound;
 }
