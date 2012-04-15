@@ -15,6 +15,7 @@
 @synthesize roadSpeed;
 @synthesize startPosition;
 @synthesize speedT;
+@synthesize lastOffCenter;
 
 const float kDriftAcc = 40;
 
@@ -36,23 +37,21 @@ bool curvetoright = false;
     if (_body != NULL) {
         _world->DestroyBody(_body);
     }
-    
-    float radius = 16.0f;
-        
+            
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.linearDamping = 0.4f;
-    bd.fixedRotation = true;
+    bd.fixedRotation = false;
 //    bd.angularDamping = 0.8f;
     bd.position.Set(startPosition.x/PTM_RATIO, startPosition.y/PTM_RATIO);
     _body = _world->CreateBody(&bd);
     
-    b2CircleShape shape;
-    shape.m_radius = radius/PTM_RATIO;
+    b2PolygonShape carShape;
+    carShape.SetAsBox(CAR_WIDTH/2/PTM_RATIO, CAR_HEIGHT/2/PTM_RATIO);
     
     b2FixtureDef fd;
-    fd.shape = &shape;
-    fd.density = 4.0f;
+    fd.shape = &carShape;
+    fd.density = CAR_MASS / (CAR_WIDTH/PTM_RATIO * CAR_HEIGHT/PTM_RATIO);
     fd.restitution = 0.0f;
     fd.friction = 0.2;
     
@@ -77,7 +76,7 @@ bool curvetoright = false;
         
         self.scale = 1.0;
         
-        last_distance = 0;
+        lastOffCenter = 0;
                 
         shadow = [CCSprite spriteWithSpriteFrameName:@"shadow.png"];
         [self positionShadow:0];
@@ -112,7 +111,7 @@ bool curvetoright = false;
     float theta = thetaT - thetaR;
     float sinTheta = sinf(theta);
     float targetDistance = hypotf(targetVector.x, targetVector.y);
-    float distance = targetDistance * sinTheta;
+    float offCenter = targetDistance * sinTheta;
     
 //    CCLOG(@"distance=%4.2f", distance);
     
@@ -123,9 +122,9 @@ bool curvetoright = false;
     
     
     //Derivative term
-    float Dterm = (distance - last_distance)*6;
-    last_distance = distance;
-    float Pterm = distance;
+    float Dterm = (offCenter - lastOffCenter)*6;
+    lastOffCenter = offCenter;
+    float Pterm = offCenter;
     
     float accR = Pterm+Dterm * kCorrectionAcc;
     
@@ -201,6 +200,8 @@ bool curvetoright = false;
         angle += _driftAngle;
         self.rotation = CC_RADIANS_TO_DEGREES(angle);
         
+        _body->SetTransform(_body->GetPosition(), -angle);
+        
         [self positionShadow:angle];
 
         [self _applyDriftForce];
@@ -225,7 +226,7 @@ bool curvetoright = false;
         _prevVels[i].SetZero();
     }
     self.rotation = 0;
-    last_distance = 0;
+    lastOffCenter = 0;
     
     [_normalAnimate stop];
     _normalAnimate = nil;

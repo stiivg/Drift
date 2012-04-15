@@ -15,11 +15,13 @@
 #define PTM_RATIO   32.0
 #define START_DOWN_ROAD 400
 #define SHADOW_OFFSET 8
+#define CAR_MASS 3.1416
+#define CAR_WIDTH 32
+#define CAR_HEIGHT 48
 
 @interface Car : CCSprite {
     b2World *_world;
     b2Body *_body;
-    float last_distance;
     
     CCSprite *leftWheel;
     CCSprite *rightWheel;
@@ -46,6 +48,7 @@
 @property float roadSpeed;
 @property CGPoint startPosition;
 @property float speedT;
+@property float lastOffCenter;
 
 - (void)runNormalAnimation;
 - (void)drive;

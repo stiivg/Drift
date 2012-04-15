@@ -240,8 +240,8 @@ int _lastRoadPoint = 100;
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    //_world->DrawDebugData();
+    //Draw the box2d bodies
+//    _world->DrawDebugData();
     
     glEnable(GL_TEXTURE_2D);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -320,7 +320,7 @@ int _lastRoadPoint = 100;
 //The scale factor zooms about the screen center
 //Calc the pixel distance from the bottom of the screen to original screen bottom (at scale 1.0)
 //Subtract the constant pixel offset desired
-//Divide by scale to convert pixels to scaled units
+//Divide by scale to converFt pixels to scaled units
 -(void) setOffset:(CGPoint)newOffset {
     const float kBaseOffset = 200;
     
