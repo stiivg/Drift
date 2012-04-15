@@ -132,11 +132,14 @@
     thanksTitleScroll.frame =  CGRectMake(0, 46, ABOUT_WIDTH, 22);
     thanksScroll.frame =  CGRectMake(0, 62, ABOUT_WIDTH, 110);
     
+    
+    // Look for the bundle’s version number.
+    NSString *versionStr = [NSString stringWithFormat:@"Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+
     titleMeScroll.text = @"Developer:";
     meScroll.text = @"Steve Gallagher";
     thanksTitleScroll.text = @"Thanks To:";
-    thanksScroll.text = @"Kai Hanako Keiko\nRay Wenderlich\n\nbox2d cocos2d\n";
-
+    thanksScroll.text = [NSString stringWithFormat:@"Kai Hanako Keiko\nRay Wenderlich\n\nbox2d cocos2d\n %@", versionStr];
 }
 
 - (id)initWithMain:(CCScene *)mainScene {

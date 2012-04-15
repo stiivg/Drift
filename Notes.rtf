@@ -71,6 +71,21 @@ From the key chain export the developer key and certificate\
 From the Organizer export the provisioning profile\
 Import these into the new computer\
 \
+
+\b AdHoc Release
+\b0 \
+Need to make an AdHoc Distribution Provisions Profile which requires:\
+\
+1. iOS Distribution Certificate\
+2.App ID uses name and 40char UDID\
+3.Device ID for each device to be run on\
+\
+Then build and code sign with this profile.\
+\
+For iPod I had to change the iOS deployment target to iOS 4.2 and change the \
+architecture from $(ARCHS_STANDARD_32_BIT) to armv6 armv7 explicitly.\
+\
+Also changed project name TinyDrift to drift to match the App ID bundle ID of "com.hanako.drift"\
 \
 
 \b Audio
