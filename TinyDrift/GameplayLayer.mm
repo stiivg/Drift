@@ -237,7 +237,7 @@ const bool _fixedDrift = false;
         chaseEngineSound = [[GameManager sharedGameManager] createSoundSource:@"ENGINE"];
     }
     chaseEngineSound.looping = YES;
-    float test = _chaseCar.speedT;
+
     if (_chaseCar.speedT == 0) {
         [chaseEngineSound stop];
     } else {
@@ -405,6 +405,29 @@ const bool _fixedDrift = false;
     [tutorialLayer turboMessage];
 }
 
+//if the chase car is approaching the car
+//adjust the target to overtake
+-(void)checkOvertake:(CGPoint)target {
+    
+    float carOffCenter = _car.lastOffCenter;
+    int diff = _carRoadIndex - _chaseCarRoadIndex;
+    //test if overtaking
+    if (_chaseCar.speedT > _car.speedT + 1) {
+        //offset changes too suddenly when car moves across center
+        // and when chase passes the car
+        if (0 < diff && diff <=3) {
+            float offset = 30+30/diff;
+            //pass on the inside
+            if (carOffCenter <= 0) {
+                offset = -offset;
+            }
+            target.x += offset;
+            //        CCLOG(@"offsetDiff %4.2f chase %4.2f car %4.2f x %4.2f", offsetDiff, chaseCarOffCenter, carOffCenter, target.x);
+        }
+    }
+    [_chaseCar setTarget:target];    
+}
+
 - (void)update:(ccTime)dt {
         
     
@@ -450,7 +473,9 @@ const bool _fixedDrift = false;
     _terrain.targetRoadIndex = _chaseCarRoadIndex;
     
     target = [_terrain nextTargetPoint:_chaseCar.position];
-    [_chaseCar setTarget:target];
+    
+    [self checkOvertake:target];
+    
     targetCurve = [_terrain targetCurve];
     [_chaseCar setPathCurve:targetCurve];
     
