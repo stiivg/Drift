@@ -21,7 +21,7 @@
 #define END_SPEED 35
 #define CAR_SIDE_OFFSET 30
 #define CHASE_CAR_SPEED 30
-#define MIN_DRIFT_ANGLE 0.2
+#define MIN_DRIFT_ANGLE 0.0
 
 
 @interface GameplayLayer : CCLayer

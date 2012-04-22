@@ -14,7 +14,7 @@
 
 @implementation GameplayLayer
 
-double k_turbo_time = 1.0;
+double k_turbo_time = 2.0;
 double driftStartTime; 
 
 CCParticleSystem * _drift_emitter;

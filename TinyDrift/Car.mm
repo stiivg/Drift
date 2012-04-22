@@ -139,6 +139,13 @@ bool curvetoright = false;
     CGPoint accRadial = ccpNormalize(pathRadial);
     //uncomment for force proportional to radial distance
 //    accRadial = ccpMult(accRadial, accR*ABS(distance));
+    //Reduce the radial force when still on road
+    //Allows the car to move about the road without being
+    //forced to center
+    float absOffCenter = ABS(offCenter);
+    if (absOffCenter < 100) {
+        accR*=0.5;
+    }
     accRadial = ccpMult(accRadial, accR);
     
     //Add force along path if needed
@@ -174,7 +181,9 @@ bool curvetoright = false;
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
-        accDrift= ccpMult(accDrift, kDriftAcc);
+        float absRotation = ABS(self.rotation);
+        float driftAccel = kDriftAcc + absRotation/2;
+        accDrift= ccpMult(accDrift, driftAccel);
         
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
     }
@@ -184,15 +193,16 @@ bool curvetoright = false;
 -(void)setDamping {
     float damping = 0.3;
     if (self.drifting) {
+        //This may not be needed intended to help keep car on tight turns
         //Increase damping with drift angle
         float absRotation = ABS(self.rotation);
-        damping = 0.1 + (absRotation)/200;
+        damping += absRotation/400;
     }
     
     //Add damping if off road
     float absOffCenter = ABS(lastOffCenter);
     if (absOffCenter > 120) {
-        damping += 1.0f*absOffCenter/100;
+        damping += absOffCenter/200;
     }
     
     _body->SetLinearDamping(damping);
