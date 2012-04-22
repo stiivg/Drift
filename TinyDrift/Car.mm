@@ -16,6 +16,7 @@
 @synthesize startPosition;
 @synthesize speedT;
 @synthesize lastOffCenter;
+@synthesize drifting;
 
 const float kDriftAcc = 40;
 
@@ -40,7 +41,7 @@ bool curvetoright = false;
             
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
-    bd.linearDamping = 0.4f;
+    bd.linearDamping = 0.3f;
     bd.fixedRotation = false;
 //    bd.angularDamping = 0.8f;
     bd.position.Set(startPosition.x/PTM_RATIO, startPosition.y/PTM_RATIO);
@@ -53,7 +54,7 @@ bool curvetoright = false;
     fd.shape = &carShape;
     fd.density = CAR_MASS / (CAR_WIDTH/PTM_RATIO * CAR_HEIGHT/PTM_RATIO);
     fd.restitution = 0.0f;
-    fd.friction = 0.2;
+//    fd.friction = 0.2;
     
     _body->CreateFixture(&fd);
     
@@ -91,6 +92,7 @@ bool curvetoright = false;
         [self addChild:rightWheel z:-1];
         
         roadSpeed = kDefaultRoadSpeed;
+        self.drifting = false;
     }
     return self;
     
@@ -168,7 +170,7 @@ bool curvetoright = false;
     CGPoint accDrift = ccp(0,0);
     
     //Add drift force
-    if (_driftAngle != 0) {
+    if (self.drifting) {
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
@@ -176,6 +178,26 @@ bool curvetoright = false;
         
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
     }
+    
+}
+
+-(void)setDamping {
+    float damping = 0.3;
+    if (self.drifting) {
+        //Increase damping with drift angle
+        float absRotation = ABS(self.rotation);
+        damping = 0.1 + (absRotation)/200;
+    }
+    
+    //Add damping if off road
+    float absOffCenter = ABS(lastOffCenter);
+    if (absOffCenter > 120) {
+        damping += 1.0f*absOffCenter/100;
+    }
+    
+    _body->SetLinearDamping(damping);
+    
+//    CCLOG(@"off=%4.2f", absOffCenter);
     
 }
 
@@ -206,6 +228,7 @@ bool curvetoright = false;
 
         [self _applyDriftForce];
         
+        [self setDamping];
     }    
 
 }

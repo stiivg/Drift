@@ -33,8 +33,8 @@
     [_label setScale:1.0];
     [_label setString:countString];
     
-    CCAction *scaleAction = [CCScaleTo  actionWithDuration:1.0 scale:8];
-    CCAction *fadeOutAction = [CCFadeOut actionWithDuration:1.0];
+    CCAction *scaleAction = [CCScaleTo  actionWithDuration:0.4 scale:4];
+    CCAction *fadeOutAction = [CCFadeOut actionWithDuration:0.4];
     [_label runAction:scaleAction];
     [_label runAction:fadeOutAction];   
     
@@ -49,7 +49,7 @@
     [beepLSound play];
     
     [_label runAction:[CCSequence actions:
-                       [CCDelayTime actionWithDuration:1],
+                       [CCDelayTime actionWithDuration:0.4],
                        [CCCallFunc actionWithTarget:self selector:@selector(digitDone)], nil]];
     
 }
@@ -73,7 +73,7 @@
     
     //Delay before first number
     [_label runAction:[CCSequence actions:
-                       [CCDelayTime actionWithDuration:1],
+                       [CCDelayTime actionWithDuration:0.4],
                        [CCCallFunc actionWithTarget:self selector:@selector(fadeNumber)], nil]];
     
 }

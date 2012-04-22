@@ -174,7 +174,7 @@
     
     //Straight line at end
     nextVector = CGPointMake(0, 100);
-    for (int j=0; j<12; j++) {
+    for (int j=0; j<6; j++) {
         //vector to next road point
         nextPathPoint = ccpAdd(nextPathPoint, nextVector);
         _keyPoints[i++] = nextPathPoint; //key point
@@ -210,7 +210,7 @@
     
 }
 
-const BOOL _newPath = true;
+const BOOL _newPath = false;
 
 -(id) createPath:(CGPoint *)pathPoints {
     _pathPoints = pathPoints;
@@ -219,7 +219,7 @@ const BOOL _newPath = true;
         [self generateKeyPoints];
 //        [self saveKeyPoints];
         [self generateControlPoints];
-//        [self saveControlPoints];
+        [self saveControlPoints];
     } else {
         [self restoreControlPoints];
     }

@@ -14,7 +14,7 @@
 
 @implementation GameplayLayer
 
-double k_turbo_time = 2.0;
+double k_turbo_time = 1.0;
 double driftStartTime; 
 
 CCParticleSystem * _drift_emitter;
@@ -209,7 +209,6 @@ const bool _fixedDrift = false;
         [self setupEmitters];
         _emitter = _drift_emitter;        
         
-        driftEnabled = YES;
         [[GameManager sharedGameManager] playBackgroundTrack:BACKGROUND_TRACK_RACE];
         
         flashLayer = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
@@ -331,6 +330,7 @@ const bool _fixedDrift = false;
 }
 
 -(void)startDrift {
+    driftStartTime = CACurrentMediaTime();
     //Only create the sound source when needed
     if (gravelSound == nil) {
         gravelSound = [[GameManager sharedGameManager] createSoundSource:@"GRAVEL"];
@@ -436,16 +436,16 @@ const bool _fixedDrift = false;
     if (_tapDown && racing) {
         if (!_car.driving) {
             [_car drive];
-        } else if(driftEnabled && !drifting) {
+        } else if(!drifting && ABS(_driftControlAngle) > MIN_DRIFT_ANGLE) {
             [self startDrift];
         }
+        _car.drifting = YES;
     } else if(drifting) {
         [self endDrift];
+        _car.drifting = NO;
     }
     
-    if (driftEnabled) {
-        _car.driftAngle = _driftControlAngle;
-    }
+    _car.driftAngle = _driftControlAngle;
     
     _terrain.targetRoadIndex = _carRoadIndex;
     CGPoint target = [_terrain nextTargetPoint:_car.position];
@@ -497,6 +497,10 @@ const bool _fixedDrift = false;
     
     //Particles when drifting only
     if (drifting) {
+        if(ABS(_driftControlAngle) <= MIN_DRIFT_ANGLE && !turboDrifting) {
+            [self endDrift];
+        }
+        
         //if turbo time change emitter
         double drift_time = CACurrentMediaTime() - driftStartTime; 
         if (drift_time > k_turbo_time) {
@@ -588,7 +592,6 @@ const bool _fixedDrift = false;
     [_chaseCar resetDrive];
     _chaseCar.roadSpeed = CHASE_CAR_SPEED;
 
-    driftEnabled = YES;
     //Reset the target point after the car has stopped
     _carRoadIndex = 1;
     _chaseCarRoadIndex = 1;
@@ -665,7 +668,6 @@ static CGPoint startLoc;
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     _tapDown = YES;
     turboDrifting = NO;
-    driftStartTime = CACurrentMediaTime();
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
     startLoc = [[CCDirector sharedDirector] convertToGL:location];

@@ -42,6 +42,7 @@
 }
 
 @property (readonly) BOOL driving;
+@property BOOL drifting;
 @property BOOL followRoad;
 @property float driftAngle;
 @property BOOL fixedDrift;
