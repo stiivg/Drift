@@ -41,6 +41,7 @@
     
 }
 
+@property BOOL chaseCar;
 @property (readonly) BOOL driving;
 @property BOOL drifting;
 @property BOOL followRoad;

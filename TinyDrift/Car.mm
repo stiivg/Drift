@@ -9,6 +9,7 @@
 #import "Car.h"
 
 @implementation Car
+@synthesize chaseCar;
 @synthesize driving = _driving;
 @synthesize followRoad;
 @synthesize fixedDrift;
@@ -70,6 +71,8 @@ bool curvetoright = false;
     
     if ((self = [super initWithSpriteFrameName:name])) {
         _world = world;
+        
+        chaseCar=false;
         
         CGSize size = [[CCDirector sharedDirector] winSize];
         int screenW = size.width;
@@ -139,12 +142,15 @@ bool curvetoright = false;
     CGPoint accRadial = ccpNormalize(pathRadial);
     //uncomment for force proportional to radial distance
 //    accRadial = ccpMult(accRadial, accR*ABS(distance));
-    //Reduce the radial force when still on road
-    //Allows the car to move about the road without being
-    //forced to center
-    float absOffCenter = ABS(offCenter);
-    if (absOffCenter < 100) {
-        accR*=0.5;
+    
+    if (chaseCar == false) {
+        //Reduce the radial force when still on road
+        //Allows the car to move about the road without being
+        //forced to center
+        float absOffCenter = ABS(offCenter);
+        if (absOffCenter < 100) {
+            accR*=0.5;
+        }
     }
     accRadial = ccpMult(accRadial, accR);
     
@@ -181,8 +187,8 @@ bool curvetoright = false;
         float posRadians = CC_DEGREES_TO_RADIANS(90 - self.rotation);
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
-        float absRotation = ABS(self.rotation);
-        float driftAccel = kDriftAcc + absRotation/2;
+        float absDriftAngle = ABS(self.driftAngle);
+        float driftAccel = kDriftAcc + absDriftAngle*30;
         accDrift= ccpMult(accDrift, driftAccel);
         
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );
@@ -195,14 +201,14 @@ bool curvetoright = false;
     if (self.drifting) {
         //This may not be needed intended to help keep car on tight turns
         //Increase damping with drift angle
-        float absRotation = ABS(self.rotation);
-        damping += absRotation/400;
+        float absDriftAngle = ABS(self.driftAngle);
+        damping += absDriftAngle/4;
     }
     
     //Add damping if off road
     float absOffCenter = ABS(lastOffCenter);
     if (absOffCenter > 120) {
-        damping += absOffCenter/200;
+        damping += absOffCenter/100;
     }
     
     _body->SetLinearDamping(damping);

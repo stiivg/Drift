@@ -205,6 +205,7 @@ const bool _fixedDrift = false;
         _chaseCar.startPosition = startPos;
         
         _chaseCar.roadSpeed = CHASE_CAR_SPEED;
+        _chaseCar.chaseCar = true;
 
         [self setupEmitters];
         _emitter = _drift_emitter;        
