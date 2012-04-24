@@ -55,7 +55,7 @@
 		
 		// life of particles
 		life = 1;
-		lifeVar = 0.5f;
+		lifeVar = 0.0f;
 		
 		// size, in pixels
 		startSize = 30.0f;
@@ -135,8 +135,8 @@
 		posVar = ccp(5, 0);
 		
 		// life of particles
-		life = 4;
-		lifeVar = 1;
+		life = .5;
+		lifeVar = .1;
 		
 		// size, in pixels
 		startSize = 30.0f;
