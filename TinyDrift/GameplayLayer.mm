@@ -116,8 +116,12 @@ const bool _fixedDrift = false;
 //Position at 0,0 then use source position to follow car
 -(void)setupEmitters {
     //Normal Drift
+//    _drift_emitter = [CCParticleSystemQuad particleWithFile:@"drift_emitter.plist"];
+//    _drift_emitter.positionType = kCCPositionTypeRelative;
+    
+
     _drift_emitter = [CCParticleDrift node];
-    _drift_emitter.emissionRate = 0.0;
+    _drift_emitter.emissionRate=0;
     [_terrain addChild: _drift_emitter];
     [_drift_emitter setPosition:ccp(0,0)];
 
@@ -340,7 +344,7 @@ const bool _fixedDrift = false;
     [gravelSound play];
     _turbo_emitter.emissionRate = 0.0;
     _emitter = _drift_emitter;
-    _emitter.emissionRate = 50.0;
+    _emitter.emissionRate = 50; //600;
     drifting = YES;
 }
 
@@ -524,17 +528,20 @@ const bool _fixedDrift = false;
         gravelSound.pan = -1 *_driftControlAngle ;
 //        CCLOG(@"pan=%4.2f", _driftControlAngle );
         
-        
-        
-        float posRadians = CC_DEGREES_TO_RADIANS(90 - _car.rotation);
-        CGPoint particleDrift;
-        //ccpForAngle zero along x axis, CCW positive
-        particleDrift = ccpForAngle(posRadians);
-        particleDrift= ccpMult(particleDrift, 0);
-        
-        _emitter.gravity = particleDrift;
-        
-        [_emitter setSourcePosition:ccp(_car.position.x / _emitter.scale, _car.position.y / _emitter.scale)];        
+        //rotation is zero on x 90 on y
+        //emitter angle is zero on y, -90 on x
+        _emitter.angle = 270 -_car.rotation;
+
+        //calc the rear wheel position for emitters
+        float rotRadians = CC_DEGREES_TO_RADIANS(-_car.rotation);
+//        CGPoint rightRear = ccp(_car.contentSize.width/2-6, -_car.contentSize.height/2+6);
+//        rightRear = ccpRotateByAngle(rightRear, ccp(0,0), rotRadians);
+//        [_emitter setSourcePosition:ccp((_car.position.x+rightRear.x) / _emitter.scale, (_car.position.y+rightRear.y) / _emitter.scale)];        
+
+        CGPoint rear = ccp(0, -_car.contentSize.height/2+6);
+        rear = ccpRotateByAngle(rear, ccp(0,0), rotRadians);
+        [_emitter setSourcePosition:ccp((_car.position.x+rear.x) / _emitter.scale, (_car.position.y+rear.y) / _emitter.scale)];        
+
     }
     
     //Gradually center on car after start

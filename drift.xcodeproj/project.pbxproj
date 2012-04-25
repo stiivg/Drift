@@ -182,6 +182,7 @@
 		649FB00B153671A500D32067 /* Statistics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 649FB00A153671A400D32067 /* Statistics.mm */; };
 		649FB00E1536838300D32067 /* HighScoreRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 649FB00D1536838200D32067 /* HighScoreRecord.m */; };
 		649FB011153684DC00D32067 /* HighScores.m in Sources */ = {isa = PBXBuildFile; fileRef = 649FB010153684DB00D32067 /* HighScores.m */; };
+		649FB0151544879800D32067 /* drift_emitter.plist in Resources */ = {isa = PBXBuildFile; fileRef = 649FB0141544879500D32067 /* drift_emitter.plist */; };
 		64B4D0AB14AB9C75000F20C3 /* pause_selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */; };
 		64B4D0AE14AB9C9A000F20C3 /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */; };
 		64B4D0C114AE5287000F20C3 /* emitters.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B4D0C014AE5286000F20C3 /* emitters.m */; };
@@ -561,6 +562,7 @@
 		649FB00D1536838200D32067 /* HighScoreRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HighScoreRecord.m; path = TinyDrift/HighScoreRecord.m; sourceTree = SOURCE_ROOT; };
 		649FB00F153684BF00D32067 /* HighScores.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HighScores.h; path = TinyDrift/HighScores.h; sourceTree = SOURCE_ROOT; };
 		649FB010153684DB00D32067 /* HighScores.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HighScores.m; path = TinyDrift/HighScores.m; sourceTree = SOURCE_ROOT; };
+		649FB0141544879500D32067 /* drift_emitter.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = drift_emitter.plist; path = TinyDrift/drift_emitter.plist; sourceTree = SOURCE_ROOT; };
 		64B4D0AA14AB9C75000F20C3 /* pause_selected-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause_selected-hd.png"; path = "TinyDrift/pause_selected-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0AD14AB9C9A000F20C3 /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-hd.png"; path = "TinyDrift/pause-hd.png"; sourceTree = SOURCE_ROOT; };
 		64B4D0BF14AE5286000F20C3 /* emitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = emitters.h; path = TinyDrift/emitters.h; sourceTree = SOURCE_ROOT; };
@@ -1150,6 +1152,7 @@
 				64639A6214817065006DB651 /* HermitePath.mm */,
 				64B4D0BF14AE5286000F20C3 /* emitters.h */,
 				64B4D0C014AE5286000F20C3 /* emitters.m */,
+				649FB0141544879500D32067 /* drift_emitter.plist */,
 			);
 			name = Race;
 			sourceTree = "<group>";
@@ -1389,6 +1392,7 @@
 				649FAFF515254DFC00D32067 /* Quasart.ttf in Resources */,
 				649FAFFF152AB21700D32067 /* beep_high.wav in Resources */,
 				649FB000152AB21700D32067 /* beep_low.wav in Resources */,
+				649FB0151544879800D32067 /* drift_emitter.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,6 +1599,7 @@
 				INFOPLIST_FILE = TinyDrift/Resources/Info.plist;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = drift;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"TinyDrift/libs\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1656,6 +1661,7 @@
 				INFOPLIST_FILE = TinyDrift/Resources/Info.plist;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = drift;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"TinyDrift/libs\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1673,6 +1679,7 @@
 				INFOPLIST_FILE = TinyDrift/Resources/Info.plist;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = drift;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"TinyDrift/libs\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

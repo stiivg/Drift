@@ -122,7 +122,7 @@
 		self.radialAccelVar = 0;
 		
 		// Gravity Mode: speed of particles
-		self.speed = 0;
+		self.speed = 200;
 		self.speedVar = 0;
 		
 		// angle
@@ -155,10 +155,10 @@
 		startColorVar.g = 0.02f;
 		startColorVar.b = 0.02f;
 		startColorVar.a = 0.0f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
+		endColor.r = 0.4f;
+		endColor.g = 0.4f;
+		endColor.b = 0.4f;
+		endColor.a = 0.5f;
 		endColorVar.r = 0.0f;
 		endColorVar.g = 0.0f;
 		endColorVar.b = 0.0f;
