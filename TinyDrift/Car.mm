@@ -188,7 +188,7 @@ bool curvetoright = false;
         //ccpForAngle zero along x axis, CCW positive
         accDrift = ccpForAngle(posRadians);
         float absDriftAngle = ABS(self.driftAngle);
-        float driftAccel = kDriftAcc + absDriftAngle*30;
+        float driftAccel = kDriftAcc + absDriftAngle*20;
         accDrift= ccpMult(accDrift, driftAccel);
         
         _body->ApplyForce( b2Vec2(accDrift.x,accDrift.y), _body->GetPosition() );

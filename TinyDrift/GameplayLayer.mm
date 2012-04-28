@@ -187,6 +187,10 @@ const bool _fixedDrift = false;
         ccTexParams tp2 = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
         [road.texture setTexParameters:&tp2];
         _terrain.roadTexture = road;
+        
+        //autorelease caused error in update method???
+        drums = [[[Drums alloc] initWithWorld:_world] retain];
+        [drums createDrums:_terrain];
        
         [self genBackground];
         self.isTouchEnabled = YES;  
@@ -555,6 +559,14 @@ const bool _fixedDrift = false;
     
     [self scaleChaseCarSound];
     
+    [drums updateDrums];
+    for (b2Body *b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
+        if(b->GetUserData() != NULL) {
+            Box2DSprite *sprite = (Box2DSprite *)b->GetUserData();
+            sprite.position = ccp(b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
+        }
+    }
+    
     //uncomment to rotate view with car
 //    [_terrain updateRotation:_car.rotation];
     
@@ -607,6 +619,7 @@ const bool _fixedDrift = false;
     [self resetEmitters];
     [self resumeSchedulerAndActions];    
     [tutorialLayer setVisible:false];
+    [drums createDrums:_terrain];
 }
 
 -(void)startRace {
@@ -729,6 +742,7 @@ static CGPoint startLoc;
     [engineSound release];
     [chaseEngineSound release];
     [gravelSound release];
+    [drums release];
     [super dealloc];
 }
 

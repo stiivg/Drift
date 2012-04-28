@@ -6,6 +6,10 @@
 //  Copyright 2011 Ray Wenderlich. All rights reserved.
 //
 
+#ifndef drift_Terrain_h
+#define drift_Terrain_h
+
+
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "GLES-Render.h"
@@ -40,6 +44,7 @@
     GLESDebugDraw * _debugDraw;
     
     CCSpriteBatchNode * _batchNode;
+    CCSprite *oilDrum;
 }
 
 @property (retain) CCSpriteBatchNode * batchNode;
@@ -55,5 +60,8 @@
 - (void) setOffset:(CGPoint)newOffset;
 - (void) updateRotation:(float)rotation;
 - (id)initWithWorld:(b2World *)world;
+- (CGPoint*)getPath;
 
 @end
+
+#endif

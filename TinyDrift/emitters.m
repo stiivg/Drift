@@ -40,13 +40,13 @@
 		self.radialAccelVar = 0;
 		
 		// Gravity mode: speed of particles
-		self.speed = 20;
+		self.speed = 400;
 		self.speedVar = 5;
         
 		
 		// angle
 		angle = 90;
-		angleVar = 360;
+		angleVar = 10;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -122,7 +122,7 @@
 		self.radialAccelVar = 0;
 		
 		// Gravity Mode: speed of particles
-		self.speed = 200;
+		self.speed = 400;
 		self.speedVar = 0;
 		
 		// angle

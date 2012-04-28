@@ -353,6 +353,10 @@ int _lastRoadPoint = 100;
     //[self resetHillVertices];
 }
 
+-(CGPoint *)getPath {
+    return _pathPoints;
+}
+
 - (void)resetTargetPoint {
     _targetRoadIndex= 1;
 }

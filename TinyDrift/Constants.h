@@ -10,6 +10,7 @@
 #define TinyDrift_Constants_h
 
 #define AUDIO_MAX_WAITTIME 150
+#define PTM_RATIO   32.0
 
 typedef enum {
     kAudioManagerUninitialized=0,
