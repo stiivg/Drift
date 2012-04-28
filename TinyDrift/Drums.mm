@@ -41,14 +41,14 @@
     
     body->CreateFixture(&fixtureDef);
     
-    [_terrain addChild:drumSprite];
+    [_terrain.batchNode addChild:drumSprite];
     
 }
 -(void)releaseDrums {
     for (b2Body *b = myWorld->GetBodyList(); b != NULL; b = b->GetNext()) {
         if(b->GetUserData() != NULL) {
             Box2DSprite *sprite = (Box2DSprite *)b->GetUserData();
-            [_terrain removeChild:sprite cleanup:true];
+            [_terrain.batchNode removeChild:sprite cleanup:true];
             myWorld->DestroyBody(b);
         }
     }

@@ -189,6 +189,7 @@ const bool _fixedDrift = false;
         _terrain.roadTexture = road;
         
         //autorelease caused error in update method???
+        //Drums are released before first update.
         drums = [[[Drums alloc] initWithWorld:_world] retain];
         [drums createDrums:_terrain];
        
