@@ -101,7 +101,7 @@ const bool _fixedDrift = false;
     _background.position = ccp(winSize.width/2, winSize.height/2);        
     ccTexParams tp = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
     [_background.texture setTexParameters:&tp];
-    [_background setTextureRect:CGRectMake(0, 0, winSize.width / MIN_SCALE, winSize.height / MIN_SCALE)];
+    [_background setTextureRect:CGRectMake(0, 0, 2*winSize.width / MIN_SCALE, 2*winSize.height / MIN_SCALE)];
     
     [self addChild:_background];
         
@@ -470,8 +470,8 @@ const bool _fixedDrift = false;
     [_car setPathCurve:targetCurve];
     
     // CCLOG(@"drift:  target x=%4.2f y=%4.2f  ", target.x, target.y);
-    CGPoint tangent = [_terrain targetTangent];
-    [_car setPathTangent:tangent];
+    CGPoint carTangent = [_terrain targetTangent];
+    [_car setPathTangent:carTangent];
     
     [_car update];
     float offsetX = _car.position.x;
@@ -490,8 +490,8 @@ const bool _fixedDrift = false;
     [_chaseCar setPathCurve:targetCurve];
     
     // CCLOG(@"drift:  target x=%4.2f y=%4.2f  ", target.x, target.y);
-    tangent = [_terrain targetTangent];
-    [_chaseCar setPathTangent:tangent];
+    CGPoint chaseCarTangent = [_terrain targetTangent];
+    [_chaseCar setPathTangent:chaseCarTangent];
     
     //Stop chase car at end of road
     if([_terrain atRoadEnd] == false) {
@@ -561,15 +561,11 @@ const bool _fixedDrift = false;
     [self scaleChaseCarSound];
     
     [drums updateDrums];
-    for (b2Body *b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
-        if(b->GetUserData() != NULL) {
-            Box2DSprite *sprite = (Box2DSprite *)b->GetUserData();
-            sprite.position = ccp(b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
-        }
-    }
     
-    //uncomment to rotate view with car
-//    [_terrain updateRotation:_car.rotation];
+    //uncomment to rotate view with road
+//    float roadAngle = ccpToAngle(carTangent);
+//    self.anchorPoint = ccp(0.5,0.4);
+//    self.rotation = CC_RADIANS_TO_DEGREES(roadAngle) - 90;
     
 }
 

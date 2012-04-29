@@ -58,7 +58,6 @@
 - (BOOL)atRaceEnd;
 - (BOOL)atRoadEnd;
 - (void) setOffset:(CGPoint)newOffset;
-- (void) updateRotation:(float)rotation;
 - (id)initWithWorld:(b2World *)world;
 - (CGPoint*)getPath;
 

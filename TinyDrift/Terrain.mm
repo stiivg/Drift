@@ -16,132 +16,6 @@
 
 int _lastRoadPoint = 100;
 
-- (void) createEdges {
-    
-    if(_body) {
-        _world->DestroyBody(_body);
-    }
-    
-    b2BodyDef bd;
-    bd.position.Set(0, 0);
-    
-    _body = _world->CreateBody(&bd);
-    
-    b2PolygonShape shape;
-    //Takes alternate edge points and makes
-    //edge lines for alternating sides of the road
-    b2Vec2 p1, p2;
-    for (int i=0; i<_nRoadVertices-2; i++) {
-        p1 = b2Vec2(_roadVertices[i].x/PTM_RATIO,_roadVertices[i].y/PTM_RATIO);
-        p2 = b2Vec2(_roadVertices[i+2].x/PTM_RATIO,_roadVertices[i+2].y/PTM_RATIO);
-        shape.SetAsEdge(p1, p2);
-        _body->CreateFixture(&shape, 0);
-    }
-}
-
-
-- (void) writeRoadFile {
-    NSString *filePath = @"/Users/stevengallagher/Documents/DriftGithub/roadPoints.tsv";
-    FILE *file;
-    file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "w");
-    
-    for (int i=0; i<_lastRoadPoint; i++) {
-        fprintf(file, "%f\t%f\n",_roadKeyPoints[i].x,_roadKeyPoints[i].y);
-    }
-    fclose(file);
-}
-
-- (void) generateRoad {
-
-    CGSize winSize = [CCDirector sharedDirector].winSize;
-    
-    float x = winSize.width/2;
-    float y = 0;
-    int i = 0;
-    
-#define kStraightKeyPoints 20
-#define kCornerRadius 1000
-
-    //first straight section
-    for (i=0; i<kStraightKeyPoints; i++) {
-        _roadKeyPoints[i] = CGPointMake(x, y);
-        y += 160;
-    }
-    //top curve includes last point of straight
-    float curveCenterX = x - kCornerRadius;
-    float curveCenterY = y;
-    for (float theta=0; theta<M_PI_2; theta+=0.1) {
-        x = curveCenterX + kCornerRadius * cosf(theta);
-        y = curveCenterY + kCornerRadius * sinf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    //set new curve center
-    curveCenterY += 2 * kCornerRadius;
-    
-    for (float theta=0; theta<M_PI; theta+=0.1) {
-        x = curveCenterX - kCornerRadius * sinf(theta);
-        y = curveCenterY - kCornerRadius * cosf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    
-    //set new curve center
-    curveCenterY += 2 * kCornerRadius;
-    
-    for (float theta=0; theta<M_PI_2; theta+=0.1) {
-        x = curveCenterX + kCornerRadius * sinf(theta);
-        y = curveCenterY - kCornerRadius * cosf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    
-    
-    //middle straight section
-    for (int j=0; j<kStraightKeyPoints; j++) {
-        y += 160;
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    y += 160;
-
-    //top curve includes last point of straight
-    curveCenterX = x + kCornerRadius;
-    curveCenterY = y;
-    for (float theta=0; theta<M_PI_2; theta+=0.1) {
-        x = curveCenterX - kCornerRadius * cosf(theta);
-        y = curveCenterY + kCornerRadius * sinf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    //set new curve center
-    curveCenterY += 2 * kCornerRadius;
-    
-    for (float theta=0; theta<M_PI; theta+=0.1) {
-        x = curveCenterX + kCornerRadius * sinf(theta);
-        y = curveCenterY - kCornerRadius * cosf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-    
-    //set new curve center
-    curveCenterY += 2 * kCornerRadius;
-    
-    for (float theta=0; theta<M_PI_2; theta+=0.1) {
-        x = curveCenterX - kCornerRadius * sinf(theta);
-        y = curveCenterY - kCornerRadius * cosf(theta);
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-    }
-
-    
-    //final straight
-    x = curveCenterX - kCornerRadius;
-    y = curveCenterY;
-    
-    for (int j=0; j<kStraightKeyPoints; j++) {
-        _roadKeyPoints[i++] = CGPointMake(x, y);
-        y += 160;
-    }
-    _lastRoadPoint = i - 1;
-    //uncomment to write file of road points
-    [self writeRoadFile];
-    
-}
-
 
 //Map the texture to the road points
 //Alternate left and right of road
@@ -201,10 +75,8 @@ int _lastRoadPoint = 100;
         _path = [[[HermitePath alloc] createPath:_pathPoints] autorelease];
         _lastRoadPoint = _path.getNumPathPoints;
         _targetRoadIndex = 1;
-//        [self generateRoad];
         
         [self resetRoadVertices];
-//        [self createEdges];
         
         _batchNode = [CCSpriteBatchNode batchNodeWithFile:@"driftCar.png"];
         [self addChild:_batchNode z:1]; //z=1 above emitter
@@ -283,6 +155,52 @@ int _lastRoadPoint = 100;
     return testPoint;
 }
 
+//-(float)viewAngle:(int)pathIndex {
+//    //linear fit to path points around target
+//    //Fit jumps 90 degrees at apex of corner
+//    int numPrePoints = 0;
+//    int numPostPoints = 1;
+//    double sumX = 0;
+//    double sumY = 0;
+//    for (int i=pathIndex-numPrePoints; i<= pathIndex+numPostPoints; i++) {
+//        sumX += _pathPoints[i].x;
+//        sumY += _pathPoints[i].y;
+//    }
+//
+//    double sumXMean = sumX/(numPrePoints+numPostPoints+1);
+//    double sumT2 = 0;
+//    double slope = 0;
+//    double diff = 0;
+//    for (int i=pathIndex-numPrePoints; i<= pathIndex+numPostPoints; i++) {
+//        diff = _pathPoints[i].x - sumXMean;
+//        sumT2 += (diff*diff);
+//        slope += (diff*_pathPoints[i].y);
+//    }    
+//    
+//    float angle = M_PI/2.0f;
+//    if (sumT2 != 0) {
+//        slope = slope / sumT2;    
+//        angle = atanf(slope);
+//    }
+//    
+//    //determine direction along slope line
+//    CGPoint startPoint  = _pathPoints[pathIndex-numPrePoints];
+//    CGPoint endPoint  = _pathPoints[pathIndex+numPostPoints];
+//    if (ABS(angle)<0.7) { //left or right
+//        if ((endPoint.x - startPoint.x)< 0) {
+//            angle = M_PI - ABS(angle);
+//        }
+//    } else { //up or down
+//        if ((endPoint.y - startPoint.y)> 0 && angle < 0) {
+//            angle = M_PI + angle;
+//        } else if ((endPoint.y - startPoint.y)< 0 && angle > 0) {
+//            angle = M_PI - angle;
+//        }
+//    }
+//   return CC_RADIANS_TO_DEGREES(angle) - 90;
+//    
+//}
+
 //True if at end of path drive section
 - (BOOL)atRaceEnd {
     return _targetRoadIndex >= _lastRoadPoint-kPointsToEnd;
@@ -333,24 +251,6 @@ int _lastRoadPoint = 100;
     
     self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, -viewOffset -_offsetY*self.scale);
 //    [self resetRoadVertices];
-}
-
-- (void) updateRotation:(float)newRotation {
-    self.anchorPoint = ccp(0.5, 0.5);
-    self.rotation = newRotation;
-//    self.rotation = -20;
-//    float rotationRadians = CC_DEGREES_TO_RADIANS(self.rotation);
-//    
-//    //update offset to maintain the car in the same position
-//    _offsetX = _offsetX * (1 - sinf(rotationRadians));
-//    _offsetY = _offsetY * (1 - cosf(rotationRadians));
-//    
-//    CGSize winSize = [CCDirector sharedDirector].winSize;
-//    
-//    self.position = CGPointMake(winSize.width/2-_offsetX*self.scale, winSize.height/4-_offsetY*self.scale);
-    
-    //SJG TODO draw the new terrain revealed here
-    //[self resetHillVertices];
 }
 
 -(CGPoint *)getPath {
